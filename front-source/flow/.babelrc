@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    "transform-vue-jsx",
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
+    ]
+  ]
+}
