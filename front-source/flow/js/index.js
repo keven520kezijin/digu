@@ -157,7 +157,7 @@ function onload() {
   ) {
     _editUrl =
       baseHost +
-      '/services/speechcraft/querySpeechcraftFlowByFlowType.json?speechcraftId=' +
+      '/manage/services/speechcraft/querySpeechcraftFlowByFlowType.json?speechcraftId=' +
       speechcraftId +
       '&flowType=' +
       flowType;

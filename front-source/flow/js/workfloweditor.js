@@ -33,7 +33,7 @@ $(function(){
 
 /**
  * 加载工作流(查看和修改)
- * 
+ *
  * @returns
  */
 function loadWorkFlowEditor(){
@@ -49,23 +49,23 @@ function loadWorkFlowEditor(){
 	flowId = $.utils.getUrlParam("flowId");
 	// 得到后台管理标识
 	manage = $.utils.getUrlParam("m");
-	
+
 	if(manage == "1"){
 		$('#exit').hide();
 	}
-	
+
 	if(flowId != null && typeof(flowId) != "undefined" && flowId != ""){
 		_editUrl = '/services/speechcraft/querySpeechcraftFlow.json?flowId=' + flowId;
-	} else if (speechcraftId != null && typeof (speechcraftId) != "undefined" && speechcraftId != "" 
+	} else if (speechcraftId != null && typeof (speechcraftId) != "undefined" && speechcraftId != ""
 				&& flowType != null && typeof (flowType) != "undefined" && flowType != "") {
-		_editUrl = '/services/speechcraft/querySpeechcraftFlowByFlowType.json?speechcraftId=' + speechcraftId + '&flowType=' + flowType;
-	}	
+		_editUrl = '/manage/services/speechcraft/querySpeechcraftFlowByFlowType.json?speechcraftId=' + speechcraftId + '&flowType=' + flowType;
+	}
 	edit();
 }
 
 /**
  * 编辑流程
- * 
+ *
  * @param flowId
  * @returns
  */
@@ -99,7 +99,7 @@ function edit(){
 							mxEditor = createEditor('config/workfloweditor-view.xml');
 						}
 					}
-					showFlowDiagram(returnObject.flowContent);				
+					showFlowDiagram(returnObject.flowContent);
 				}
 
 				_flowContent = getFlowContent();
@@ -113,7 +113,7 @@ function edit(){
 
 /**
  * 保存流程
- * 
+ *
  * @returns
  */
 function save() {
@@ -139,13 +139,13 @@ function save() {
 			} else if(data.resultMessageEnum == "0001"){
 				$.utils.tooltip($.utils.getErrorMessage(data.errorInfoList),'error');
 			}
-		}		
+		}
 	});
 }
 
 /**
  * 显示流程图
- * 
+ *
  * @param xml
  * @returns
  */
@@ -156,7 +156,7 @@ function showFlowDiagram(xml){
 
 /**
  * 获得流程内容
- * 
+ *
  * @returns XML content
  */
 function getFlowContent() {
@@ -175,35 +175,35 @@ function getFlowContent() {
  */
 function showUploadRecordDialog(){
 	$.utils._dialogVue.editRecordTabs = $.utils._editableTabs;
-	
+
 	// 处理recordData
 	$.utils._editableTabs.forEach((elem,index) => {
 		let recordData = [];
 		let arr = $.utils.handleSpeech(elem.content);
-	
+
 		arr.forEach((item,i) => {
 			let data = {
 					'id':i+1,
 					'title':item,
 					'url':getRecordUrl(item)
-			};		
+			};
 			recordData.push(data);
 		})
 		elem.recordData = recordData;
 	})
-	
+
 	// 更新_dialogVue的recordData
 	$.utils._editableTabs.forEach((elem,index) => {
 		if(elem.name === $.utils._dialogVue.editRecordTabsValue){
 			$.utils._dialogVue.recordData = elem.recordData;
-		} 
+		}
 	})
-        	    		
+
 	$.utils._dialogVue.dialogRecordVisible = true;
 }
 /**
  * 获取录音文件URL
- * @param {*} title 
+ * @param {*} title
  */
 function getRecordUrl(title){
 	var sReturn = '';
@@ -216,8 +216,8 @@ function getRecordUrl(title){
 					sReturn = item.url;
 				}
 			})
-		} 
-	});	
+		}
+	});
 
 	return sReturn;
 }
@@ -226,12 +226,12 @@ function getRecordUrl(title){
  */
 function showExitDialog(){
 	if(viewType === '1' && _flowContent !== getFlowContent()){
-		$.utils._dialogVue.exitText = '您还没有保存话术，确定要退出吗？';			
-		$.utils._dialogVue.exitVisible = true;			
-	} else {
-		$.utils._dialogVue.exitText = '您确定退出当前话术编辑吗？';	
+		$.utils._dialogVue.exitText = '您还没有保存话术，确定要退出吗？';
 		$.utils._dialogVue.exitVisible = true;
-	}	
+	} else {
+		$.utils._dialogVue.exitText = '您确定退出当前话术编辑吗？';
+		$.utils._dialogVue.exitVisible = true;
+	}
 }
 
 /**
