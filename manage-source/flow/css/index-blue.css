@@ -26,8 +26,8 @@ div.base#toolbar {
 
 #head {
 	padding: 20px 0 0 20px;
-	display: inline-block;
-	float: left;
+	/*display: inline-block;*/
+	/*float: left;*/
 	font-size:24px;
 	font-weight: bold;
 	color: #4E5F6F;
@@ -36,8 +36,8 @@ div.base#toolbar {
 }
 #btn-group {
 	padding: 18px 20px 0 0;
-	display: inline-block;
-	float: right;
+	/*display: inline-block;*/
+	/*float: right;*/
 }
 
 #exit {

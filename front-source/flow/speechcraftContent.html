@@ -130,7 +130,7 @@
 	<el-checkbox v-for="item in checkList" :label="item" :key="item"
 				 :disabled="item === 'isAllow' ? $.utils._dialogVue.speechForm.isArtificial : isDisabled" @change="checked=>checkItemChange(item,checked)">
 		{{mxResources.get(item)}}
-		<el-tooltip v-if="item != 'isEnd'" class="item" effect="light" placement="bottom-end"
+		<el-tooltip class="item" effect="light" placement="bottom-end"
 					popper-class="speech-editor-tip">
 			<div slot="content">{{mxResources.get(item + 'Content')}}</div>
 			<i class="el-icon-question"></i>

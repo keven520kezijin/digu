@@ -38,7 +38,6 @@
         >
           {{ $options.mxResources.get(item) }}
           <el-tooltip
-            v-if="item != 'isEnd'"
             class="item"
             effect="light"
             placement="bottom-end"
@@ -68,6 +67,7 @@ const CHECKBOX_LIST = new Map([
     '勾选允许打断后，客户在机器说话时可随时进行插话打断。建议本功能用在无需客户听完的场景下，若有重要信息需要传递给客户请勿勾选。',
   ],
   ['isSkip_content', '勾选允许平级跳转后，本编辑器下一级的意图间可支持相互跳转。'],
+  ['isEnd_content', '结束语叙述。'],
 ]);
 
 export default {
@@ -77,8 +77,13 @@ export default {
     name: String,
   },
   data() {
+      let list = $.utils._checkList.concat([])
+      if (list.indexOf('isEnd') < 0) {
+          list.push('isEnd')
+      }
+
     return {
-      checkList: $.utils._checkList,
+      checkList: list,
       checkedList: $.utils._checkedList,
       EXCSkipOptions: $.utils._EXCSkipOptions,
       excSkipNode: $.utils._excSkipNode,
@@ -101,15 +106,16 @@ export default {
   },
   destroyed() {
     this.$document.off('endConfirm');
+    console.log('destroy',$.utils._checkedList)
   },
   mxResources: CHECKBOX_LIST,
   methods: {
     checkItemChange(item) {
       const checked = !this.checkedList.includes(item);
-      if (checked) {
-        if (item !== 'isEnd') {
+        if (checked) {
+        // if (item !== 'isEnd') {
           this.checkedList = this.checkedList.concat(item);
-        }
+        // }
       } else {
         this.checkedList = this.checkedList.filter(c => c !== item);
       }
@@ -149,7 +155,8 @@ export default {
   },
   watch: {
     checkedList(val) {
-      $.utils._checkedList = val;
+        console.log(val);
+        $.utils._checkedList = val;
 
       const isEXCSkip = $.inArray('isEXCSkip', $.utils._checkedList) >= 0;
       if (isEXCSkip) {

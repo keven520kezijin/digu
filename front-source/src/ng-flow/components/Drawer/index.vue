@@ -83,7 +83,7 @@
                             :native="false"
                             :noresize="false"
                     >
-                        <ul class="audio-files-list" v-infinite-scroll="audioFilesListLoad">
+                        <ul class="audio-files-list" v-infinite-scroll="audioFilesListLoad" infinite-scroll-disabled="busy" infinite-scroll-distance='10'>
                             <li
                                     v-for="(item, index) in showDetailCate.child"
                                     draggable="true"
@@ -122,6 +122,7 @@
                     // 知识库音频
                     knowledgeAudio: [],
                 },
+                busy: false
             };
         },
 
@@ -184,7 +185,7 @@
                     const cate = {
                         id: item.id,
                         name: item.configGroupName,
-                        currentPage: 0,
+                        currentPage: 1,
                         endPage: -1,
                         child: [],
                     };
@@ -205,43 +206,46 @@
              */
             async audioFilesListLoad() {
                 if (!this.showDetailCate) {
+                    this.$message.error('请选择要搜索的分类');
                     return;
                 }
 
-                const param = {
+                let param = {
                     configGroupId: this.showDetailCate.id,
-                    currentPage: this.showDetailCate.currentPage,
+                    currentPage: 1,
                     pageSize: 20,
+                    queryKey: this.queryKey,
                 };
+                this.busy = true
+                const {data} = await axios.post(this.$baseUrl + 'sound/querySoundConfigItemList.json', param)
+                const {returnObject, resultMessageEnum, resultMessage} = data
+                const { recordList, totalPage } = returnObject;
 
-                if (this.queryKey) {
-                    param.queryKey = this.queryKey;
+                if (resultMessageEnum !== '0000') {
+                    this.$message.error(resultMessage);
+                    return
                 }
-
-                const { data } = await axios.post(this.$baseUrl + 'sound/querySoundConfigItemList.json', param);
-                if (data.resultMessageEnum !== API_SUCCESS_CODE) {
-                    this.$message.error('数据加载异常');
-                    return;
-                }
-
-                const { recordList } = data.returnObject;
                 if (recordList) {
                     if (recordList.length === 0) {
                         this.showDetailCate.endPage = this.showDetailCate.currentPage;
                         return;
                     }
-
-                    recordList.forEach(item => {
-                        this.showDetailCate.child.push({
-                            id: item.id,
-                            fileName: item.fileName,
-                            soundPath: item.soundPath,
-                            soundContent: item.soundContent,
-                            duration: item.soundDuration,
+                    if (this.showDetailCate.currentPage > totalPage) {
+                        return
+                    } else {
+                        recordList.forEach(item => {
+                            this.showDetailCate.child.push({
+                                id: item.id,
+                                fileName: item.fileName,
+                                soundPath: item.soundPath,
+                                soundContent: item.soundContent,
+                                duration: item.soundDuration,
+                            })
                         });
-                    });
+                        this.showDetailCate.currentPage++;
+                    }
 
-                    this.showDetailCate.currentPage++;
+                    this.busy = false
                 }
             },
 
@@ -267,7 +271,6 @@
 
                 e.dataTransfer.setData('message', JSON.stringify(message));
             },
-
             /**
              * 拖拽终止的事件
              * @param e

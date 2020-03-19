@@ -5,11 +5,15 @@ body {
 	background: url('../images/background.png');
 }
 
+.workFlowEditorBody {
+
+}
+
 /* 流程设计器 begin */
 
 div.base {
 	position: absolute;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	font-family: Arial;
 	font-size: 8pt;
 }

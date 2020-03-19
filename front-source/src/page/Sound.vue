@@ -16,7 +16,15 @@
                         </el-col>
                         <el-col :span="10" class="sound-card-right">
                             <el-button type="primary" :disabled="uploadDisabled" class="upload-btn-sound">上传音频
-                            <input multiple="multiple" :disabled="uploadDisabled" ref="upload_input" type="file" id="file" @change="uploadSoundFileList" ></el-button>
+                            <input
+                                    multiple="multiple"
+                                    :disabled="uploadDisabled"
+                                    ref="upload_input"
+                                    type="file"
+                                    id="file"
+                                    @change="uploadSoundFileList"
+                                    accept=".mp3,.ogg,.wav"
+                            ></el-button>
                             <el-button type="primary" :disabled="disabled" @click="createSoundConfigItemExcelFile">导出表格</el-button>
                             <el-button type="primary" :disabled="disabled" class="upload-btn-sound" @click="uploadBtn">上传表格</el-button>
 
@@ -780,7 +788,10 @@
                 let files = $('#file')[0].files;
 
                 let size = 10485760;
-
+                if (files.length > 5) {
+                    this.$message.error('最多选择5个文件！');
+                    return false
+                }
                 for(var i=0;i<files.length;i++){
                     if(files[i].size>size){
                         this.$message.error('请选择10M以内的文件！');
