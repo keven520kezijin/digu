@@ -1,6 +1,6 @@
 // 默认流程图
 const _defaultFlowDiagram =
-  "<mxGraphModel><root><Workflow label='MyWorkflow' description='' href='' flowId='' id='0'><mxCell/></Workflow><Layer label='Default Layer' id='1'><mxCell parent='0'/></Layer><Start label='开场白' nodeType='start' speechcraft='' intentionLevel='F' isAllow='false' artificialIntention='' isSkip='false' isEXCSkip='false' excSkipNode='' id='2'><mxCell style='start;' vertex='1' parent='1'><mxGeometry x='680' y='20' width='70' height='30' as='geometry'/></mxCell></Start></root></mxGraphModel>";
+  "<mxGraphModel><root><Workflow label='MyWorkflow' description='' href='' flowId='' id='0'><mxCell/></Workflow><Layer label='Default Layer' id='1'><mxCell parent='0'/></Layer><Start label='开场白' nodeType='start' speechcraft='' intentionLevel='F' isEnd='false' isAllow='false' artificialIntention='' isSkip='false' isEXCSkip='false' excSkipNode='' id='2'><mxCell style='start;' vertex='1' parent='1'><mxGeometry x='680' y='20' width='70' height='30' as='geometry'/></mxCell></Start></root></mxGraphModel>";
 // 话术轮数
 const _speechRound = 5;
 // 阿拉伯数字汉子对应关系

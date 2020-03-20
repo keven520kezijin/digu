@@ -155,7 +155,7 @@ export default {
   },
   watch: {
     checkedList(val) {
-        console.log(val);
+        console.log('watch',val);
         $.utils._checkedList = val;
 
       const isEXCSkip = $.inArray('isEXCSkip', $.utils._checkedList) >= 0;

@@ -12,7 +12,7 @@
                         </el-col>
                         <el-col :span="9" >
                             <el-input v-model="queryKey" clearable @change="searchChange" placeholder="输入音频名称或文本" class="handle-input mr10" @keyup.native.13="search"></el-input>
-                            <el-button type="primary" icon="search" @click="search">搜索音频</el-button> 
+                            <el-button type="primary" icon="search" @click="search">搜索音频</el-button>
                         </el-col>
                         <el-col :span="10" class="sound-card-right">
                             <el-button type="primary" :disabled="uploadDisabled" class="upload-btn-sound">上传音频
@@ -41,28 +41,28 @@
                             <div class="repository-menu-top">文件夹<i class="el-icon-circle-plus" @click="addGroup"></i></div>
                             <div class="repository-menu sound-menu">
                                 <!-- <keep-alive> -->
-                                <el-menu 
-                                    class="repository-menu" 
+                                <el-menu
+                                    class="repository-menu"
                                     :unique-opened="true"
                                     :default-openeds="openeds"
                                     @open="handleOpen">
                                     <el-submenu index="1" >
                                         <template slot="title">话术音频</template>
                                         <draggable v-model="speechMenu" @end="draggableEnd" @start="draggableStart('speech')">
-                                            <el-menu-item 
+                                            <el-menu-item
                                             :index="`1-${index}`"
                                             class="repository-menu-item"
-                                            :class="{active:item.index==itemActive,edit:item.isEdit}" 
-                                            v-for="(item,index) in speechMenu" 
+                                            :class="{active:item.index==itemActive,edit:item.isEdit}"
+                                            v-for="(item,index) in speechMenu"
                                             :key="`${index}`">
                                                 <div class="duplicate" v-if="item.duplicateFlag == 1">通用</div>
                                                 <div class="repository-menu-input-box" v-show="item.show">
                                                     <el-input
-                                                    v-model="item.configGroupName" 
+                                                    v-model="item.configGroupName"
                                                     v-if="item.type!=1&&item.type!=2"
                                                     ></el-input>
                                                 </div>
-                                                
+
                                                 <span v-show="!item.show" class="groupName" @click="querySoundConfigItemList(item,index)">{{item.configGroupName}}</span>
                                                 <div class="repository-icon-box edit-box">
                                                     <i class="el-icon-check" @click="modifySoundConfigGroup(item,index)"></i>
@@ -79,20 +79,20 @@
                                     <el-submenu index="2"  class="repository-menu" >
                                         <template slot="title">知识库音频</template>
                                         <draggable v-model="knowledgeMenu" @end="draggableEnd" @start="draggableStart('knowledge')">
-                                            <el-menu-item 
+                                            <el-menu-item
                                             :index="`2-${index}`"
                                             class="repository-menu-item"
-                                            :class="{active:item.index==itemActive,edit:item.isEdit}" 
-                                            v-for="(item,index)  in knowledgeMenu" 
+                                            :class="{active:item.index==itemActive,edit:item.isEdit}"
+                                            v-for="(item,index)  in knowledgeMenu"
                                             :key="index">
                                                 <div class="duplicate" v-if="item.duplicateFlag == 1">通用</div>
                                                 <div class="repository-menu-input-box" v-show="item.show">
-                                                    <el-input 
-                                                    v-model="item.configGroupName" 
+                                                    <el-input
+                                                    v-model="item.configGroupName"
                                                     v-if="item.type!=1&&item.type!=2"
                                                     ></el-input>
                                                 </div>
-                                                
+
                                                 <span v-show="!item.show" class="groupName" @click="querySoundConfigItemList(item,index)">{{item.configGroupName}}</span>
                                                 <div class="repository-icon-box edit-box">
                                                     <i class="el-icon-check" @click="modifySoundConfigGroup(item,index)"></i>
@@ -110,11 +110,11 @@
                             </div>
                         </el-col>
                         <el-col :span="19">
-                            <el-table stripe :data="configGroupIdData" 
-                                class="table tb-edit sound-table" 
-                                id="configGroupIdData" 
-                                :height="height" 
-                                ref="configGroupIdData" 
+                            <el-table stripe :data="configGroupIdData"
+                                class="table tb-edit sound-table"
+                                id="configGroupIdData"
+                                :height="height"
+                                ref="configGroupIdData"
                                 @selection-change="handleSelectionChange" @sort-change="sortChange">
                                 <el-table-column type="selection" width="55" align="center" :selectable="checkSelectable"></el-table-column>
                                 <el-table-column label="音频名称" prop="fileName" width="140" sortable></el-table-column>
@@ -136,7 +136,7 @@
                                 <el-table-column label="状态" prop="useFlag" :formatter="soundUseStatus" width="60" v-if="isSound"></el-table-column>
                             </el-table>
                             <div class="pagination">
-                                <el-pagination background @current-change="handleCurrentChange" 
+                                <el-pagination background @current-change="handleCurrentChange"
                                     layout="total, prev, pager, next,jumper"
                                     :total="pagination.total"
                                     :page-size="pagination.pageSize"
@@ -176,7 +176,7 @@
         <el-dialog title="上传确认" :visible.sync="uploadVisible" width="400px" :append-to-body="true">
             <div >上传内容可能会覆盖相关已有文本内容！</div>
             <span slot="footer" class="dialog-footer">
-                
+
                 <el-button type="primary" class="upload-btn-sound">确 定
                     <input type="file" :disabled="disabled" id="importFile"  @change="importSoundConfigItemExcelFile" >
                 </el-button>
@@ -400,13 +400,13 @@
                     this.knowledgeMenu.forEach((item)=>{
                         sortData.push(item.id);
                     });
-                    
+
                 }
-                
+
                 this.configGroupMenu = this.speechMenu.concat(this.knowledgeMenu);
 
                 this.configGroupMenu.forEach((item,index)=>{
-                  item.index = index;  
+                  item.index = index;
                 })
 
                 this.sortSoundConfigGroup(sortData).then(res=>{
@@ -460,15 +460,15 @@
 
                             this.querySoundConfigItemList(newData[0],0);
                         }
-                        
+
                     }else{
                         this.$message.error(res.errorInfoList[0].errorMessage);
                     }
                 })
-            },  
+            },
             //添加录音配置文件明细列表
             modifySoundConfigGroup(item,index){
-                
+
                 index = item.index;
 
                 // this.configGroupMenu = this.speechMenu.concat(this.knowledgeMenu);
@@ -507,7 +507,7 @@
                     })
                 }else{
                 // 否则为修改
-                    
+
                     let data={
                         id:item.id,
                         configGroupName:item.configGroupName
@@ -545,7 +545,7 @@
                     item.soundConfigGroupType=2;
                     this.knowledgeMenu.push(item);
                 }
-                
+
                 this.configGroupMenu = this.speechMenu.concat(this.knowledgeMenu);
 
                 this.setIndex()
@@ -577,7 +577,7 @@
             removeSoundConfigGroup(){
                     // this.removeGroupName = this.removeSoundInfo.configGroupName;
                     this.removeGroupId = this.removeSoundInfo.id;
-                    this.removeGroupIndex = this.removeSoundInfo.index; 
+                    this.removeGroupIndex = this.removeSoundInfo.index;
                     let data={
                         soundConfigGroupId:this.removeGroupId
                     }
@@ -630,8 +630,8 @@
                 $.post(this.$baseUrl+'sound/querySoundConfigItemList.json',JSON.stringify(data)).then((res)=>{
                     if(res.resultMessageEnum=='0000'){
                         let data = res.returnObject.recordList;
-                        
-                        
+
+
                         if(typeof index != 'undefined'){
 
                             this.itemActive=item.index;
@@ -652,13 +652,13 @@
                         }else{
                             this.disabled = true;
                         }
-                        
+
                         this.configGroupIdData = data;
 
                         this.pagination.total = res.returnObject.totalNumber;
 
                     }else{
-                        
+
                     }
                 });
             },
@@ -743,7 +743,7 @@
                 return this.selectable;
                 /*if (this.selectable && row.useFlag === 0){
                     return true;
-                } 
+                }
                 return false;*/
 
             },
@@ -798,7 +798,7 @@
                         this.changeFileType();
                         return false;
                     }
-                    let ext = files[i].name.substr(files[i].name.lastIndexOf(".")).toLowerCase(); 
+                    let ext = files[i].name.substr(files[i].name.lastIndexOf(".")).toLowerCase();
                     // if(ext!=".mp3"&&ext!=".wma"&&ext!=".wav"&&ext!=".amr"){
                     if(ext!=".wav"){
                         self.$message.error('文件格式错误,重新选择！');
@@ -839,10 +839,10 @@
                         }
                     }
                 }).fail(function(res) {
-                    
+
                 });
 
-                
+
             },
             //批量匹配
             multithMatchUpLoad(){
@@ -1040,7 +1040,7 @@
                     }else{
                         self.$message.error('上传失败！');
                     }
-                    
+
                 }).fail(function(res) {
 
                 });
@@ -1049,7 +1049,7 @@
                 $('#importFile').val('');
             },
             handleVideo(index,row){
-                
+
                 this.videoVisible=true;
                 this.$nextTick(() => {
                     this.viewSource =row.soundPath;
