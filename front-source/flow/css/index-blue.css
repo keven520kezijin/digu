@@ -25,7 +25,7 @@ div.base#toolbar {
 }
 
 #head {
-  padding: 20px 0 0 20px;
+  padding: 10px 0 0 20px;
   /*display: inline-block;*/
   /*float: left;*/
   font-size: 24px;
@@ -41,6 +41,11 @@ div.base#toolbar {
   color: #4e8ff9;
   margin-left: 10px;
   text-decoration: none;
+}
+
+#headerBody {
+  position: relative;
+  z-index: 9;
 }
 
 #btn-group {
@@ -262,6 +267,7 @@ div.base#graph {
   right: 20px;
   top: 50px;
   bottom: 20px;
+  height: 200%;
 }
 
 /* 流程设计器 end */

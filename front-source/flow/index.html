@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style='overflow-y: auto'>
   <head>
     <meta charset="UTF-8" />
     <title>话术模板设计器</title>
@@ -90,20 +90,20 @@
         <div id="errorInfo" style="display: none;">
           <!-- <i class="el-icon-error"></i> -->
           <div class="el-tooltip__popper is-light" style="top: 75px; right: 55px; z-index:0;" x-placement="bottom">
-            <div style="max-width: 157px; line-height: 2;">抱歉，保存失败了，您的网络不给力，请检查后重试</div>
+            <div style="max-width: 157px; width: 157px; line-height: 2;">抱歉，保存失败了，您的网络不给力，请检查后重试</div>
             <div class="popper__arrow" style="right: 90px;"></div>
           </div>
         </div>
         <div id="offlineInfo" style="display: none;">
           <div class="el-tooltip__popper is-light" style="top: 75px; right: 55px; z-index:0;" x-placement="bottom">
-            <div style="max-width: 157px; line-height: 2;">网络异常，离线编辑中，最新流程会在网络恢复后同步</div>
+            <div style="max-width: 157px; width: 157px; line-height: 2;">网络异常，离线编辑中，最新流程会在网络恢复后同步</div>
             <div class="popper__arrow" style="right: 90px;"></div>
           </div>
         </div>
-        <div id="industryOfflineInfo" style="display: none;">
+        <div id="industryOfflineInfo" style="display: none;position: relative">
           <i class="el-icon-info"></i>
-          <div class="el-tooltip__popper is-light" style="top: 75px; right: 80px; z-index:0;" x-placement="bottom">
-            <div style="max-width: 157px; line-height: 2;">
+          <div class="el-tooltip__popper is-light" style="top: 13px; right: -43px; z-index:0;" x-placement="bottom">
+            <div style="max-width: 157px; width: 157px; line-height: 2;">
               该话术所属行业已经下线，暂时无法正常提交审核，请您耐心等待。
             </div>
             <div class="popper__arrow" style="right: 90px;"></div>
@@ -148,10 +148,10 @@
     <script type="text/javascript" src="./mxGraph/src/js/mxClient.js"></script>
     <script type="text/javascript" src="./js/postMessageBridge.js"></script>
     <script type="text/javascript" src="./neojs/index.js"></script>
-    <script>
-        window.onload(function () {
-            console.log(document.getElementById('graph'))
-        })
-    </script>
   </body>
+  <script>
+    $(function(){
+      $('html').css('overflow', 'auto')
+    });
+  </script>
 </html>

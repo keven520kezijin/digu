@@ -231,7 +231,7 @@
                             label="通话结果"
                             column-key="connectedResultTypeList"
                             :formatter="connectedResultType"
-                            :filters="[{text: '接听', value: '1'},{text: '关机', value: '2'},{text: '通话中', value: '3'},{text: '无应答', value: '4'},{text: '拒接', value: '5'},{text: '空号', value: '6'},{text: '呼叫转移', value: '7'},{text: '呼叫失败', value: '8'},{text: '队列中', value: '9'},{text: '限制骚扰', value: '10'},{text: '限制呼叫', value: '11'}, {text: '用户忙', value: '13'}, { text: '停机', value: '14'}]"
+                            :filters="[{text: '接听', value: '1'},{text: '关机', value: '2'},{text: '线路故障', value: '11'},{text: '无应答', value: '4'},{text: '用户忙', value: '13'},{text: '空号', value: '6'},{text: '呼叫转移', value: '7'},{text: '呼叫失败', value: '8'},{text: '停机', value: '14'},{text: '来电提醒', value: '16'}]"
                             >
                         </el-table-column>
                         <el-table-column

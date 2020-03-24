@@ -124,14 +124,14 @@ export default {
       case 2:
         txt = '关机';
         break;
-      case 3:
-        txt = '通话中';
+      case 11:
+        txt = '线路故障';
         break;
       case 4:
         txt = '无应答';
         break;
-      case 5:
-        txt = '拒接';
+      case 13:
+        txt = '用户忙';
         break;
       case 6:
         txt = '空号';
@@ -145,17 +145,11 @@ export default {
       case 9:
         txt = '队列中';
         break;
-      case 10:
-        txt = '限制骚扰';
-        break;
-      case 11:
-        txt = '限制呼叫';
-        break;
-      case 13:
-        txt = '用户忙';
-        break;
       case 14:
         txt = '停机';
+        break;
+      case 16:
+        txt = '来电提醒';
         break;
     }
     return txt;

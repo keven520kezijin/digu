@@ -788,8 +788,8 @@
                 let files = $('#file')[0].files;
 
                 let size = 10485760;
-                if (files.length > 5) {
-                    this.$message.error('最多选择5个文件！');
+                if (files.length > 50) {
+                    this.$message.error('最多选择50个文件！');
                     return false
                 }
                 for(var i=0;i<files.length;i++){
