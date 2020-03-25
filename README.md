@@ -58,13 +58,15 @@ _端口重复问题，无法同时启动前台和后台_
     # 1.打包镜像
         docker build -t digu-prod --build-arg ACTION_COMMAND=prod .
  
-    # 2.docker build后分别运行，否则镜像里还会运行旧的container
+    # 2.创建镜像，在docker build后运行
         docker images
+        
     # 3.导出镜像
         docker save -o ~/digu-prod.tar digu-prod
         
+        
     # 打包后台镜像
-        docker build -t digu-prod-manage --build-arg ACTION_COMMAND=prod -f manage.Dockerfile .  
+        1. docker build -t digu-prod-manage --build-arg ACTION_COMMAND=prod -f manage.Dockerfile .  
         打包后进行上一流程的2,3步
     
     # 导入镜像
