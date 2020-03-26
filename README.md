@@ -53,18 +53,26 @@ _端口重复问题，无法同时启动前台和后台_
 
 一套基于 vue.js2.0 的桌面组件库。访问地址：[element](http://element.eleme.io/#/zh-CN/component/layout)
 
-## docker
+## docker 部署步骤
 
-    # 打包镜像
-    docker build -t digu-prod --build-arg ACTION_COMMAND=prod .
-    # 启动容器
-    docker run -p 4001:4001 digu-prod
-    # 设置后端接口地址启动
-    docker run -p 4001:4001 --env BACKEND_URL=http://www.google.com digu-prod
-    # 导出镜像
-    docker save -o ~/digu-prod.tar digu-prod
-    # 导入镜像
-    docker load < ~/digu-prod.tar
-
+    # 1.打包镜像
+        docker build -t digu-prod --build-arg ACTION_COMMAND=prod .
+ 
+    # 2.创建镜像，在docker build后运行
+        docker images
+        
+    # 3.导出镜像
+        docker save -o ~/digu-prod.tar digu-prod
+        
+        
     # 打包后台镜像
-    docker build -t digu-prod-manage --build-arg ACTION_COMMAND=prod -f manage.Dockerfile .
+        1. docker build -t digu-prod-manage --build-arg ACTION_COMMAND=prod -f manage.Dockerfile .  
+        打包后进行上一流程的2,3步
+    
+    # 导入镜像
+        docker load < ~/digu-prod.tar
+    # 启动容器
+        docker run -p 4001:4001 digu-prod
+    # 设置后端接口地址启动
+        docker run -p 4001:4001 --env BACKEND_URL=http://www.google.com digu-prod
+ 
