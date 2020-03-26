@@ -37,7 +37,8 @@
     "dev:flow": "cd front-source/flow && yarn dev",
     "dev": "concurrently -c \"bgCyan.bold,bgBlue.bold,bgMagenta.bold\" \"npm:dev:server\" \"npm:dev:front\" \"npm:dev:flow\"",
     "dev:manage": "concurrently -c \"bgCyan.bold,bgBlue.bold\" \"npm:dev:server:manage\" \"npm:dev-manage\"",
-    "build:manage": "cross-env MODE=manage node build/build.js"
+    "build:manage": "cross-env MODE=manage node build/build.js",
+    "build:front": "cross-env MODE=front node build/build.js"
   },
   "dependencies": {
     "axios": "^0.15.3",
@@ -55,6 +56,7 @@
     "query-string": "^6.8.3",
     "request": "^2.88.0",
     "stream-to-string": "^1.2.0",
+    "supports-color": "^7.1.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
