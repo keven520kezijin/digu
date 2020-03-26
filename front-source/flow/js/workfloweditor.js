@@ -58,7 +58,7 @@ function loadWorkFlowEditor(){
 		_editUrl = '/services/speechcraft/querySpeechcraftFlow.json?flowId=' + flowId;
 	} else if (speechcraftId != null && typeof (speechcraftId) != "undefined" && speechcraftId != ""
 				&& flowType != null && typeof (flowType) != "undefined" && flowType != "") {
-		_editUrl = '/manage/services/speechcraft/querySpeechcraftFlowByFlowType.json?speechcraftId=' + speechcraftId + '&flowType=' + flowType;
+		_editUrl = '/services/speechcraft/querySpeechcraftFlowByFlowType.json?speechcraftId=' + speechcraftId + '&flowType=' + flowType;
 	}
 	edit();
 }

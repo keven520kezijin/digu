@@ -46,7 +46,7 @@ const copyConfig = [
   utils.ifFrontMode()
     ? [
         {
-          from: path.resolve(__dirname, `../${sourcePath}/flow/${dist}/index.html`),
+          from: path.resolve(__dirname, `../${sourcePath}/flow/dist/index.html`),
           to: path.resolve(__dirname, `../server/${dist}/flow`),
           flatten: true,
           transform(content) {

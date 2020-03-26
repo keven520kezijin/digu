@@ -5,7 +5,7 @@
 </template>
 <script>
 // import "../static/js/config.js";
-console.log('%c front vision 1.0.0','color:#f00')
+console.log('%c front 2.0.0','color:#f00')
 export default {
   name: 'App',
   data : function(){

@@ -217,8 +217,9 @@
                               class="checkbox-label"
                               href="javascript: void(0)"
                               @click="switchPhoneStatus(idx, name, 'invalid')"
-                              >{{ partOfstatus }}</a
                             >
+                              {{ partOfstatus }}
+                            </a>
                           </ElCheckBox>
                         </ElCheckBoxGroup>
                       </el-tab-pane>
@@ -306,6 +307,7 @@ const mapInvalidPhoneStatus = {
   '14': '停机',
   // '5': '拒接',
   '4': '无应答',
+  '13': '用户忙',
   '11': '线路故障',
   '6': '空号',
   // '7': '呼叫转移',

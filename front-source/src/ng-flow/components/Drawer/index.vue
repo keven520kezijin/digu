@@ -39,10 +39,10 @@
                 <div v-if="!showDetailCate" class="audio-dir">
                     <h3>文件夹</h3>
                     <el-scrollbar
-                        class="audio-dir-scrollbar"
-                        wrapClass="audio-dir-scrollbar-warp"
-                        :native="false"
-                        :noresize="false"
+                            class="audio-dir-scrollbar"
+                            wrapClass="audio-dir-scrollbar-warp"
+                            :native="false"
+                            :noresize="false"
                     >
                         <el-collapse v-model="collapseActiveNames">
                             <el-collapse-item class="speech-audio" name="speechAudio">
@@ -54,7 +54,8 @@
                                             :class="index === 0 ? 'is-common' : ''"
                                             v-for="(cate, index) in audioList.speechAudio"
                                             @click="showDetailCate=cate"
-                                    >{{cate.name}}</li>
+                                    >{{cate.name}}
+                                    </li>
                                 </ul>
                             </el-collapse-item>
                             <el-collapse-item name="knowledgeAudio">
@@ -66,7 +67,8 @@
                                             :class="index === 0 ? 'is-common' : ''"
                                             v-for="(cate, index) in audioList.knowledgeAudio"
                                             @click="showDetailCate=cate"
-                                    >{{cate.name}}</li>
+                                    >{{cate.name}}
+                                    </li>
                                 </ul>
                             </el-collapse-item>
                         </el-collapse>
@@ -83,13 +85,15 @@
                             :native="false"
                             :noresize="false"
                     >
-                        <ul class="audio-files-list" v-infinite-scroll="audioFilesListLoad" infinite-scroll-disabled="busy" infinite-scroll-distance='10'>
+                        <ul class="audio-files-list" v-infinite-scroll="audioFilesListLoad"
+                            infinite-scroll-disabled="busy" infinite-scroll-distance='10'>
                             <li
                                     v-for="(item, index) in showDetailCate.child"
                                     draggable="true"
                                     @dragstart="(e) => audioFileDragStart(e, item)"
                                     @dragend="audioFileDragEnd"
-                            >{{item.soundContent}}{{'{' + item.fileName + '}'}}</li>
+                            >{{item.soundContent}}{{'{' + item.fileName + '}'}}
+                            </li>
                         </ul>
                     </el-scrollbar>
                 </div>
@@ -99,196 +103,196 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import { API_ERROR_CODE, API_SUCCESS_CODE } from '../../../common/enums';
-    import bus from '../../../common/bus';
+  import axios from 'axios';
+  import { API_ERROR_CODE, API_SUCCESS_CODE } from '../../../common/enums';
+  import bus from '../../../common/bus';
 
-    export default {
-        data() {
-            return {
-                drawer: true,
-                drawerClosed: false,
-                collapseActiveNames: [
-                    'speechAudio',
-                    'knowledgeAudio'
-                ],
-                direction: 'rtl',
-                audioSearchKeyWord: '',
-                queryKey: '',
-                showDetailCate: null,
-                audioList: {
-                    // 话术音频
-                    speechAudio: [],
-                    // 知识库音频
-                    knowledgeAudio: [],
-                },
-                busy: false
-            };
+  export default {
+    data() {
+      return {
+        drawer: true,
+        drawerClosed: false,
+        collapseActiveNames: [
+          'speechAudio',
+          'knowledgeAudio',
+        ],
+        direction: 'rtl',
+        audioSearchKeyWord: '',
+        queryKey: '',
+        showDetailCate: null,
+        audioList: {
+          // 话术音频
+          speechAudio: [],
+          // 知识库音频
+          knowledgeAudio: [],
         },
+        busy: false,
+      };
+    },
 
-        async created() {
-            await this.fetchAudioGroupList();
-            bus.$on("updateSoundList", async () => {
-                Object.keys(this.audioList).forEach(key => {
-                    this.audioList[key] = []
-                });
-                await this.fetchAudioGroupList();
-                this.showDetailCate = null;
-                this.$message.success("更新成功")
-            })
-        },
+    async created() {
+      await this.fetchAudioGroupList();
+      bus.$on('updateSoundList', async () => {
+        Object.keys(this.audioList).forEach(key => {
+          this.audioList[key] = [];
+        });
+        await this.fetchAudioGroupList();
+        this.showDetailCate = null;
+        this.$message.success('更新成功');
+      });
+    },
 
-        watch: {
-            async audioSearchKeyWord(val) {
-                if (val === '' && this.showDetailCate) {
-                    this.queryKey = '';
-                    this.$nextTick(async () => {
-                        await this.audioFilesListLoad();
-                    })
-                }
+    watch: {
+      async audioSearchKeyWord(val) {
+        if (val === '' && this.showDetailCate) {
+          this.queryKey = '';
+          this.$nextTick(async () => {
+            await this.audioFilesListLoad();
+          });
+        }
+      },
+
+      // queryKey有更新要清除恢复所有类别的数据
+      queryKey() {
+        Object.keys(this.audioList).forEach(key => {
+          this.audioList[key].forEach(cate => this.clearCateData(cate));
+        });
+      },
+    },
+
+    methods: {
+      clearCateData(cate) {
+        cate.currentPage = 0;
+        cate.endPage = -1;
+        cate.child = [];
+      },
+
+      async search() {
+        this.queryKey = this.audioSearchKeyWord;
+        this.$nextTick(async () => {
+          await this.audioFilesListLoad();
+        });
+      },
+
+      /**
+       * 拉取话术音频的分类
+       * @return {Promise.<void>}
+       */
+      async fetchAudioGroupList() {
+        const { data } = await axios.get(this.$baseUrl + 'sound/querySoundConfigGroupList.json');
+        if (data.resultMessageEnum !== API_SUCCESS_CODE) {
+          this.$message.error('数据加载异常');
+          return;
+        }
+
+        data.returnObject.forEach(item => {
+          const cate = {
+            id: item.id,
+            name: item.configGroupName,
+            currentPage: 1,
+            endPage: -1,
+            child: [],
+          };
+
+          if (item.soundConfigGroupType === 1) {
+            // 话术音频
+            this.audioList.speechAudio.push(cate);
+          } else if (item.soundConfigGroupType === 2) {
+            // 知识库音频
+            this.audioList.knowledgeAudio.push(cate);
+          }
+        });
+      },
+
+      /**
+       * 加载音频文件列表
+       * @return {Promise.<void>}
+       */
+      async audioFilesListLoad() {
+        if (!this.showDetailCate) {
+          this.$message.error('请选择要搜索的分类');
+          return;
+        }
+
+        let param = {
+          configGroupId: this.showDetailCate.id,
+          currentPage: this.showDetailCate.currentPage || 1,
+          pageSize: 20,
+          queryKey: this.queryKey,
+        };
+        this.busy = true;
+        const { data } = await axios.post(this.$baseUrl + 'sound/querySoundConfigItemList.json', param);
+        const { returnObject, resultMessageEnum, resultMessage } = data;
+        const { recordList, totalPage, currentPage } = returnObject;
+        console.log(recordList, currentPage, this.showDetailCate.currentPage);
+        if (resultMessageEnum !== '0000') {
+          this.$message.error(resultMessage);
+          return;
+        }
+        if (recordList) {
+          if (recordList.length === 0) {
+            this.showDetailCate.endPage = this.showDetailCate.currentPage;
+            return;
+          }
+          if (this.showDetailCate.currentPage > totalPage) {
+            return;
+          } else {
+            recordList.forEach(item => {
+              this.showDetailCate.child.push({
+                id: item.id,
+                fileName: item.fileName,
+                soundPath: item.soundPath,
+                soundContent: item.soundContent,
+                duration: item.soundDuration,
+              });
+            });
+            this.showDetailCate.currentPage = currentPage + 1;
+          }
+
+          this.busy = false;
+        }
+      },
+
+      /**
+       * 鼠标拖拽的消息传递
+       * @param e
+       * @param item
+       */
+      audioFileDragStart(e, item) {
+        const message = {
+          command: 'appendComponent',
+          data: {
+            component: 'AudioTag',
+            data: {
+              id: item.id || '',
+              fileName: item.fileName || '',
+              soundPath: item.soundPath || '',
+              soundContent: item.soundContent || '',
+              duration: item.duration || '',
             },
+          },
+        };
 
-            // queryKey有更新要清除恢复所有类别的数据
-            queryKey() {
-                Object.keys(this.audioList).forEach(key => {
-                    this.audioList[key].forEach(cate => this.clearCateData(cate));
-                });
-            }
-        },
+        e.dataTransfer.setData('message', JSON.stringify(message));
+      },
+      /**
+       * 拖拽终止的事件
+       * @param e
+       */
+      audioFileDragEnd(e) {
+        e.dataTransfer.clearData();
+      },
 
-        methods: {
-            clearCateData(cate) {
-                cate.currentPage = 0;
-                cate.endPage = -1;
-                cate.child = [];
-            },
+      openCallback() {
+        this.drawerClosed = false;
+        this.$emit('drawerOpen');
+      },
 
-            async search() {
-                this.queryKey = this.audioSearchKeyWord;
-                this.$nextTick(async () => {
-                    await this.audioFilesListLoad();
-                });
-            },
-
-            /**
-             * 拉取话术音频的分类
-             * @return {Promise.<void>}
-             */
-            async fetchAudioGroupList() {
-                const { data } = await axios.get(this.$baseUrl + 'sound/querySoundConfigGroupList.json');
-                if (data.resultMessageEnum !== API_SUCCESS_CODE) {
-                    this.$message.error('数据加载异常');
-                    return;
-                }
-
-                data.returnObject.forEach(item => {
-                    const cate = {
-                        id: item.id,
-                        name: item.configGroupName,
-                        currentPage: 1,
-                        endPage: -1,
-                        child: [],
-                    };
-
-                    if (item.soundConfigGroupType === 1) {
-                        // 话术音频
-                        this.audioList.speechAudio.push(cate);
-                    } else if (item.soundConfigGroupType === 2) {
-                        // 知识库音频
-                        this.audioList.knowledgeAudio.push(cate);
-                    }
-                });
-            },
-
-            /**
-             * 加载音频文件列表
-             * @return {Promise.<void>}
-             */
-            async audioFilesListLoad() {
-                if (!this.showDetailCate) {
-                    this.$message.error('请选择要搜索的分类');
-                    return;
-                }
-
-                let param = {
-                    configGroupId: this.showDetailCate.id,
-                    currentPage: 1,
-                    pageSize: 20,
-                    queryKey: this.queryKey,
-                };
-                this.busy = true
-                const {data} = await axios.post(this.$baseUrl + 'sound/querySoundConfigItemList.json', param)
-                const {returnObject, resultMessageEnum, resultMessage} = data
-                const { recordList, totalPage } = returnObject;
-
-                if (resultMessageEnum !== '0000') {
-                    this.$message.error(resultMessage);
-                    return
-                }
-                if (recordList) {
-                    if (recordList.length === 0) {
-                        this.showDetailCate.endPage = this.showDetailCate.currentPage;
-                        return;
-                    }
-                    if (this.showDetailCate.currentPage > totalPage) {
-                        return
-                    } else {
-                        recordList.forEach(item => {
-                            this.showDetailCate.child.push({
-                                id: item.id,
-                                fileName: item.fileName,
-                                soundPath: item.soundPath,
-                                soundContent: item.soundContent,
-                                duration: item.soundDuration,
-                            })
-                        });
-                        this.showDetailCate.currentPage++;
-                    }
-
-                    this.busy = false
-                }
-            },
-
-            /**
-             * 鼠标拖拽的消息传递
-             * @param e
-             * @param item
-             */
-            audioFileDragStart(e, item) {
-                const message = {
-                    command: 'appendComponent',
-                    data: {
-                        component: 'AudioTag',
-                        data: {
-                            id: item.id || '',
-                            fileName: item.fileName || '',
-                            soundPath: item.soundPath || '',
-                            soundContent: item.soundContent || '',
-                            duration: item.duration || '',
-                        },
-                    },
-                };
-
-                e.dataTransfer.setData('message', JSON.stringify(message));
-            },
-            /**
-             * 拖拽终止的事件
-             * @param e
-             */
-            audioFileDragEnd(e) {
-                e.dataTransfer.clearData()
-            },
-
-            openCallback() {
-                this.drawerClosed = false;
-                this.$emit('drawerOpen');
-            },
-
-            closeCallback() {
-                this.$emit('drawerClose');
-            }
-        },
-    }
+      closeCallback() {
+        this.$emit('drawerClose');
+      },
+    },
+  };
 </script>
 
 <style lang="less" scoped>
@@ -298,6 +302,7 @@
         top: 0;
         right: 0;
         bottom: 0;
+
         &.close {
             width: 16px;
         }
@@ -351,15 +356,18 @@
 
     .speech-audio-list {
         padding: 15px 30px;
+
         li {
             list-style: none;
             color: #647184;
             line-height: 30px;
             cursor: pointer;
             font-size: 14px;
+
             &:hover {
                 color: #4E8FF9;
             }
+
             &.is-common {
                 &:before {
                     content: "通用";
@@ -371,7 +379,7 @@
                     line-height: 24px;
                     color: #FDA412;
                     background: #FDEDD3;
-                    border-radius:4px;
+                    border-radius: 4px;
                 }
             }
 
@@ -387,7 +395,8 @@
                 color: #4E8FF9;
                 cursor: pointer;
             }
-            border-bottom: 1px rgba(235,237,240,1) solid;
+
+            border-bottom: 1px rgba(235, 237, 240, 1) solid;
             padding-bottom: 14px;
             margin-right: 20px;
         }
@@ -395,13 +404,14 @@
 
     .audio-files-list {
         padding: 0 20px 22px 20px;
+
         li {
             padding: 4px 5px;
             margin-top: 20px;
             list-style: none;
-            background: rgba(245,249,255,1);
+            background: rgba(245, 249, 255, 1);
             border-radius: 2px;
-            border: 1px solid rgba(78,143,249,1);
+            border: 1px solid rgba(78, 143, 249, 1);
             color: #4B8FFF;
             user-select: none;
             cursor: move;
@@ -434,7 +444,8 @@
 <style lang="less">
     .flow-drawer {
         z-index: 0 !important;
-        > div{
+
+        > div {
             outline: none !important;
             overflow-x: hidden;
         }
@@ -442,6 +453,7 @@
 
     .search-audio-input {
         width: 212px;
+
         input {
             height: 38px !important;
             line-height: 38px !important;
@@ -452,6 +464,7 @@
         box-shadow: none;
         background: transparent;
         position: relative;
+
         > header {
             position: absolute;
             right: 0;
@@ -460,7 +473,7 @@
             line-height: 60px;
             font-size: 16px;
             color: #647184;
-            border-bottom: 1px rgba(235,237,240,1) solid;
+            border-bottom: 1px rgba(235, 237, 240, 1) solid;
             margin-bottom: 0;
             padding: 0 20px;
             width: 296px;
@@ -495,8 +508,10 @@
                 text-indent: 30px;
                 border-bottom: none;
             }
+
             div[role="tabpanel"] {
                 border-bottom: none;
+
                 > div {
                     padding-bottom: 5px;
                 }
@@ -516,7 +531,7 @@
 
             div[role="button"] {
                 color: #4E8FF9;
-                background:rgba(247,248,251,1);
+                background: rgba(247, 248, 251, 1);
             }
         }
     }
