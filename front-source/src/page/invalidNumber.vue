@@ -155,20 +155,20 @@
             ></el-input-number>
             次
           </el-form-item>
-          <el-form-item label="呼叫转移">
-            <el-select v-model="forwordSelect">
-              <el-option label="不限" value="unlimited"></el-option>
-              <el-option label="自定义" value="custom"></el-option>
-            </el-select>
-            <el-input-number
-              v-if="forwordSelect == 'custom'"
-              v-model="form.callLimitForword"
-              controls-position="right"
-              :min="1"
-              :max="1000"
-            ></el-input-number>
-            次
-          </el-form-item>
+          <!--<el-form-item label="呼叫转移">-->
+            <!--<el-select v-model="forwordSelect">-->
+              <!--<el-option label="不限" value="unlimited"></el-option>-->
+              <!--<el-option label="自定义" value="custom"></el-option>-->
+            <!--</el-select>-->
+            <!--<el-input-number-->
+              <!--v-if="forwordSelect == 'custom'"-->
+              <!--v-model="form.callLimitForword"-->
+              <!--controls-position="right"-->
+              <!--:min="1"-->
+              <!--:max="1000"-->
+            <!--&gt;</el-input-number>-->
+            <!--次-->
+          <!--</el-form-item>-->
           <el-form-item label="呼叫失败">
             <el-select v-model="callFailSelect">
               <el-option label="不限" value="unlimited"></el-option>

@@ -84,7 +84,7 @@ export default {
 
     return {
       checkList: list,
-      checkedList: $.utils._checkedList,
+      checkedList: [...new Set($.utils._checkedList.concat($.utils.newCheck || []))],
       EXCSkipOptions: $.utils._EXCSkipOptions,
       excSkipNode: $.utils._excSkipNode,
     };
@@ -115,7 +115,7 @@ export default {
         if (checked) {
         // if (item !== 'isEnd') {
           this.checkedList = this.checkedList.concat(item);
-        // }
+            // }
       } else {
         this.checkedList = this.checkedList.filter(c => c !== item);
       }
@@ -131,19 +131,19 @@ export default {
           let delCells = [];
           for (let i in cellsChildInfo.outCells) {
             delCells.push(cellsChildInfo.outCells[i]);
-          }
+          }delCells
           let v1 = $.utils.changeCellEndTorobot(lastCell);
-          graph.removeCells(delCells);
+          // graph.removeCells(delCells);
           //关闭弹窗
           mxEditor.hideProperties();
-          setTimeout(
-            function() {
-              mxEditor.execute('showProperties', v1);
-            },
-            50,
-            mxEditor,
-            v1,
-          );
+          // setTimeout(
+          //   function() {
+          //     mxEditor.execute('showProperties', v1);
+          //   },
+          //   50,
+          //   mxEditor,
+          //   v1,
+          // );
           $.utils.lastv2 = v1;
         }
       }
@@ -157,6 +157,7 @@ export default {
     checkedList(val) {
         console.log('watch',val);
         $.utils._checkedList = val;
+        $.utils.newCheck = val;
 
       const isEXCSkip = $.inArray('isEXCSkip', $.utils._checkedList) >= 0;
       if (isEXCSkip) {

@@ -1741,14 +1741,14 @@ var lastIndex = [];
             graph.removeCells(delCells);
             //关闭弹窗
             mxEditor.hideProperties();
-            setTimeout(
-              function() {
-                mxEditor.execute('showProperties', v1);
-              },
-              50,
-              mxEditor,
-              v1,
-            );
+            // setTimeout(
+            //   function() {
+            //     mxEditor.execute('showProperties', v1);
+            //   },
+            //   50,
+            //   mxEditor,
+            //   v1,
+            // );
             $.utils.lastV1 = v1;
             $(document).trigger('endConfirm');
           },

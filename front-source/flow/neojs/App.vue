@@ -74,6 +74,7 @@ export default {
       if (!v) this.$document.trigger('clearSelection');
     },
     speechEditorVisible(v) {
+        // console.log(v)
       if (!v) this.$document.trigger('clearSelection');
     },
   },
