@@ -162,7 +162,7 @@
 
     methods: {
       clearCateData(cate) {
-        cate.currentPage = 0;
+        cate.currentPage = 1;
         cate.endPage = -1;
         cate.child = [];
       },
@@ -170,7 +170,7 @@
       async search() {
         this.queryKey = this.audioSearchKeyWord;
         this.$nextTick(async () => {
-          await this.audioFilesListLoad();
+          await this.audioFilesListLoad(1);
         });
       },
 
@@ -208,7 +208,7 @@
        * 加载音频文件列表
        * @return {Promise.<void>}
        */
-      async audioFilesListLoad() {
+      async audioFilesListLoad(no) {
         if (!this.showDetailCate) {
           this.$message.error('请选择要搜索的分类');
           return;
@@ -216,7 +216,7 @@
 
         let param = {
           configGroupId: this.showDetailCate.id,
-          currentPage: this.showDetailCate.currentPage || 1,
+          currentPage: no || this.showDetailCate.currentPage || 1,
           pageSize: 20,
           queryKey: this.queryKey,
         };

@@ -612,7 +612,7 @@
 
                 // unclassified 未分类
                 let data={
-                    currentPage:this.cur_page-1,
+                    currentPage:this.cur_page,
                     pageSize:this.pagination.pageSize
                 };
                 if(item && item.id){

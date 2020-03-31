@@ -90,7 +90,7 @@
                 var ledgeParams={
                     groupId:this.groupId,
                     searchType:2,
-                    currentPage:0,
+                    currentPage:1,
                     pageSize:5000
                 }
                 //获取到了knoledge表的数据

@@ -123,16 +123,16 @@ export default {
         if (checked) {
           $.utils._dialogVue.dialogVisibleChild = true;
         } else {
-          let lastCell = $.utils.getLastCells();
-          if (lastCell.style == 'robot') {
-            lastCell = $.utils.lastV1;
-          }
-          let cellsChildInfo = $.utils.hasChildNodeInfo(lastCell);
-          let delCells = [];
-          for (let i in cellsChildInfo.outCells) {
-            delCells.push(cellsChildInfo.outCells[i]);
-          }delCells
-          let v1 = $.utils.changeCellEndTorobot(lastCell);
+          // let lastCell = $.utils.getLastCells();
+          // if (lastCell.style == 'robot') {
+          //   lastCell = $.utils.lastV1;
+          // }
+          // let cellsChildInfo = $.utils.hasChildNodeInfo(lastCell);
+          // let delCells = [];
+          // for (let i in cellsChildInfo.outCells) {
+          //   delCells.push(cellsChildInfo.outCells[i]);
+          // }delCells
+          // let v1 = $.utils.changeCellEndTorobot(lastCell);
           // graph.removeCells(delCells);
           //关闭弹窗
           mxEditor.hideProperties();
@@ -144,7 +144,7 @@ export default {
           //   mxEditor,
           //   v1,
           // );
-          $.utils.lastv2 = v1;
+          // $.utils.lastv2 = v1;
         }
       }
       if (item === 'isInterrupt' && !checked) {

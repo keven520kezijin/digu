@@ -40,42 +40,42 @@
 		</add>
 		<add as="task">
 			<Task label="Task" description="" href="" test = "">
-				<mxCell vertex="1" style="rounded">	
+				<mxCell vertex="1" style="rounded">
 					<mxGeometry as="geometry" width="72" height="32"/>
 				</mxCell>
 			</Task>
 		</add>
 		<add as="question">
 			<Task label="Question" description="" href="" test = "">
-				<mxCell vertex="1" style="rounded">	
+				<mxCell vertex="1" style="rounded">
 					<mxGeometry as="geometry" width="72" height="32"/>
 				</mxCell>
 			</Task>
-		</add>		
+		</add>
 		<add as="answer">
 			<Task label="Answer" description="" href="" test = "">
-				<mxCell vertex="1" style="rounded">	
+				<mxCell vertex="1" style="rounded">
 					<mxGeometry as="geometry" width="72" height="32"/>
 				</mxCell>
 			</Task>
 		</add>
 		<add as="subprocess">
 			<Subprocess label="Subprocess" description="" href="">
-				<mxCell vertex="1" style="rounded">		
+				<mxCell vertex="1" style="rounded">
 					<mxGeometry as="geometry" width="72" height="32"/>
 				</mxCell>
 			</Subprocess>
 		</add>
 		<add as="shape">
 			<Shape label="" description="" href="">
-				<mxCell vertex="1" style="rounded">		
+				<mxCell vertex="1" style="rounded">
 					<mxGeometry as="geometry" width="32" height="32"/>
 				</mxCell>
 			</Shape>
 		</add>
 		<add as="symbol">
 			<Symbol label="Symbol" description="" href="">
-				<mxCell vertex="1" style="symbol;image=images/symbols/event.png">		
+				<mxCell vertex="1" style="symbol;image=images/symbols/event.png">
 					<mxGeometry as="geometry" width="32" height="32"/>
 				</mxCell>
 			</Symbol>
@@ -111,13 +111,13 @@
 				</mxCell>
 			</End>
 		</add>
-		<!-- 自定义模板结束 -->		
+		<!-- 自定义模板结束 -->
 	</Array>
 	<add as="createTasks"><![CDATA[
 		function (div)
 		{
 			var off = 30;
-			
+
 			if (this.graph != null)
 			{
 				var layer = this.graph.model.root.getChildAt(0);
@@ -131,7 +131,7 @@
 				mxUtils.linkInvoke(div, mxResources.get('travelBooking'), this,
 					'open', 'diagrams/travel-booking.xml', off);
 				mxUtils.br(div);
-				
+
 				if (!this.graph.isSelectionEmpty())
 				{
 					var cell = this.graph.getSelectionCell();
@@ -147,9 +147,9 @@
 							this, 'horizontalTree', off);
 						mxUtils.br(div);
 					}
-					
+
 					mxUtils.para(div, 'Format');
-					
+
 					if (mxUtils.isNode(cell.value, 'Symbol'))
 					{
 						mxUtils.linkAction(div, mxResources.get('image'),
@@ -162,7 +162,7 @@
 							this, 'opacity', off);
 						mxUtils.br(div);
 						if (this.graph.model.isVertex(cell) ||
-							(cell.style != null && 
+							(cell.style != null &&
 							cell.style.indexOf("arrowEdge") >= 0))
 						{
 							mxUtils.linkAction(div, mxResources.get('gradientColor'),
@@ -179,7 +179,7 @@
 							mxUtils.br(div);
 						}
 					}
-					
+
 					mxUtils.linkAction(div, 'Rounded', this, 'toggleRounded', off);
 					mxUtils.br(div);
 					if (this.graph.isSwimlane(cell) || this.graph.model.isEdge(cell))
@@ -187,7 +187,7 @@
 						mxUtils.linkAction(div, 'Orientation', this, 'toggleOrientation', off);
 						mxUtils.br(div);
 					}
-					
+
 					if (this.graph.getSelectionCount() > 1)
 					{
 						mxUtils.para(div, mxResources.get('align'));
@@ -210,7 +210,7 @@
 							this, 'alignCellsBottom', off);
 						mxUtils.br(div);
 					}
-					
+
 					mxUtils.para(div, mxResources.get('selection'));
 					mxUtils.linkAction(div, mxResources.get('clearSelection'),
 						this, 'selectNone', off);
@@ -223,7 +223,7 @@
 						this, 'selectAll', off);
 					mxUtils.br(div);
 				}
-				
+
 				mxUtils.br(div);
 			}
 		}
