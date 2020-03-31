@@ -14,6 +14,7 @@ const HtmlWebpackStringReplacePlugin = require('html-webpack-string-replace-plug
 const fs = require('fs');
 
 const sourcePath = utils.ifFrontMode() ? 'front-source' : 'manage-source';
+const dist = utils.ifFrontMode() ? 'digu-prod' : 'digu-manage'
 
 const copyConfig = [
   {
@@ -24,12 +25,12 @@ const copyConfig = [
   },
   {
     from: path.resolve(__dirname, '../common-static'),
-    to: path.resolve(__dirname, '../server/dist/common-static'),
+    to: path.resolve(__dirname, `../server/${dist}/common-static`),
     ignore: ['.*'],
   },
   {
     from: path.resolve(__dirname, `../${sourcePath}/flow/*.html`),
-    to: path.resolve(__dirname, '../server/dist/flow'),
+    to: path.resolve(__dirname, `../server/${dist}/flow`),
     flatten: true,
     transform(content) {
       return content.toString().replace('GLOBAL_VARIABLES_SCRIPT', globalVariables);
@@ -38,7 +39,7 @@ const copyConfig = [
   },
   {
     from: path.resolve(__dirname, `../${sourcePath}/flow`),
-    to: path.resolve(__dirname, '../server/dist/flow'),
+    to: path.resolve(__dirname, `../server/${dist}/flow`),
     ignore: ['*.html', 'dist/**/*', 'node_modules/**/*', '*.lock', '.cache/**/*'],
   },
 ].concat(
@@ -46,7 +47,7 @@ const copyConfig = [
     ? [
       {
         from: path.resolve(__dirname, `../${sourcePath}/flow/dist/index.html`),
-        to: path.resolve(__dirname, '../server/dist/flow'),
+        to: path.resolve(__dirname, `../server/${dist}/flow`),
         flatten: true,
         transform(content) {
           return content
@@ -56,8 +57,8 @@ const copyConfig = [
         },
       },
       {
-        from: path.resolve(__dirname, `../${sourcePath}/flow/dist/*`),
-        to: path.resolve(__dirname, '../server/dist/flow'),
+        from: path.resolve(__dirname, `../${sourcePath}/flow/${dist}/*`),
+        to: path.resolve(__dirname, `../server/${dist}/flow`),
         flatten: true,
         ignore: ['index.html'],
       },
@@ -76,7 +77,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
-    path: path.resolve(__dirname, '../server/dist/'),
+    path: path.resolve(__dirname, `../server/${dist}/`),
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
   },
@@ -112,7 +113,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: path.resolve(__dirname, '../server/dist/index.html'),
+      filename: path.resolve(__dirname, `../server/${dist}/index.html`),
       template: `./${sourcePath}/index.html`,
       inject: true,
       minify: {
