@@ -14,7 +14,7 @@ const HtmlWebpackStringReplacePlugin = require('html-webpack-string-replace-plug
 const fs = require('fs');
 
 const sourcePath = utils.ifFrontMode() ? 'front-source' : 'manage-source';
-const dist = utils.ifFrontMode() ? 'digu-prod' : 'digu-manage'
+const dist = utils.ifFrontMode() ? 'digu-front' : 'digu-manage'
 
 const copyConfig = [
   {
@@ -57,7 +57,7 @@ const copyConfig = [
         },
       },
       {
-        from: path.resolve(__dirname, `../${sourcePath}/flow/${dist}/*`),
+        from: path.resolve(__dirname, `../${sourcePath}/flow/dist/*`),
         to: path.resolve(__dirname, `../server/${dist}/flow`),
         flatten: true,
         ignore: ['index.html'],
