@@ -53,7 +53,7 @@
                                     <li
                                             :class="index === 0 ? 'is-common' : ''"
                                             v-for="(cate, index) in audioList.speechAudio"
-                                            @click="showDetailCate=cate"
+                                            @click="showDetailCateFunc(cate)"
                                     >{{cate.name}}
                                     </li>
                                 </ul>
@@ -66,7 +66,7 @@
                                     <li
                                             :class="index === 0 ? 'is-common' : ''"
                                             v-for="(cate, index) in audioList.knowledgeAudio"
-                                            @click="showDetailCate=cate"
+                                            @click="showDetailCateFunc(cate)"
                                     >{{cate.name}}
                                     </li>
                                 </ul>
@@ -165,6 +165,11 @@
         cate.currentPage = 1;
         cate.endPage = -1;
         cate.child = [];
+      },
+
+      async showDetailCateFunc(cate) {
+        this.showDetailCate = cate
+        this.search()
       },
 
       async search() {
