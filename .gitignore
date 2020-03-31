@@ -87,3 +87,7 @@ dev-test/
 dist/
 
 .DS_Store
+
+/server/digu-front
+
+/server/digu-manage
