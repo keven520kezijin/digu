@@ -121,7 +121,8 @@ export default {
       if (item === 'isEnd') {
         if (checked) {
           $.utils._dialogVue.dialogVisibleChild = true;
-        } else {
+          return
+          // 原先勾选会直接干掉节点，改造front-source/flow/js/utils changeRobotToEnd方法
           let lastCell = $.utils.getLastCells();
           if (lastCell.style == 'robot') {
             lastCell = $.utils.lastV1;

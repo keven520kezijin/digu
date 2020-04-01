@@ -1720,7 +1720,7 @@ var lastIndex = [];
           changeRobotToEnd: function() {
             this.dialogVisibleChild = false;
             let lastCell = $.utils.getLastCells();
-            if (lastCell.style != 'robot') {
+            if (lastCell.style == 'robot') {
               lastCell = $.utils.lastv2;
             } else {
               if ($.inArray(lastCell.id, this.delindex) >= 0) {
@@ -1734,7 +1734,7 @@ var lastIndex = [];
               delCells.push(cellsChildInfo.outCells[i]);
             }
             //更改按钮颜色
-            let v1 = $.utils.changeCellRobotToEnd(lastCell);
+            // let v1 = $.utils.changeCellRobotToEnd(lastCell);
             // 删除
             for (var i in delCells) {
               this.delindex.push(delCells[i].id);
@@ -1744,13 +1744,13 @@ var lastIndex = [];
             mxEditor.hideProperties();
             setTimeout(
               function() {
-                mxEditor.execute('showProperties', v1);
+                // mxEditor.execute('showProperties', v1);
               },
               50,
               mxEditor,
-              v1,
+              // v1,
             );
-            $.utils.lastV1 = v1;
+            // $.utils.lastV1 = v1;
             $(document).trigger('endConfirm');
           },
           exceptionFunc: function() {
