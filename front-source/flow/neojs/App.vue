@@ -44,11 +44,12 @@ export default {
       speechEditorVisible: false,
       count: 1,
       disabled: true,
+      payload: ''
     };
   },
   methods: {
-    async handleOpenDrawer(_, payload) {
-      switch (payload.type) {
+    async handleOpenDrawer() {
+      switch (this.payload) {
         case 'knowledgeForm':
           this.knowledgeFormVisible = true;
           break;
@@ -60,12 +61,19 @@ export default {
           this.speechEditorVisible = true;
           break;
         default:
-          console.log(`Unexpected type:${payload.type}`);
+          console.log(`Unexpected type:${this.payload}`);
       }
     },
+    // 记录打开的按钮
+    async openDrawerBindType(_, payload) {
+      if (payload.type) {
+        this.payload = payload.type
+      }
+    }
   },
   mounted() {
-    this.$document.on('openDrawer', this.handleOpenDrawer.bind(this));
+    this.$document.on('openDrawer', this.openDrawerBindType.bind(this));
+    this.$document.on('dblclick', this.handleOpenDrawer.bind(this));
     const viewType = $.utils.getUrlParam('viewType');
     this.disabled = viewType == null || viewType == '' || viewType == '0';
   },

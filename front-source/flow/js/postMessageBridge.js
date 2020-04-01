@@ -92,7 +92,6 @@
 
     messageBridgeUtils.handleArtificialChange = val => {
         $.utils._dialogVue.speechForm.isArtificial = !!val;
-
         if (val){
             if ($.inArray('isAllow', $.utils._checkedList <= 0)){
                 $.utils._checkedList.push('isAllow');

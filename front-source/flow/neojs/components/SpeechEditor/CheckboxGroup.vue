@@ -106,7 +106,6 @@ export default {
   },
   destroyed() {
     this.$document.off('endConfirm');
-    console.log('destroy',$.utils._checkedList)
   },
   mxResources: CHECKBOX_LIST,
   methods: {
@@ -123,27 +122,27 @@ export default {
         if (checked) {
           $.utils._dialogVue.dialogVisibleChild = true;
         } else {
-          // let lastCell = $.utils.getLastCells();
-          // if (lastCell.style == 'robot') {
-          //   lastCell = $.utils.lastV1;
-          // }
-          // let cellsChildInfo = $.utils.hasChildNodeInfo(lastCell);
-          // let delCells = [];
-          // for (let i in cellsChildInfo.outCells) {
-          //   delCells.push(cellsChildInfo.outCells[i]);
-          // }delCells
+          let lastCell = $.utils.getLastCells();
+          if (lastCell.style == 'robot') {
+            lastCell = $.utils.lastV1;
+          }
+          let cellsChildInfo = $.utils.hasChildNodeInfo(lastCell);
+          let delCells = [];
+          for (let i in cellsChildInfo.outCells) {
+            delCells.push(cellsChildInfo.outCells[i]);
+          }delCells
           // let v1 = $.utils.changeCellEndTorobot(lastCell);
-          // graph.removeCells(delCells);
+          graph.removeCells(delCells);
           //关闭弹窗
           mxEditor.hideProperties();
-          // setTimeout(
-          //   function() {
-          //     mxEditor.execute('showProperties', v1);
-          //   },
-          //   50,
-          //   mxEditor,
-          //   v1,
-          // );
+          setTimeout(
+            function() {
+              mxEditor.execute('showProperties', v1);
+            },
+            50,
+            mxEditor,
+            v1,
+          );
           // $.utils.lastv2 = v1;
         }
       }

@@ -849,7 +849,7 @@
             node.setAttribute('isAllow', 'false');
             node.setAttribute('isInterrupt', 'true');
             node.setAttribute('isSkip', 'false');
-            node.setAttribute('isEnd', 'false');
+            node.setAttribute('isEnd', 'true');
             node.setAttribute('isEXCSkip', 'false');
             node.setAttribute('artificialIntention', '');
             node.setAttribute('excSkipNode', '');

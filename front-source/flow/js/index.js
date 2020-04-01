@@ -743,7 +743,6 @@ function hasSensitiveWord() {
             highlight.highlight(graph.view.getState(allCells[i]));
           }
         }
-        console.log($.utils.highlight);
         sensitiveWordArr = sensitiveWordArr.filter(function(element, index, self) {
           return self.indexOf(element) === index;
         });

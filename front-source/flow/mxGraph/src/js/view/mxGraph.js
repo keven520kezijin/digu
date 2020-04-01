@@ -2576,7 +2576,6 @@ mxGraph.prototype.escape = function(evt)
  */
 mxGraph.prototype.click = function(me)
 {
-  console.log('clikc')
 	var evt = me.getEvent();
 	var cell = me.getCell();
 	var mxe = new mxEventObject(mxEvent.CLICK, 'event', evt, 'cell', cell);

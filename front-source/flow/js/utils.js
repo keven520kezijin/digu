@@ -529,15 +529,16 @@ var lastIndex = [];
     //更改按钮
     changeCellRobotToEnd(cell) {
       //获取当前cell下所有的线
-      let edgs = cell.edges;
+      let edgs = cell ? cell.edges : null;
       //当前cell的ID
-      let cellId = cell.id;
       //指向当前cell的sourceCell
-      let sourceCell;
-      //获取当前cell的位置
-      let x = cell.geometry.x;
-      let y = cell.geometry.y;
+      let sourceCell, x, y;
+
       if (edgs != null) {
+        let cellId = cell.id;
+        //获取当前cell的位置
+        x = cell.geometry.x;
+        y = cell.geometry.y;
         for (let i in edgs) {
           if (edgs[i].target.id == cellId) {
             sourceCell = edgs[i].source;
@@ -550,7 +551,7 @@ var lastIndex = [];
       parent = graph.getDefaultParent();
       var doc = mxUtils.createXmlDocument();
       var node = doc.createElement('End');
-      node.setAttribute('label', '结束语');
+      node.setAttribute('label', '结束语1');
       node.setAttribute('nodeType', 'end');
       node.setAttribute('speechcraft', spc);
       node.setAttribute('intentionLevel', '');
@@ -1741,14 +1742,14 @@ var lastIndex = [];
             graph.removeCells(delCells);
             //关闭弹窗
             mxEditor.hideProperties();
-            // setTimeout(
-            //   function() {
-            //     mxEditor.execute('showProperties', v1);
-            //   },
-            //   50,
-            //   mxEditor,
-            //   v1,
-            // );
+            setTimeout(
+              function() {
+                mxEditor.execute('showProperties', v1);
+              },
+              50,
+              mxEditor,
+              v1,
+            );
             $.utils.lastV1 = v1;
             $(document).trigger('endConfirm');
           },
