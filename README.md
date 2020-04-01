@@ -60,6 +60,7 @@ _端口重复问题，无法同时启动前台和后台_
   ###打包
   
   ```
+    注意：打包前要先在本地跑起flow项目，否则flow不会打进最新digu-front包里
     前台: yarn build:front
     后台: yarn build:manage
   ```
