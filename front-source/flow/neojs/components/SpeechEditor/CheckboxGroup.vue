@@ -137,11 +137,11 @@ export default {
           mxEditor.hideProperties();
           setTimeout(
             function() {
-              mxEditor.execute('showProperties', v1);
+              // mxEditor.execute('showProperties', v1);
             },
             50,
             mxEditor,
-            v1,
+            // v1,
           );
           // $.utils.lastv2 = v1;
         }
