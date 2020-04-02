@@ -1,8 +1,13 @@
 <template>
     <div class="sidebar" :class="collapseUser">
         <div class="sidebar-user" :class="collapseUser">
-            <span class="sidebar-user-head"><img :src="head" alt=""></span>
-            <p class="sidebar-user-name">{{username + (roleName ? '(' + roleName + ')' : '')}}</p>
+            <!--<span class="sidebar-user-head"><img :src="head" alt=""></span>-->
+            <!--<p class="sidebar-user-name">{{username + (roleName ? '(' + roleName + ')' : '')}}</p>-->
+        </div>
+        <div class="sidebar_footer" :class="{position_ab:isAb}">
+            <!--<p class="a">嘀咕智能交互与理解平台</p>-->
+            <p class="a"><img  alt=""></p>
+            <p v-if="!collapse" class="sidebar_name">嘀咕智能交互与理解平台</p>
         </div>
         <el-menu class="sidebar-el-menu" :default-active="onRoutes" :collapse="collapse"
             text-color="#d4eaff" active-text-color="#fff" unique-opened>
@@ -34,11 +39,7 @@
                 </template>
             </template>
         </el-menu>
-        <div class="sidebar_footer" :class="{position_ab:isAb}">
-            <!-- <p class="a">智能外呼系统</p> -->
-            <p class="a"><img  alt=""></p>
-            <!-- <p class="b">智能外呼系统</p> -->
-        </div>
+
     </div>
 </template>
 
@@ -79,6 +80,7 @@
                         localStorage.setItem('USER_ROLE',data.role);
                         GLOBAL_NAME = data.contactName || data.enterpriseName || data.accountName
                         this.roleName = data.roleName;
+                        localStorage.setItem('roleName', data.roleName)
                         if(typeof data.avatarPath != 'undefined' && data.avatarPath.indexOf('static/img')>-1){
                             if(data.avatarPath.indexOf('female')>-1){
                                 GLOBAL_HEAD = female;
@@ -189,13 +191,13 @@
         height:640px;
         // height:100%;
         box-sizing: border-box;
-        padding-top: 200px;
-        padding-bottom: 60px;
+        padding-top: 40px;
         // height:480px;
     }
     
     .sidebar-user{
-        padding: 62px 5px 40px 0;
+        /*padding: 62px 5px 40px 0;*/
+        padding: 20px;
         text-align:center;
         box-sizing: border-box;
         transition:all 0.3s ease-in-out;
@@ -239,7 +241,9 @@
     }
     .sidebar_footer{
         position: relative;
-        bottom:-100px;
+        top: 30px;
+        left: 50%;
+        transform: translate(-50%, 0);
         text-align: center;
         color: #fff;
         box-sizing: border-box;
@@ -255,6 +259,11 @@
             }
             // font-size: 28px;
             // font-weight: bold;
+        }
+        .sidebar_name {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 25px 0;
         }
     }
 </style>

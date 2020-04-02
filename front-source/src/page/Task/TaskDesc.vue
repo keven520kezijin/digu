@@ -25,6 +25,10 @@
                 <span class="time-input-separator">-</span>
                 <el-input class="time-input" v-model="select_call_duration_max" clearable placeholder="通话时长(s)" maxlength="10" @change="searchChange" @keyup.native.13="search"></el-input>
                 <el-button type="primary" @click="filter" class="filter-btn">筛选</el-button>
+                <p class="hide_user_info" @click="handleShowUser">
+                    <i :class="isShowUser ? 'iconfont icon-ico_invisible active' : 'iconfont icon-ico_invisible'"></i>
+                    &nbsp;{{isShowUser ? '隐藏用户信息' : '显示用户信息'}}
+                </p>
             </div>
         </div>
         <div class="">
@@ -210,8 +214,14 @@
                     >
                         <!-- <el-table-column type="selection" width="55" align="center"></el-table-column> -->
                         <el-table-column prop="phone" label="外呼号码" width="150">
+                            <template slot-scope="scope">
+                                {{isShowUser ? scope.row.phone : hideInfo(scope.row.phone)}}
+                            </template>
                         </el-table-column>
                         <el-table-column prop="customerName" label="用户姓名" width="150">
+                            <template slot-scope="scope">
+                                {{isShowUser ? scope.row.customerName : hideInfo(scope.row.customerName || '', 'name')}}
+                            </template>
                         </el-table-column>
                         <el-table-column
                         prop="callTime"
@@ -348,6 +358,7 @@
             }
             return {
                 isCer:true,
+                isShowUser: false,
                 url: './static/vuetable.json',
                 viewSource:'',
                 title:'',
@@ -437,6 +448,33 @@
 
         },
         methods: {
+            // 显示用户信息
+            handleShowUser() {
+              this.isShowUser = !this.isShowUser
+            },
+            hideInfo(str, type) {
+                // 默认phone
+                if (!str || str === '') return
+                let res = ''
+                if (!type) type = 'phone'
+                if (type === 'phone') {
+                    if (str.length === 11) {
+                        // 手机
+                        res = `${str.substr(0, 3)}****${str.substr(7, 4)}`
+                    } else {
+                        // 固话
+                        res = `${str.substr(0, str.length - 4)}****`
+                    }
+                } else if (type === 'name') {
+                    // 姓名
+                    let code = ''
+                    for (var i = 0; i < str.length - 1; i++) {
+                        code += ' *';
+                    }
+                    res = `${str.substr(0, 1)}${code}`
+                }
+                return res
+            },
             // 分页导航
             handleCurrentChange(val) {
                 this.cur_page = val;
@@ -880,9 +918,11 @@
 
     .content-box-top {
         height: 120px;
+        top: 50px;
     }
 
     .context-box-top-middle {
+        position: relative;
         margin-top: 15px;
         .select-date {
             margin-right: 15px;
@@ -904,6 +944,25 @@
         .filter-btn {
             margin-left: 20px;
             vertical-align: top;
+        }
+
+        .hide_user_info {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            bottom: 0;
+            right: 0;
+            color: #333;
+            cursor: pointer;
+
+            i {
+                color: lightgrey;
+            }
+
+            .active {
+                color: #4E8FF9;
+            }
         }
     }
 

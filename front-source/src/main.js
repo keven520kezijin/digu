@@ -85,24 +85,16 @@ Vue.prototype.$menuAdmin = (hasTask = true, hasDialogue = true) => {
       subs: [
         {
           index: 'speech',
-          title: '话术模版库',
+          title: '流程型话术模版库',
         },
         {
           index: 'repository',
           title: '知识库',
         },
         {
-          index: 'hotword',
-          title: '热词词典',
-        },
-        {
           index: 'sound',
           title: '音频库',
-        },
-        {
-          index: 'sensitive',
-          title: '敏感词库',
-        },
+        }
       ],
     },
     {
@@ -149,6 +141,14 @@ Vue.prototype.$menuAdmin = (hasTask = true, hasDialogue = true) => {
         {
           index: 'antiHarassmentNumber',
           title: '有效号码',
+        },
+        {
+            index: 'hotword',
+            title: '热词词典',
+        },
+        {
+            index: 'sensitive',
+            title: '敏感词库',
         },
       ],
     },

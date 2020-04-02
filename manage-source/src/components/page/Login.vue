@@ -50,10 +50,10 @@
               </i>
             </el-input>
           </el-form-item>
-          <!-- <div class="login-footer">
-                        <el-checkbox v-model="checked">记住密码</el-checkbox>
-                        <a class="forget_password" href="#/forgetpassword">忘记密码？</a>
-                    </div> -->
+          <div class="login-footer">
+              <el-checkbox v-model="checked">记住密码</el-checkbox>
+              <!--<a class="forget_password" href="#/forgetpassword">忘记密码？</a>-->
+          </div>
 
           <div class="login-btn">
             <el-form-item>

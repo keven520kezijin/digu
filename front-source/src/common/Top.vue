@@ -23,6 +23,8 @@
                     </el-tooltip>
                     <span class="btn-bell-badge" v-if="message"></span>
                 </div> -->
+                <span class="sidebar-user-name">{{username + (roleName && roleName!== '' ? '(' + roleName + ')' : '')}}</span>
+                <span class="sidebar-user-head"><img :src="head" alt=""></span>
                 <div class="user-name" @click="dialogVisible = true">
                     <el-tooltip effect="dark" content="退出登录" placement="bottom">
                         <i class="iconfont icon-ico_log-out"></i>
@@ -35,7 +37,7 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <a @click="dialogVisible = true">
-                            <el-dropdown-item>退出登录</el-dropdown-item> 
+                            <el-dropdown-item>退出登录</el-dropdown-item>
                         </a>
                     </el-dropdown-menu>
                 </el-dropdown>  -->
@@ -73,7 +75,7 @@
 </template>
 
 <script>
-    
+
     import bus from '../common/bus';
     export default {
         data() {
@@ -83,13 +85,10 @@
                 dialogVisible:false,
                 showTip:false,
                 name: '',
-                message: 2
-            }
-        },
-        computed:{
-            username(){
-                let username = localStorage.getItem('ms_username');
-                return username ? username : this.name;
+                message: 2,
+                head: localStorage.getItem('GLOBAL_HEAD') || '/common-static/img/ico_male.png',
+                username: localStorage.getItem('GLOBAL_NAME') || localStorage.getItem('ms_username'),
+                roleName: localStorage.getItem('roleName') || ''
             }
         },
         created(){
@@ -187,7 +186,7 @@
         position: relative;
         box-sizing: border-box;
         width: 100%;
-        height:40px;
+        height:50px;
         font-size: 22px;
         color: #000;
     }
@@ -200,19 +199,33 @@
     .header .logo{
         float: left;
         width:250px;
-        line-height:40px;
+        line-height:50px;
     }
     .header-right{
         float: right;
-        padding-right: 50px;
+        padding-right: 26px;
+    }
+    .sidebar-user-head{
+        width:40px;
+        height:40px;
+        padding:5px 0 0 5px;
+        img{
+            width:36px;
+            height:36px;
+        }
     }
     .header-user-con{
         display: flex;
-        height:40px;
+        height:50px;
         align-items: center;
         i{
             font-size:22px;
             color: #333;
+        }
+
+        .sidebar-user-name {
+            font-size: 14px;
+            padding-right: 10px;
         }
     }
     .btn-fullscreen{
@@ -250,8 +263,8 @@
     }
     .user-avator img{
         display: block;
-        width:40px;
-        height:40px;
+        width:50px;
+        height:50px;
         border-radius: 50%;
     }
     .el-dropdown-link{
