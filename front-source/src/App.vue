@@ -5,7 +5,7 @@
 </template>
 <script>
 // import "../static/js/config.js";
-console.log('%c front 0401','color: #4e8ff9')
+console.log('%c front 1.3.6','color: #4e8ff9')
 export default {
   name: 'App',
   data : function(){

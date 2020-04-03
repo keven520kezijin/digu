@@ -555,7 +555,7 @@ function showApproveDialog() {
     Answer.forEach(answer => {
       if (!answer._intentionId && !answer._keywords) {
         console.log(answer);
-        errorMessage += `[${answer._label || '客户意图'}] 必须要有意图模板或意图预料<br>`;
+        errorMessage += `[${answer._label || '客户意图'}] 必须要有意图模板或意图语料<br>`;
       }
     });
 

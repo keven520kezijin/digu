@@ -29,15 +29,29 @@
         <dg-form-item label="标题">
           <el-input v-model="intentLabel" placeholder="请输入标题" :disabled="isDisabled"></el-input>
         </dg-form-item>
-        <dg-form-item label="意图预料">
-          <el-input
-            type="textarea"
+<!--        <dg-form-item label="意图预料">-->
+<!--          <el-input-->
+<!--            type="textarea"-->
+<!--            class="dg-textarea"-->
+<!--            v-model="intentKeywords"-->
+<!--            placeholder="如有多条语料请用英文“|”隔开"-->
+<!--            :rows="5"-->
+<!--            :disabled="isDisabled"-->
+<!--          ></el-input>-->
+<!--        </dg-form-item>-->
+        <dg-form-item label="意图语料">
+          <el-select
             class="dg-textarea"
             v-model="intentKeywords"
-            placeholder="如有多条语料请用英文“|”隔开"
-            :rows="5"
+            @change='handleSelect'
+            multiple
+            allow-create
+            filterable
+            default-first-option
+            placeholder="请输入语料内容，按”enter“隔开"
             :disabled="isDisabled"
-          ></el-input>
+            popper-class="dropdown-hidden"
+          ></el-select>
         </dg-form-item>
       </el-collapse-item>
       <dg-checkbox-collapse-item
@@ -89,7 +103,7 @@ export default {
       intentId: $.utils._intentId,
       intentLabel: $.utils._intentLabel,
       intentLevel: $.utils._intentLevel,
-      intentKeywords: $.utils._intentKeywords,
+      intentKeywords: $.utils._intentKeywords.split('|'),
       jumpType: $.utils._jumpType,
       showJumpItemType: !!$.utils._jumpType,
       jumpItemType: $.utils._jumpItemType,
@@ -156,6 +170,9 @@ export default {
       } else {
         this.jumpType = '1';
       }
+    },
+    handleSelect(val) {
+      $.utils._intentKeywords = val.join('|')
     },
     nochangeJumpList() {
       var currentEdges = currentCell.edges;
@@ -287,9 +304,11 @@ export default {
     intentLevel(val) {
       $.utils._intentLevel = val;
     },
-    intentKeywords(val) {
-      $.utils._intentKeywords = val;
-    },
+    // intentKeywords(val) {
+    //   // $.utils._intentKeywords = val;
+    //   console.log(val.join('|'));
+    //   $.utils._intentKeywords = val.join('|');
+    // },
     jumpType(val) {
       $.utils._jumpType = val;
       this.jumpItemTypeList = $.utils.getACellsExStart(true);

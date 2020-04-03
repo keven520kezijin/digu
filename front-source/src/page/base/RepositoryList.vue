@@ -95,7 +95,7 @@
           <el-col :span="6" v-for="part in listOfPageData" :key="part.id">
             <el-card class="card-item">
               <el-checkbox class="card-checkbox" :label="part.id">
-                <img src="../../../static/img/icon-books.png" class="image knowledge-image" />
+                <img src="../../../static/img/icon-books.png" class="image knowledge-image" @click="handleConfig(part)"/>
               </el-checkbox>
               <div style="padding: 14px;">
                 <i class="el-icon-edit-outline edit" @click="handleModifyGroup(part)"></i>

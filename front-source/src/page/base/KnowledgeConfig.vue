@@ -386,29 +386,41 @@
                         </div>
                     </el-form-item>
                      <el-form-item label="关键词" class="form-item-keywords">
-                         <div class="keywords">
-                            <el-tag
-                                :key="index"
-                                v-for="(tag, index) in sigleKnowledgeData.keyWords"
-                                closable
-                                :disable-transitions="false"
-                                @close="handleCloseKeyword(tag)">
-                                {{tag}}
-                            </el-tag>
-                            <el-input
-                                class="input-new-tag"
-                                v-if="inputVisible"
-                                v-model="inputValue"
-                                ref="saveTagInput"
-                                size="small"
-                                @keyup.enter.native="handleInputConfirm"
-                                @blur="handleInputConfirm"
-                            >
-                            </el-input>
+<!--                         <div class="keywords">-->
+<!--                            <el-tag-->
+<!--                                :key="index"-->
+<!--                                v-for="(tag, index) in sigleKnowledgeData.keyWords"-->
+<!--                                closable-->
+<!--                                :disable-transitions="false"-->
+<!--                                @close="handleCloseKeyword(tag)">-->
+<!--                                {{tag}}-->
+<!--                            </el-tag>-->
+<!--                            <el-input-->
+<!--                                class="input-new-tag"-->
+<!--                                v-if="inputVisible"-->
+<!--                                v-model="inputValue"-->
+<!--                                ref="saveTagInput"-->
+<!--                                size="small"-->
+<!--                                @keyup.enter.native="handleInputConfirm"-->
+<!--                                @blur="handleInputConfirm"-->
+<!--                            >-->
+<!--                            </el-input>-->
                             <!-- <textarea  class="w_textarea" placeholder='关键词之间请按"enter"隔开'> -->
-                            <el-button v-else class="button-new-tag" size="small" @click="showInput">+</el-button>
+<!--                            <el-button v-else class="button-new-tag" size="small" @click="showInput">+</el-button>-->
                             <!-- </textarea> -->
-                         </div>
+                             <el-select
+                                     class="keywords"
+                                     v-model="sigleKnowledgeData.keyWords"
+                                     multiple
+                                     allow-create
+                                     filterable
+                                     default-first-option
+                                     placeholder="请输入关键词内容，按”enter“隔开"
+                                     popper-class="dropdown-hidden"
+                             >
+                                 <div slot="empty"></div>
+                             </el-select>
+<!--                         </div>-->
                      </el-form-item>
                      <div class="drawer-footer">
                         <el-button @click="showDrawer = false">取 消</el-button>
@@ -750,7 +762,7 @@
                         return;
                     }
                     if(inputValue.trim() === this.sigleKnowledgeData.questionContent) {
-                        this.dialogTitle = '关键词提示';  
+                        this.dialogTitle = '关键词提示';
                         this.dialogMessage = '该关键词与主问题冲突';
                         this.dialogVisible = true;
                         return;
@@ -1707,10 +1719,6 @@
         }
         .keywords{
             width: 100%;
-            border: 1px solid #DEE2E6;
-            padding: 10px;
-            border-radius: 10px;
-            box-sizing: border-box;
         }
     }
     // .textarea-wrapper {
