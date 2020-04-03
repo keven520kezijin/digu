@@ -10,6 +10,10 @@
       ></el-input>
       <el-button type="primary" icon="search" @click="search">搜索</el-button>
       <div class="content-box-top-right">
+        <p class="hide_user_info" @click="handleShowUser">
+          <i :class="isShowUser ? 'iconfont icon-ico_invisible active' : 'iconfont icon-ico_invisible'"></i>
+          &nbsp;{{isShowUser ? '隐藏用户信息' : '显示用户信息'}}
+        </p>
         <el-button type="primary" @click="handleSetupLimit">呼叫上限设置</el-button>
       </div>
     </div>
@@ -34,9 +38,17 @@
             @selection-change="handleSelectionChange"
           >
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="phone" label="号码" width="120"></el-table-column>
+            <el-table-column prop="phone" label="号码" width="120">
+              <template slot-scope="scope">
+                {{isShowUser ? scope.row.phone : hideInfo(scope.row.phone)}}
+              </template>
+            </el-table-column>
             <el-table-column prop="taskName" label="任务名称" width="120"></el-table-column>
-            <el-table-column prop="customerName" label="用户姓名"></el-table-column>
+            <el-table-column prop="customerName" label="用户姓名">
+              <template slot-scope="scope">
+                {{isShowUser ? scope.row.customerName : hideInfo(scope.row.customerName || '', 'name')}}
+              </template>
+            </el-table-column>
             <el-table-column prop="callNumber" label="拨打次数" width="120"></el-table-column>
             <el-table-column
               prop="connectedResultType"
@@ -200,6 +212,7 @@ export default {
   data() {
     return {
       total: null,
+      isShowUser: false,
       queryPageCondition: {
         queryKey: null,
         currentPage: 1,
@@ -250,6 +263,36 @@ export default {
           this.$message.error(res.errorInfoList[0].errorMessage);
         }
       });
+    },
+
+    // 显示用户信息
+    handleShowUser() {
+      this.isShowUser = !this.isShowUser
+    },
+
+    // 隐藏信息***
+    hideInfo(str, type) {
+      // 默认phone
+      if (!str || str === '') return
+      let res = ''
+      if (!type) type = 'phone'
+      if (type === 'phone') {
+        if (str.length === 11) {
+          // 手机
+          res = `${str.substr(0, 3)}****${str.substr(7, 4)}`
+        } else {
+          // 固话
+          res = `${str.substr(0, str.length - 4)}****`
+        }
+      } else if (type === 'name') {
+        // 姓名
+        let code = ''
+        for (var i = 0; i < str.length - 1; i++) {
+          code += ' *';
+        }
+        res = `${str.substr(0, 1)}${code}`
+      }
+      return res
     },
 
     //下载Excel文件
@@ -445,6 +488,10 @@ export default {
 };
 </script>
 <style scoped lang="less">
+.content-box-top {
+  top: 50px;
+}
+
 .text {
   font-size: 14px;
 }
@@ -556,5 +603,24 @@ export default {
 }
 .default {
   // color: #606266;
+}
+.hide_user_info {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  right: 150px;
+  top: 50%;
+  transform: translate(0, -50%);
+  color: #333;
+  cursor: pointer;
+
+  i {
+    color: lightgrey;
+  }
+
+  .active {
+    color: #4E8FF9;
+  }
 }
 </style>
