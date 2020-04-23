@@ -840,6 +840,7 @@ var mxUtils =
 	getXml: function(node, linefeed)
 	{
 		var xml = '';
+		// console.log('getXml: ')
 
 		if (window.XMLSerializer != null)
 		{

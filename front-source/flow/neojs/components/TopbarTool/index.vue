@@ -42,8 +42,10 @@ export default {
   data() {
     return {
       highlight: null,
+      isEnd: $.utils.isEnd
     };
   },
+  created() {},
   methods: {
     getBtn(title) {
       return $(`#toolbar img[src='${title}']`);
@@ -52,8 +54,16 @@ export default {
       this.highlight = title;
     },
     handleClick(title) {
-      this.getBtn(title).click();
-      this.changeHighlight(title);
+      if ($.utils.isEnd && title === 'images/blue.gif') {
+        alert('开场白为结束语时新建意图不可用')
+        return
+      } else if ($.utils.isEnd && title === 'images/connect.gif') {
+        alert('开场白为结束语时连接不可用')
+        return
+      }  else {
+        this.getBtn(title).click();
+        this.changeHighlight(title);
+      }
     },
     handleZoom(type) {
       this.getBtn(type === 'in' ? 'images/icon_enlarge.svg' : 'images/icon_shrink.svg').click();
@@ -62,12 +72,20 @@ export default {
       this.getBtn('images/delete.gif').click();
     },
   },
-  mounted() {
+  mounted() {    
+    $.utils.isEnd = false
+    // console.log('isEnd: ', $(flowContent).find("[label=开场白]").attr('isEnd'))
+    // console.log("handleClick-title: ", title)    
+    
     setTimeout(() => {
       const highlight = $('#toolbar img.mxToolbarModeSelected').attr('src');
       if (highlight) {
         this.highlight = highlight;
-      }
+      }      
+      var flowContent = $.utils.inheritIntentionLevel(getFlowContent());
+      // console.log('created-flowContent: ', flowContent)
+      $.utils.isEnd = $(flowContent).find("[label=开场白]").attr('isEnd') === 'true'
+      // console.log('$.utils.isEnd: ', $.utils.isEnd)
     }, 500);
     this.$document.on('insertVertex', () => {
       this.highlight = 'images/icon_drag to move.svg';

@@ -66,6 +66,7 @@
  */
 function mxCell(value, geometry, style)
 {
+	// console.log("mxCell: ")
 	this.value = value;
 	this.setGeometry(geometry);
 	this.setStyle(style);
@@ -213,8 +214,11 @@ mxCell.prototype.setId = function(id)
  * Returns the user object of the cell. The user
  * object is stored in <value>.
  */
+// 流程图
 mxCell.prototype.getValue = function()
 {
+	// alert('getValue')
+	// console.log('getValue-value: ', this.value)
 	return this.value;
 };
 		

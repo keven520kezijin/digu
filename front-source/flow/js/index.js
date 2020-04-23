@@ -1,6 +1,38 @@
 // mx的基础路径
 const mxBasePath = 'mxGraph/src';
 
+// const dataNew = {
+// 	"resultMessageEnum": "0000",
+// 	"resultMessage": "成功",
+// 	"returnObject": {
+// 		"id": "c6a678c13a5a4cf9a4726276c2981f01",
+// 		"memberId": "23341b7c42e8489da77371e943f30ef5",
+// 		"speechcraftId": "ec0f24ebbfaa41e8ba06f2383d1c32f7",
+// 		"speechcraftName": "y--",
+// 		"flowType": 1,
+// 		"flowContent": "<mxGraphModel><root><Workflow label=\"MyWorkflow\" description=\"\" href=\"\" flowId=\"\" id=\"0\"><mxCell/></Workflow><Layer label=\"Default Layer\" id=\"1\"><mxCell parent=\"0\"/></Layer><Start label=\"开场白\" nodeType=\"start\" speechcraft=\"{&quot;main&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&lt;div contenteditable=\\&quot;true\\&quot; class=\\&quot;rich-editor\\&quot;&gt;aaa&lt;/div&gt;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}],&quot;quiet&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}],&quot;exception&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}],&quot;retell&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}]}\" intentionLevel=\"F\" isEnd=\"true\" isAllow=\"false\" artificialIntention=\"\" isSkip=\"false\" isEXCSkip=\"false\" excSkipNode=\"\" knowledgeStrategySwitch=\"0\" strategyTriggerCondition=\"\" knowledgePlayFlowType=\"\" preCallServices=\"\" lastCallServices=\"\" id=\"2\"><mxCell style=\"start;\" parent=\"1\" vertex=\"1\"><mxGeometry x=\"880\" y=\"10\" width=\"70\" height=\"30\" as=\"geometry\"/></mxCell></Start><Robot label=\"电视机话术\" nodeType=\"robot\" speechcraft=\"{&quot;main&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&lt;div contenteditable=\\&quot;true\\&quot; class=\\&quot;rich-editor\\&quot;&gt;电视机&lt;/div&gt;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}],&quot;quiet&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}],&quot;exception&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}],&quot;retell&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}]}\" intentionLevel=\"\" isAllow=\"false\" isInterrupt=\"true\" isSkip=\"false\" isEnd=\"true\" isEXCSkip=\"false\" artificialIntention=\"\" excSkipNode=\"\" knowledgeStrategySwitch=\"0\" strategyTriggerCondition=\"\" knowledgePlayFlowType=\"\" preCallServices=\"\" lastCallServices=\"\" id=\"18\"><mxCell style=\"robot\" parent=\"1\" vertex=\"1\"><mxGeometry x=\"687.3333129882812\" y=\"333.7777862548828\" width=\"100\" height=\"30\" as=\"geometry\"/></mxCell></Robot><Edge label=\"\" description=\"\" id=\"19\"><mxCell style=\"straightEdge\" parent=\"1\" source=\"20\" target=\"18\" edge=\"1\"><mxGeometry relative=\"1\" as=\"geometry\"/></mxCell></Edge><Answer label=\"电视机意图啊啊\" nodeType=\"answer\" intentionLabel=\"\" keywords=\"电视机\" intentionId=\"\" level=\"\" jumpType=\"\" jumpItemType=\"\" id=\"20\"><mxCell style=\"answer;\" parent=\"1\" vertex=\"1\"><mxGeometry x=\"692.5\" y=\"160\" width=\"140\" height=\"30\" as=\"geometry\"/></mxCell></Answer><Edge label=\"\" description=\"\" id=\"21\"><mxCell style=\"straightEdge\" parent=\"1\" source=\"2\" target=\"20\" edge=\"1\"><mxGeometry relative=\"1\" as=\"geometry\"/></mxCell></Edge><Robot label=\"空调话术\" nodeType=\"robot\" speechcraft=\"{&quot;main&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&lt;div contenteditable=\\&quot;true\\&quot; class=\\&quot;rich-editor\\&quot;&gt;空调&lt;/div&gt;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}],&quot;quiet&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}],&quot;exception&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}],&quot;retell&quot;:[{&quot;title&quot;:&quot;首轮话术&quot;,&quot;name&quot;:1,&quot;content&quot;:&quot;&quot;,&quot;isLocked&quot;:false,&quot;recordData&quot;:[],&quot;viewCont&quot;:&quot;&quot;}]}\" intentionLevel=\"\" isAllow=\"false\" isInterrupt=\"true\" isSkip=\"false\" isEnd=\"false\" isEXCSkip=\"false\" artificialIntention=\"\" excSkipNode=\"\" knowledgeStrategySwitch=\"0\" strategyTriggerCondition=\"\" knowledgePlayFlowType=\"\" preCallServices=\"\" lastCallServices=\"\" id=\"22\"><mxCell style=\"robot\" parent=\"1\" vertex=\"1\"><mxGeometry x=\"608.4000244140625\" y=\"704.7999877929688\" width=\"90\" height=\"30\" as=\"geometry\"/></mxCell></Robot><Edge label=\"\" description=\"\" id=\"23\"><mxCell style=\"straightEdge\" parent=\"1\" source=\"24\" target=\"22\" edge=\"1\"><mxGeometry relative=\"1\" as=\"geometry\"/></mxCell></Edge><Answer label=\"空调意图\" nodeType=\"answer\" keywords=\"空调\" intentionId=\"\" level=\"\" jumpType=\"\" jumpItemType=\"\" id=\"24\"><mxCell style=\"answer;\" parent=\"1\" vertex=\"1\"><mxGeometry x=\"710\" y=\"470\" width=\"90\" height=\"30\" as=\"geometry\"/></mxCell></Answer><Edge label=\"\" description=\"\" id=\"25\"><mxCell style=\"straightEdge\" parent=\"1\" source=\"18\" target=\"24\" edge=\"1\"><mxGeometry relative=\"1\" as=\"geometry\"/></mxCell></Edge></root></mxGraphModel>",
+// 		"addVariableName": "[]",
+// 		"deleteFlag": 0,
+// 		"createTime": "2020-04-08 17:00:26",
+// 		"createId": "23341b7c42e8489da77371e943f30ef5",
+// 		"creator": "云知声",
+// 		"editorId": "23341b7c42e8489da77371e943f30ef5",
+// 		"editTime": "2020-04-13 16:46:11",
+// 		"editor": "云知声",
+// 		"nluAppId": "24929",
+// 		"nluAppKey": "kndpahqpn273fsdw3kismaaehi2mzc5qfq3askah",
+// 		"flowContentJson": "{\"Workflow\":{\"mxCell\":\"\",\"label\":\"MyWorkflow\",\"description\":\"\",\"href\":\"\",\"flowId\":\"\",\"id\":\"0\"},\"Layer\":{\"mxCell\":{\"parent\":\"0\"},\"label\":\"Default Layer\",\"id\":\"1\"},\"Start\":{\"mxCell\":{\"mxGeometry\":{\"x\":\"880\",\"y\":\"10\",\"width\":\"70\",\"height\":\"30\",\"as\":\"geometry\"},\"style\":\"start;\",\"parent\":\"1\",\"vertex\":\"1\"},\"label\":\"开场白\",\"nodeType\":\"start\",\"speechcraft\":{\"main\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"<div contenteditable=\\\"true\\\" class=\\\"rich-editor\\\">aaa</div>\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}],\"quiet\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}],\"exception\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}],\"retell\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}]},\"intentionLevel\":\"F\",\"isEnd\":\"true\",\"isAllow\":\"false\",\"artificialIntention\":\"\",\"isSkip\":\"false\",\"isEXCSkip\":\"false\",\"excSkipNode\":\"\",\"knowledgeStrategySwitch\":\"0\",\"strategyTriggerCondition\":\"\",\"knowledgePlayFlowType\":\"\",\"preCallServices\":\"\",\"lastCallServices\":\"\",\"id\":\"2\",\"children\":[\"20\"]},\"Robot\":[{\"mxCell\":{\"mxGeometry\":{\"x\":\"687.3333129882812\",\"y\":\"333.7777862548828\",\"width\":\"100\",\"height\":\"30\",\"as\":\"geometry\"},\"style\":\"robot\",\"parent\":\"1\",\"vertex\":\"1\"},\"label\":\"电视机话术\",\"nodeType\":\"robot\",\"speechcraft\":{\"main\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"<div contenteditable=\\\"true\\\" class=\\\"rich-editor\\\">电视机</div>\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}],\"quiet\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}],\"exception\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}],\"retell\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}]},\"intentionLevel\":\"\",\"isAllow\":\"false\",\"isInterrupt\":\"true\",\"isSkip\":\"false\",\"isEnd\":\"true\",\"isEXCSkip\":\"false\",\"artificialIntention\":\"\",\"excSkipNode\":\"\",\"knowledgeStrategySwitch\":\"0\",\"strategyTriggerCondition\":\"\",\"knowledgePlayFlowType\":\"\",\"preCallServices\":\"\",\"lastCallServices\":\"\",\"id\":\"18\",\"children\":[\"24\"],\"parent\":[\"20\"]},{\"mxCell\":{\"mxGeometry\":{\"x\":\"608.4000244140625\",\"y\":\"704.7999877929688\",\"width\":\"90\",\"height\":\"30\",\"as\":\"geometry\"},\"style\":\"robot\",\"parent\":\"1\",\"vertex\":\"1\"},\"label\":\"空调话术\",\"nodeType\":\"robot\",\"speechcraft\":{\"main\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"<div contenteditable=\\\"true\\\" class=\\\"rich-editor\\\">空调</div>\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}],\"quiet\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}],\"exception\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}],\"retell\":[{\"title\":\"首轮话术\",\"name\":1,\"content\":\"\",\"isLocked\":false,\"recordData\":[],\"viewCont\":\"\"}]},\"intentionLevel\":\"\",\"isAllow\":\"false\",\"isInterrupt\":\"true\",\"isSkip\":\"false\",\"isEnd\":\"false\",\"isEXCSkip\":\"false\",\"artificialIntention\":\"\",\"excSkipNode\":\"\",\"knowledgeStrategySwitch\":\"0\",\"strategyTriggerCondition\":\"\",\"knowledgePlayFlowType\":\"\",\"preCallServices\":\"\",\"lastCallServices\":\"\",\"id\":\"22\",\"children\":[],\"parent\":[\"24\"]}],\"Edge\":[{\"mxCell\":{\"mxGeometry\":{\"relative\":\"1\",\"as\":\"geometry\"},\"style\":\"straightEdge\",\"parent\":\"1\",\"source\":\"20\",\"target\":\"18\",\"edge\":\"1\"},\"label\":\"\",\"description\":\"\",\"id\":\"19\"},{\"mxCell\":{\"mxGeometry\":{\"relative\":\"1\",\"as\":\"geometry\"},\"style\":\"straightEdge\",\"parent\":\"1\",\"source\":\"2\",\"target\":\"20\",\"edge\":\"1\"},\"label\":\"\",\"description\":\"\",\"id\":\"21\"},{\"mxCell\":{\"mxGeometry\":{\"relative\":\"1\",\"as\":\"geometry\"},\"style\":\"straightEdge\",\"parent\":\"1\",\"source\":\"24\",\"target\":\"22\",\"edge\":\"1\"},\"label\":\"\",\"description\":\"\",\"id\":\"23\"},{\"mxCell\":{\"mxGeometry\":{\"relative\":\"1\",\"as\":\"geometry\"},\"style\":\"straightEdge\",\"parent\":\"1\",\"source\":\"18\",\"target\":\"24\",\"edge\":\"1\"},\"label\":\"\",\"description\":\"\",\"id\":\"25\"}],\"Answer\":[{\"mxCell\":{\"mxGeometry\":{\"x\":\"692.5\",\"y\":\"160\",\"width\":\"140\",\"height\":\"30\",\"as\":\"geometry\"},\"style\":\"answer;\",\"parent\":\"1\",\"vertex\":\"1\"},\"label\":\"电视机意图bb啊啊\",\"nodeType\":\"answer\",\"keywords\":\"电视机\",\"intentionLabel\":\"\",\"intentionId\":\"\",\"level\":\"\",\"jumpType\":\"\",\"jumpItemType\":\"\",\"id\":\"20\",\"children\":[\"18\"],\"parent\":[\"2\"]},{\"mxCell\":{\"mxGeometry\":{\"x\":\"710\",\"y\":\"470\",\"width\":\"90\",\"height\":\"30\",\"as\":\"geometry\"},\"style\":\"answer;\",\"parent\":\"1\",\"vertex\":\"1\"},\"label\":\"空调意图\",\"nodeType\":\"answer\",\"keywords\":\"空调\",\"intentionId\":\"\",\"level\":\"\",\"jumpType\":\"\",\"jumpItemType\":\"\",\"id\":\"24\",\"children\":[\"22\"],\"parent\":[\"18\"]}],\"End\":[]}",
+// 		"copyOperationType": 2,
+// 		"speechcraftStatus": 5,
+// 		"industryType": "22",
+// 		"templateType": 2,
+// 		"isInterrupt": 0,
+// 		"isArtificial": 0,
+// 		"artificialIntention": "",
+// 		"industryStatus": 2
+// 	}
+// }
+
 // mx的资源扩展名
 const mxResourceExtension = '.properties';
 
@@ -226,8 +258,11 @@ function edit() {
     contentType: 'application/json',
     async: false,
     success: function(data) {
+      // console.log('index-querySpeechcraftFlowByFlowType.json: ', data)
       if (data.resultMessageEnum === '0000') {
         var returnObject = data.returnObject;
+        // console.log('returnObject: ', returnObject)
+        localStorage.setItem('intentionLevelDescription', returnObject.intentionLevelDescription)
         if (typeof returnObject !== 'undefined') {
           templateType = returnObject.templateType;
           speechcraftName = returnObject.speechcraftName;
@@ -273,6 +308,39 @@ function edit() {
 }
 
 /**
+ * 
+ * @param {*} isApprove 
+ * @param {*} successCallback 
+ * @param {*} failCallback 
+ */
+function getFlowXml(id) {
+  // alert('getFlowXml')
+  const flowContent = $.utils.inheritIntentionLevel(getFlowContent());
+  // console.log('flowContent: ', flowContent)
+  // console.log('5 - source: ',$(flowContent).find("[target=" + id + "]").attr('source'))
+  var sourceId = $(flowContent).find("[target=" + id + "]").attr('source')
+  var list = $(flowContent).find("[source="+sourceId+"]")
+  // console.log('list', list)
+  var listArr = []
+  list.each(function(){
+    var obj = {}
+    var listId = $(this).attr('target')
+    // console.log('listId: ', listId)
+    var label =  $(flowContent).find("[id="+listId+"]").attr('label')
+    obj.value = listId
+    obj.label = label
+    listArr.push(obj)
+  })
+  listArr = listArr.filter(function(o) {
+    return o.value !== id
+  })
+  // console.log('listArr: ', listArr)
+  return listArr
+}
+
+
+
+/**
  * 保存流程
  * @param {*} isApprove 审批保存标识
  */
@@ -296,6 +364,7 @@ function save(isApprove, successCallback, failCallback) {
     return;
   }
   const flowContent = $.utils.inheritIntentionLevel(getFlowContent());
+  // console.log('flowContent: ', flowContent)
 
   function queryChildren(id, json) {
     var childrenArr = [];
@@ -326,6 +395,7 @@ function save(isApprove, successCallback, failCallback) {
   }
 
   function handleJson(json) {
+    // alert("handleJson")
     json = JSON.parse(JSON.stringify(json).replace(/@/g, ''));
     // console.log('json: ', json)
     // 开场白
@@ -492,6 +562,7 @@ function getFlowContent() {
   var codec = new mxCodec();
   var node = codec.encode(mxEditor.graph.getModel());
   var xml = mxUtils.getXml(node);
+  // console.log('getFlowContent-xml: ', xml)
   return xml;
 }
 
@@ -664,6 +735,7 @@ function showLevelDialog() {
     contentType: 'application/json',
     async: false,
     success: function(data) {
+      // debugger
       if (data.resultMessageEnum == '0000') {
         var returnObject = data.returnObject;
         if (typeof returnObject != 'undefined') {
@@ -673,6 +745,11 @@ function showLevelDialog() {
             returnObject.intentionLevelDescription != ''
           ) {
             $.utils._dialogVue.intentLevelForm = JSON.parse(returnObject.intentionLevelDescription);
+            // console.log('$.utils._dialogVue.intentLevelForm: ', $.utils._dialogVue.intentLevelForm)
+            // console.log('')
+            // $.utils._dialogVue.intentLevelForm.A.children = [{
+            //   name: "1"
+            // }]
           }
         }
       }
@@ -695,6 +772,7 @@ function showSettingDialog() {
  * 显示保存话术对话框
  */
 function showSaveDialog() {
+  // alert('showSaveDialog')
   updateModel(currentCell); // 更新mxModel
   if (speechcraftStatus === 5) {
     $.utils._dialogVue.saveVisible = true;

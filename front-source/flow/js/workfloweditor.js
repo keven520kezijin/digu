@@ -79,6 +79,7 @@ function edit(){
 		async:false,
 		success : function(data) {
 			if (data.resultMessageEnum == "0000") {
+				// console.log('3-querySpeechcraftFlowByFlowType.json: ', data)
 				var returnObject = data.returnObject;
 				if (typeof(returnObject) != "undefined") {
 					$('#head .head-title').html(returnObject.speechcraftName);
@@ -117,6 +118,7 @@ function edit(){
  * @returns
  */
 function save() {
+	alert('save()')
 	var speechcraftFlowPO = {
 		"speechcraftId" : speechcraftId,
 		"speechcraftName" : speechcraftName,

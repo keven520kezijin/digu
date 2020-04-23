@@ -82,12 +82,12 @@
           <el-table-column prop="taskName" label="任务名称" width="150" sortable fixed></el-table-column>
           <el-table-column prop="factStartTime" label="任务开始时间" sortable width="180"></el-table-column>
           <el-table-column width="180" prop="factEndTime" sortable label="任务结束时间"></el-table-column>
-          <el-table-column prop="speechcraftName" label="话术名称" width="200"></el-table-column>
+          <el-table-column prop="speechcraftName" sortable label="话术名称" width="200"></el-table-column>
           <!--<el-table-column prop="phoneNumber" label="号码数">-->
           <!--</el-table-column>-->
           <!--<el-table-column prop="connectedNumber" label="接通数" >-->
           <!--</el-table-column>-->
-          <el-table-column prop="connectedRate" label="接通率" width="70"></el-table-column>
+          <el-table-column prop="connectedRate" sortable label="接通率" width="100"></el-table-column>
           <el-table-column prop="agentCount" label="坐席数" width="70"></el-table-column>
           <el-table-column prop="taskStatus" label="进度">
             <template slot-scope="scope">

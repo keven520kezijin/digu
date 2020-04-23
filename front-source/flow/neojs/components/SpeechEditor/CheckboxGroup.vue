@@ -155,8 +155,14 @@ export default {
   },
   watch: {
     checkedList(val) {
-        console.log('watch',val);
+        // console.log('watch-1',val);
         $.utils._checkedList = val;
+        if(val.indexOf('isEnd') > -1){
+          // alert('ok')
+          $.utils.isEnd = true
+        } else {
+          $.utils.isEnd = false
+        }
         $.utils.newCheck = val;
 
       const isEXCSkip = $.inArray('isEXCSkip', $.utils._checkedList) >= 0;

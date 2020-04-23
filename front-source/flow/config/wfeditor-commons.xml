@@ -90,7 +90,7 @@
 			</Start>
 		</add>-->
 		<add as="answer">
-			<Answer label="客户意图" nodeType="answer" keywords="" intentionId="" level="" jumpType="" jumpItemType="">
+			<Answer label="客户意图" nodeType="answer" intentionLabel="" keywords="" intentionId="" level="" jumpType="" intentionLable="" greaterProhibit="" jumpItemType="">
 				<mxCell vertex="1" style="answer;">
 					<mxGeometry as="geometry" width="90" height="30"/>
 				</mxCell>

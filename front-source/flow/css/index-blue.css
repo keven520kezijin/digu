@@ -583,3 +583,24 @@ div.w-button-group input {
 .top-zindex {
   z-index: 9999 !important;
 }
+.child-box {
+    margin-top: 22px;
+    margin-left: 20px;
+}
+.child-hr {
+  position: relative;
+  margin-top: 10px;
+}
+
+.child-txt{
+  position: absolute;
+  left: -30px;
+}
+
+.del-box {
+  position: absolute;
+  right: -60px;
+  height: 30px;
+  width: 30px;
+  color: #f56c6c;
+}

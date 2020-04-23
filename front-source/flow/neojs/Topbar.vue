@@ -12,7 +12,7 @@ export default {
       disabled: true,
     };
   },
-  mounted() {
+  mounted() {    
     const viewType = $.utils.getUrlParam('viewType');
     this.disabled = viewType == null || viewType == '' || viewType == '0';
   },

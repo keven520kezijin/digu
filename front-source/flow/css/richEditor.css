@@ -9,3 +9,16 @@
     color: #c0c4cc;
     cursor: not-allowed;
 }
+.templateBox {
+    position: relative;
+}
+.inputBox{
+    width: 80%;
+    float: left;
+    margin-right: 10px;
+}
+.plus-dw{
+    position: absolute;
+    right: 70px;
+    top: 40px;
+}

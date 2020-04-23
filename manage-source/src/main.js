@@ -15,6 +15,8 @@ import "../static/css/override-element-ui.less";*/
 // 蓝色主题
 import '../static/css/main-blue.less';
 import '../static/css/override-element-ui-blue.less';
+import all from './utils/index';
+Vue.use(all);//将全局函数当做插件来进行注册
 
 Vue.use(ElementUI, { size: 'small' });
 

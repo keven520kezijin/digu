@@ -296,41 +296,83 @@
   </el-form>
   <!-- 会员模板 -->
   <el-form v-else-if="templateType == 2">
-    <el-form-item label="A" :label-width="intentLevelFormLabelWidth">
-      <div style="width: 90%; float: left;">
+    <el-form-item class="templateBox" label="A" :label-width="intentLevelFormLabelWidth">
+      <div class="inputBox">
         <el-input v-model="intentLevelForm['A'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+        <div v-if="intentLevelForm.A.children && intentLevelForm.A.children.length" class="child-box">
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.A.children" >
+            <span class="child-txt">A{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+            <span class="del-box" @click="delIntentLevel('A', i)"><i class="el-icon-delete"></i></span>
+          </div>
+        </div>
       </div>
-      <el-button type="text" @click="initDescription('A')" :disabled="isDisabled">初始描述</el-button>
+      <el-button type="text" @click="initDescription('A')" :disabled="isDisabled">初始描述</el-button>      
+      <el-button type="text" @click="initDescriptionChildren('A')">新增</el-button>
     </el-form-item>
-    <el-form-item label="B" :label-width="intentLevelFormLabelWidth">
-      <div style="width: 90%; float: left;">
+    <el-form-item class="templateBox" label="B" :label-width="intentLevelFormLabelWidth">
+      <div class="inputBox">
         <el-input v-model="intentLevelForm['B'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+        <div v-if="intentLevelForm.B.children && intentLevelForm.B.children.length" class="child-box">
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.B.children" >
+            <span class="child-txt">B{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+            <span class="del-box" @click="delIntentLevel('B', i)"><i class="el-icon-delete"></i></span>
+          </div>
+        </div>
       </div>
       <el-button type="text" @click="initDescription('B')" :disabled="isDisabled">初始描述</el-button>
+      <el-button type="text" @click="initDescriptionChildren('B')">新增</el-button>
     </el-form-item>
     <el-form-item label="C" :label-width="intentLevelFormLabelWidth">
-      <div style="width: 90%; float: left;">
+      <div class="inputBox">
         <el-input v-model="intentLevelForm['C'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+        <div v-if="intentLevelForm.C.children && intentLevelForm.C.children.length" class="child-box">
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.C.children" >
+            <span class="child-txt">C{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+            <span class="del-box" @click="delIntentLevel('C', i)"><i class="el-icon-delete"></i></span>
+          </div>
+        </div>
       </div>
       <el-button type="text" @click="initDescription('C')" :disabled="isDisabled">初始描述</el-button>
+      <el-button type="text" @click="initDescriptionChildren('C')">新增</el-button>
     </el-form-item>
     <el-form-item label="D" :label-width="intentLevelFormLabelWidth">
-      <div style="width: 90%; float: left;">
+      <div class="inputBox">
         <el-input v-model="intentLevelForm['D'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+        <div v-if="intentLevelForm.D.children && intentLevelForm.D.children.length" class="child-box">
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.D.children" >
+            <span class="child-txt">D{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+            <span class="del-box" @click="delIntentLevel('D', i)"><i class="el-icon-delete"></i></span>
+          </div>
+        </div>
       </div>
       <el-button type="text" @click="initDescription('D')" :disabled="isDisabled">初始描述</el-button>
+      <el-button type="text" @click="initDescriptionChildren('D')">新增</el-button>
     </el-form-item>
     <el-form-item label="E" :label-width="intentLevelFormLabelWidth">
-      <div style="width: 90%; float: left;">
+      <div class="inputBox">
         <el-input v-model="intentLevelForm['E'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+        <div v-if="intentLevelForm.E.children && intentLevelForm.E.children.length" class="child-box">
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.E.children" >
+            <span class="child-txt">E{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+            <span class="del-box" @click="delIntentLevel('E', i)"><i class="el-icon-delete"></i></span>
+          </div>
+        </div>
       </div>
       <el-button type="text" @click="initDescription('E')" :disabled="isDisabled">初始描述</el-button>
+      <el-button type="text" @click="initDescriptionChildren('E')">新增</el-button>
     </el-form-item>
     <el-form-item label="F" :label-width="intentLevelFormLabelWidth">
-      <div style="width: 90%; float: left;">
+      <div class="inputBox">
         <el-input v-model="intentLevelForm['F'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+        <div v-if="intentLevelForm.F.children && intentLevelForm.F.children.length" class="child-box">
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.F.children" >
+            <span class="child-txt">F{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+            <span class="del-box" @click="delIntentLevel('F', i)"><i class="el-icon-delete"></i></span>
+          </div>
+        </div>
       </div>
       <el-button type="text" @click="initDescription('F')" :disabled="isDisabled">初始描述</el-button>
+      <el-button type="text" @click="initDescriptionChildren('F')">新增</el-button>
     </el-form-item>
   </el-form>
   <div slot="footer" class="w-dialog dialog-footer">

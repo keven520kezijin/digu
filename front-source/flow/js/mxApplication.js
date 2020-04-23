@@ -86,7 +86,7 @@
 
       graph = editor.graph;
       model = editor.graph.getModel();
-
+      // console.log('customize - editor: ', editor)
       customize(editor);
     } catch (e) {
       hideSplash();
@@ -104,7 +104,10 @@
    */
   function updateModel(cell) {
     // 开始更新cell数据
+    // console.log('attrs-0: ', attrs)
+    // console.log('updateModel-cell: ', cell)
     model.beginUpdate();
+    // console.log('attrs: ', attrs)
     try {
       if (_nodeType !== '') {
         switch (_nodeType) {
@@ -112,11 +115,21 @@
             // 意图编辑器
             for (var i = 0; i < attrs.length; i++) {
               let nodeName = attrs[i].nodeName;
+              // console.log('nodeName: ', nodeName)
+              // debugger
               let val;
               if (nodeName != 'nodeType') {
                 switch (nodeName) {
-                  case 'label':
+                  case 'label': // 标题
+                    // console.log('$.utils._intentLabel: ', $.utils._intentLabel)
                     val = $.utils._intentLabel;
+                    break;
+                  case 'intentionLable':  // 意图标签
+                    // console.log('$.utils._intentionLable: ', $.utils._intentionLable)
+                    val = $.utils._intentionLable
+                    break;
+                  case 'greaterProhibit':  // 意图优先级
+                    val = $.utils._greaterProhibit
                     break;
                   case 'keywords':
                     val = $.utils._intentKeywords;
@@ -135,7 +148,10 @@
                     break;
                 }
                 // 更新数据到mxModel
+                // console.log("cell3: ", cell)
+                // console.log('val: ', val)
                 let edit = new mxCellAttributeChange(cell, nodeName, val);
+                // console.log("edit-1: ", edit)
                 model.execute(edit);
               }
             }
@@ -233,6 +249,9 @@
      * mxGraph单击事件
      */
     mxEditor.graph.addListener(mxEvent.CLICK, function(sender, evt) {
+      // // alert('mxEvent.CLICK')
+      // console.log('mxEvent.CLICK: ', mxEvent.CLICK)
+      // console.log('sender', sender)
       //去掉敏感词框
       for (var i in $.utils.highlight) {
         if (sender.lastTouchCell != null && sender.lastTouchCell.id == i) {
@@ -302,10 +321,14 @@
      * 重构创建属性
      */
     mxEditor.createProperties = function(cell) {
+      // console.log('cell: ', cell)
+      // debugger
       var value = model.getValue(cell);
+      // console.log('value: ', value)
       if (mxUtils.isNode(value)) {
         // cell属性对象列表
         attrs = value.attributes;
+        // console.log('attrs: ', attrs)
         // html页面元素对象列表
         elements = {};
         // checkBox元素map name:obj
@@ -331,6 +354,7 @@
         switch (_nodeType) {
           case 'answer':
             attrs = Array.from(attrs);
+            // console.log('attrs-0: ', attrs)
             // 意图编辑器
             if (attrs.map(item => item.nodeName).indexOf('intentionId') < 0) {
               attrs.push({
@@ -341,6 +365,7 @@
 
             for (var i = 0; i < attrs.length; i++) {
               let val = attrs[i].value;
+              // console.log('val-0: ', val)
               let nodeName = attrs[i].nodeName;
               if (nodeName != 'nodeType') {
                 switch (nodeName) {
@@ -350,11 +375,18 @@
                   case 'keywords':
                     $.utils._intentKeywords = val;
                     break;
+                  case 'greaterProhibit':  // 意图优先级
+                    $.utils._greaterProhibit = val.replace(/N/g, '');
+                    // console.log('$.utils._greaterProhibit: ', $.utils._greaterProhibit)
+                    break;
                   case 'intentionId':
                     $.utils._intentId = val;
                     break;
                   case 'level':
                     $.utils._intentLevel = val;
+                    break;
+                  case 'intentionLable':
+                    $.utils._intentionLable = val;
                     break;
                   case 'jumpType':
                     $.utils._jumpType = val;

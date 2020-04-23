@@ -2665,6 +2665,8 @@ mxVisibleChange.prototype.execute = function()
  */
 function mxCellAttributeChange(cell, attribute, value)
 {
+	// console.log("attribute: ", attribute)
+	// console.log("value: ", value)
 	this.cell = cell;
 	this.attribute = attribute;
 	this.value = value;

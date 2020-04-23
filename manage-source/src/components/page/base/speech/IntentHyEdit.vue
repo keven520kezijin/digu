@@ -16,7 +16,7 @@
           <span>{{ id ? '编辑意图' : '新增意图' }}</span>
         </div>
         <div>
-          <el-form ref="addForm" :model="addForm" :rules="addFormRules" label-width="100px">
+          <el-form ref="addForm" :model="addForm" :rules="addFormRules" label-width="140px">
             <el-form-item label="意图名称：" prop="intentionName">
               <el-input v-model="addForm.intentionName" placeholder="输入意图名称" class="add-input"></el-input>
             </el-form-item>
@@ -39,13 +39,7 @@
               <span class="add-tip">注：批量新增语料请先下载txt模版，填写后上传，每条语料必须换行填写</span>
               <span class="file-name">{{ filePath }}</span>
             </el-form-item>
-            <el-form-item label="意图语料：" prop="intentionSentenceList">
-              <!-- <el-input
-                type="textarea"
-                placeholder="如有多个答案请以“|“隔开"
-                v-model="addForm.intentionSentence"
-                class="add-textarea"
-              ></el-input>-->
+            <!-- <el-form-item label="意图语料：" prop="intentionSentenceList">
               <el-select
                 class="full-width"
                 v-model="addForm.intentionSentenceList"
@@ -72,6 +66,25 @@
               >
                 <div slot="empty"></div>
               </el-select>
+            </el-form-item> -->
+            
+            <el-form-item label="意图语料：" prop="intentionSentenceList">
+              <el-input v-model="intentionSentence" placeholder="请输入意图语料" @keyup.enter.native="doSth('intentionSentence')"></el-input>
+              <el-tag class="tag" v-for="(tag, i) in addForm.intentionSentenceList" :key="tag" closable @close="handleClose('intentionSentence',i)">
+                {{ tag }}
+              </el-tag>
+            </el-form-item>
+            <el-form-item label="关键词模版：" prop="keyWordsTemplate">
+              <el-input v-model="keyWordsTemplate" placeholder="请输入意图语料" @keyup.enter.native="doSth('keyWordsTemplate')"></el-input>
+              <el-tag class="tag" v-for="(tag, i) in addForm.keyWordsTemplate" :key="tag" closable @close="handleClose('keyWordsTemplate',i)">
+                {{ tag }}
+              </el-tag>
+            </el-form-item>
+            <el-form-item label="兜底关键词模版：" prop="ddKeyWordsTemplate">
+              <el-input v-model="regularFinal" placeholder="输入兜底关键词模版" class="add-input" @keyup.enter.native="doSth('regularFinal')"></el-input>
+              <el-tag class="tag" v-for="(tag, i) in addForm.regularFinal" :key="tag" closable @close="handleClose('regularFinal', i)">
+                {{ tag }}
+              </el-tag>
             </el-form-item>
             <el-form-item>
               <el-checkbox
@@ -129,12 +142,16 @@ export default {
       type: '2',
       filePath: '',
       id: '',
+      regularFinal: '',
+      intentionSentence: "", // 意图语料字符串
+      keyWordsTemplate: "",
       addForm: {
         intentionName: '',
         // intentionSentence: '',
         keyWordsTemplate: [],
         intentionSentenceList: [],
         industryType: '',
+        regularFinal: []  // 兜底数据
       },
       addFormRules: {
         intentionName: [{ required: true, message: '意图名称不能为空！' }],
@@ -174,11 +191,13 @@ export default {
       this.queryIntentionDetail().then(res => {
         this.addForm.intentionName = res.intentionName;
         this.addForm.industryType = res.industryId;
-        this.addForm.intentionSentenceList = res.intentionSentence ? res.intentionSentence.split(DIVIDE) : [];
-        this.addForm.keyWordsTemplate = res.keyWordsTemplate ? res.keyWordsTemplate.split("&") : [];
+        this.addForm.intentionSentenceList = res.intentionSentence ? res.intentionSentence : [];
+        this.addForm.keyWordsTemplate = res.keyWordsTemplate ? res.keyWordsTemplate : [];
+        this.addForm.regularFinal = res.regularFinal
 
         let relationList = res.relationList;
-        if (relationList.length) {
+        
+        if (relationList && relationList.length) {
           this.checked = true;
           this.isAssociation = true;
           let selectData = [];
@@ -195,6 +214,41 @@ export default {
   },
   watch: {},
   methods: {
+    doSth(type) {      
+      // return;
+      if (type === 'intentionSentence') {
+        const inputList = this.intentionSentence.trim().split(/\s+/)
+        console.log('inputList: ', inputList)
+        this.addForm.intentionSentenceList = this.$unique(this.addForm.intentionSentenceList.concat(inputList));
+        console.log('this.addForm.intentionSentenceList: ', this.addForm.intentionSentenceList)
+        this.intentionSentence = '';
+      }
+      if (type === 'keyWordsTemplate') {
+        const inputList = this.keyWordsTemplate.trim().split(/\s+/)
+        // console.log('inputList: ', inputList)
+        this.addForm.keyWordsTemplate = this.$unique(this.addForm.keyWordsTemplate.concat(inputList));
+        // console.log('this.addForm.keyWordsTemplate: ', this.addForm.keyWordsTemplate)
+        this.keyWordsTemplate = '';
+      }
+      if (type === 'regularFinal') {
+        const inputList = this.regularFinal.trim().split(/\s+/)
+        console.log('inputList: ', inputList)
+        this.addForm.regularFinal = this.$unique(this.addForm.regularFinal.concat(inputList));
+        // console.log('this.addForm.regularFinal: ', this.addForm.regularFinal)
+        this.regularFinal = '';
+      }
+    },
+    handleClose(type, i) {
+      if(type === 'intentionSentence') {
+        this.addForm.intentionSentenceList.splice(i, 1)
+      }
+      if(type === 'keyWordsTemplate') {
+        this.addForm.keyWordsTemplate.splice(i, 1)
+      }
+      if(type === 'regularFinal') {
+        this.addForm.regularFinal.splice(i, 1)
+      }
+    },
     onSave(type) {
       this.$refs['addForm'].validate(valid => {
         if (valid) {
@@ -229,8 +283,9 @@ export default {
         intentionType: this.type,
         industryType: this.addForm.industryType,
         intentionName: this.addForm.intentionName,
-        intentionSentence: this.addForm.intentionSentenceList.join(DIVIDE),
-        keyWordsTemplate: this.addForm.keyWordsTemplate.join("&"),
+        intentionSentence: this.addForm.intentionSentenceList,
+        regularFinal: this.addForm.regularFinal,
+        keyWordsTemplate: this.addForm.keyWordsTemplate,
       };
       if (this.relationList.length) {
         params.relationList = this.relationList;
@@ -255,9 +310,10 @@ export default {
         id: this.id,
         industryType: this.addForm.industryType,
         intentionName: this.addForm.intentionName,
-        intentionSentence: this.addForm.intentionSentenceList.join(DIVIDE),
-        keyWordsTemplate: this.addForm.keyWordsTemplate.join("&"),
+        intentionSentence: this.addForm.intentionSentenceList,
+        keyWordsTemplate: this.addForm.keyWordsTemplate,
         relationList: this.relationList,
+        regularFinal: this.addForm.regularFinal
       };
 
       $.post(this.$baseUrl + 'services/intention/modifyIntentionSpeechcraft.json', JSON.stringify(params)).then(res => {
@@ -294,14 +350,18 @@ export default {
         async: false,
       }).done(function(res) {
         if (res.resultMessageEnum == '0000') {
-          const { intentionSentence, keywords } = res.returnObject || {};
-          const { intentionSentenceList, keyWordsTemplate } = self.addForm;
+          const { intentionSentence, keyWordsTemplate, regularFinal } = res.returnObject || {};
+          const { intentionSentenceList, keyWordsTemplate: formKeyWordsTemplate, regularFinal: formRegularFinal } = self.addForm;
           if (intentionSentence) {
-            self.addForm.intentionSentenceList = uniq(intentionSentenceList.concat(intentionSentence.split(DIVIDE)));
+            self.addForm.intentionSentenceList = uniq(intentionSentenceList.concat(intentionSentence));
           }
 
-          if (keywords) {
-            self.addForm.keyWordsTemplate = uniq(keyWordsTemplate.concat(keywords.split(DIVIDE)));
+          if (keyWordsTemplate) {
+            self.addForm.keyWordsTemplate = uniq(formKeyWordsTemplate.concat(keyWordsTemplate));
+          }
+
+          if (regularFinal) {
+            self.addForm.regularFinal = uniq(formRegularFinal.concat(regularFinal));
           }
         } else {
           self.$message.error(res.errorInfoList[0].errorMessage);
@@ -367,6 +427,30 @@ export default {
 </script>
 
 <style scoped lang="less">
+.tag {
+    margin: 0 10px 10px 0;
+}
+.child-box {
+    margin-top: 22px;
+    margin-left: 20px;
+}
+.child-hr {
+  position: relative;
+  margin-top: 10px;
+}
+
+.child-txt{
+  position: absolute;
+  left: -30px;
+}
+
+.del-box {
+  position: absolute;
+  right: -60px;
+  height: 30px;
+  width: 30px;
+  color: #f56c6c;
+}
 .admin-page {
   padding-bottom: 10px;
   position: relative;
@@ -395,7 +479,7 @@ export default {
   }
 }
 .add-input {
-  width: 240px;
+  // width: 240px;
 }
 .add-textarea {
   width: 80%;

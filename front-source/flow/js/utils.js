@@ -286,6 +286,7 @@ var lastIndex = [];
      * 获取意图分类级别
      */
     getIntentionLevel: function(xml, nodeId, nodeName) {
+      // console.log('getIntentionLevel: ', xml)
       let xmlDoc = $.parseXML(xml);
       let level = '';
 
@@ -303,6 +304,7 @@ var lastIndex = [];
      * 获取当前机器人节点下级意图节点
      */
     getNextAnswerNode: function(xml, nodeId) {
+      // alert("getNextAnswerNode")
       let xmlDoc = $.parseXML(xml);
       let arrReturn = [];
 
@@ -1121,12 +1123,12 @@ var lastIndex = [];
           intentLevelDesc: '',
           intentLevelFormLabelWidth: '30px',
           intentLevelForm: {
-            A: { initDescription: '', memberDescription: '' },
-            B: { initDescription: '', memberDescription: '' },
-            C: { initDescription: '', memberDescription: '' },
-            D: { initDescription: '', memberDescription: '' },
-            E: { initDescription: '', memberDescription: '' },
-            F: { initDescription: '', memberDescription: '' },
+            A: { initDescription: '', memberDescription: '', children:[] },
+            B: { initDescription: '', memberDescription: '', children:[] },
+            C: { initDescription: '', memberDescription: '', children:[] },
+            D: { initDescription: '', memberDescription: '', children:[] },
+            E: { initDescription: '', memberDescription: '', children:[] },
+            F: { initDescription: '', memberDescription: '', children:[] },
           },
 
           // 知识库设置相关
@@ -1215,6 +1217,7 @@ var lastIndex = [];
           disable() {
             if (viewType == null || viewType == '' || viewType == '0') {
               this.isDisabled = true;
+              // console.log('intentionLevelDescription:', intentionLevelDescription)
             }
           },
           /**
@@ -1371,6 +1374,15 @@ var lastIndex = [];
               this.intentLevelForm[key].memberDescription = this.intentLevelForm[key].initDescription;
             }
           },
+          initDescriptionChildren(key) {
+            // alert(key)
+            const obj = {initDescription: '', memberDescription: ''}
+            this.intentLevelForm[key].children.push(obj)
+            // console.log("this.intentLevelForm[key]: ", this.intentLevelForm[key])
+          },
+          delIntentLevel(type, i) {
+            this.intentLevelForm[type].children.splice(i,1)
+          },
           /**
            * 保存意图分类级别描述
            */
@@ -1390,6 +1402,7 @@ var lastIndex = [];
               if (data.resultMessageEnum == '0000') {
                 $.utils._dialogVue.intentLevelVisible = false;
                 $.utils.tooltip('意图分类级别描述设置成功！', 'success');
+                localStorage.setItem('intentionLevelDescription', JSON.stringify(this.intentLevelForm))
                 //修改之后立刻更新页面数据，不影响展示
                 $.utils.queryCurrentSpeechcraftDetail();
               } else {
@@ -1716,8 +1729,9 @@ var lastIndex = [];
             $(document).trigger('resetCheckedList', { checkedList });
             this.dialogVisibleChild = false;
           },
-          //转换按钮颜色回调函数
+          //转换按钮颜色回调函数 
           changeRobotToEnd: function() {
+            // alert('changeRobotToEnd')
             this.dialogVisibleChild = false;
             let lastCell = $.utils.getLastCells();
             if (lastCell.style == 'robot') {
@@ -1733,6 +1747,7 @@ var lastIndex = [];
             for (let i in cellsChildInfo.outCells) {
               delCells.push(cellsChildInfo.outCells[i]);
             }
+            // console.log('delCells: ', delCells)
             //更改按钮颜色
             // let v1 = $.utils.changeCellRobotToEnd(lastCell);
             // 删除
@@ -2062,6 +2077,8 @@ var lastIndex = [];
     _intentLevel: '',
     // 标题
     _intentLabel: '',
+    // 意图标签
+    _intentionLable: '',
     // 意图语料
     _intentKeywords: '',
     _jumpItemType: '',
@@ -2083,6 +2100,8 @@ var lastIndex = [];
           intentLevel: $.utils._intentLevel,
           // 标题
           intentLabel: $.utils._intentLabel,
+          // _intentionLable
+          intentionLable: $.utils._intentionLable,
           // 意图语料
           intentKeywords: $.utils._intentKeywords,
           // 分页相关
@@ -2107,6 +2126,7 @@ var lastIndex = [];
         created() {
           this.disable();
           this.queryIntentionTemplateList();
+          // console.log('createIntentionEditorVue')
           //如果选择的是话数据跳转的列表
           if (this.jumpType == 1) {
             this.jumpItemTypeList = $.utils.getACellsExStart(false);
@@ -2176,6 +2196,7 @@ var lastIndex = [];
           },
           // 更改标题
           changeLabel(val) {
+            // alert('biaoq')
             $.utils._intentLabel = val;
           },
           // 更改意图语料

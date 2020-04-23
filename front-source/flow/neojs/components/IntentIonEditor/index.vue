@@ -18,7 +18,7 @@
             :disabled="isDisabled"
           >
             <el-option
-              v-for="item in $options.intentLevelData"
+              v-for="item in intentLevelData"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -53,6 +53,46 @@
             popper-class="dropdown-hidden"
           ></el-select>
         </dg-form-item>
+        <!-- <dg-form-item label="意图标签">
+          <el-input v-model="intentTag" placeholder="请输入意图标签" :disabled="disabledIntentTag"></el-input>
+        </dg-form-item> -->
+        <dg-checkbox-collapse-item
+          name="2"
+          title="意图标签"
+          :value="disabledIntentionLable"
+          :disabled="isDisabled"
+          @change="handleDisabledIntentionLable"
+        >
+          <el-input v-model="intentionLable" placeholder="请输入意图标签"></el-input>
+        </dg-checkbox-collapse-item>
+        <!---->        
+        <dg-checkbox-collapse-item
+          name="2"
+          title="意图优先级"
+          :value="disabledIntentionPriority"
+          :disabled="isDisabled"
+          @change="handleDisabledIntentionPriority"
+        >
+          <el-select
+            class="dg-textarea"
+            v-model="intentionPriority"
+            @change='handleSelectIntentionPriority'
+            multiple
+            allow-create
+            filterable
+            default-first-option
+            placeholder="请选择意图"
+            :disabled="!disabledIntentionPriority"
+            popper-class="dropdown-hidden"
+          >
+            <el-option
+              v-for="item in intentionPriorityOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </dg-checkbox-collapse-item>
       </el-collapse-item>
       <dg-checkbox-collapse-item
         name="2"
@@ -103,47 +143,82 @@ export default {
       intentId: $.utils._intentId,
       intentLabel: $.utils._intentLabel,
       intentLevel: $.utils._intentLevel,
+      intentionLable: $.utils._intentionLable,  // 意图标签
+      disabledIntentionPriority: $.utils._greaterProhibit !== '', // 意图优先级
+      // intentionPriority: [$.utils._greaterProhibit === '' ? [] : $.utils._greaterProhibit.split('|')], // 意图优先级 newIntenPrio
+      intentionPriority: this.newIntenPrio(),
+      intentionPriorityOptions: [],
+      disabledIntentionLable: !!$.utils._intentionLable,  // 是否关闭意图标签
       intentKeywords: $.utils._intentKeywords.split('|'),
       jumpType: $.utils._jumpType,
       showJumpItemType: !!$.utils._jumpType,
       jumpItemType: $.utils._jumpItemType,
       preJumpTtemType: '',
+      intentLevelData: [],
       jumpItemTypeList: [],
       activeNames: ['1', '2'],
     };
   },
-  intentLevelData: [
-    {
-      value: 'A',
-      label: 'A',
-      description: '立即还款',
-    },
-    {
-      value: 'B',
-      label: 'B',
-      description: '不清楚',
-    },
-    {
-      value: 'C',
-      label: 'C',
-      description: '是本人、不还款',
-    },
-    {
-      value: 'D',
-      label: 'D',
-      description: '能否还款后所有横行意图中异常、静默、复述挂断',
-    },
-    {
-      value: 'E',
-      label: 'E',
-      description: '非本人、以及能否还款前一轮的意图',
-    },
-    {
-      value: 'F',
-      label: 'F',
-      description: '未接通、开场白就主动挂断',
-    },
-  ],
+  created() {
+    // console.log('created - $.utils._greaterProhibit: ', $.utils._greaterProhibit)
+    let intentionArr = []
+    if (localStorage.getItem('intentionLevelDescription') !== 'undefined') {
+      const intentionLevelDescription = JSON.parse(localStorage.getItem('intentionLevelDescription'))
+      // console.log('intentionLevelDescription: ', intentionLevelDescription)
+      for(let key in intentionLevelDescription) {
+        // console.log('key: ', key)
+        const obj = {}
+        obj.value = key
+        obj.label = key
+        intentionArr.push(obj)
+        // console.log('intentionLevelDescription[key].children: ', intentionLevelDescription[key])
+        if (intentionLevelDescription[key].children.length > 0) {
+          intentionLevelDescription[key].children.forEach((v, i) => {
+            const chiObj = {}
+            chiObj.value = key+(i+1)
+            chiObj.label = key+(i+1)
+            intentionArr.push(chiObj)
+          })
+        }
+      }
+      // console.log('intentionArr: ', intentionArr)
+      this.intentLevelData = intentionArr
+    } else {
+      this.intentLevelData = [
+        {
+          value: 'A',
+          label: 'A',
+          description: '立即还款',
+        },
+        {
+          value: 'B',
+          label: 'B',
+          description: '不清楚',
+        },
+        {
+          value: 'C',
+          label: 'C',
+          description: '是本人、不还款',
+        },
+        {
+          value: 'D',
+          label: 'D',
+          description: '能否还款后所有横行意图中异常、静默、复述挂断',
+        },
+        {
+          value: 'E',
+          label: 'E',
+          description: '非本人、以及能否还款前一轮的意图',
+        },
+        {
+          value: 'F',
+          label: 'F',
+          description: '未接通、开场白就主动挂断',
+        },
+      ]
+    }
+
+  },
   jumpTypeList: [
     {
       value: '1',
@@ -151,6 +226,39 @@ export default {
     },
   ],
   methods: {
+    newIntenPrio() {      
+      var id = ''
+      var atherList = []
+      if($.utils.getLastCells()) {
+        id = $.utils.getLastCells().id
+        atherList = getFlowXml(id)
+      }
+      // console.log('atherList: ', atherList)
+      var newList = []
+      if ($.utils._greaterProhibit) {
+        var list = $.utils._greaterProhibit.split('|');
+        list.forEach(l => {
+          atherList.forEach(a => {
+            if(a.value === l) {
+              newList.push(a.label)
+            }
+          })
+        })
+      }
+      return newList
+    },
+    // 意图优先级选择
+    handleSelectIntentionPriority(e) {
+      // console.log('e: ', e)
+    },
+    handleDisabledIntentionPriority(e) {
+      this.disabledIntentionPriority = !this.disabledIntentionPriority
+    },
+    handleDisabledIntentionLable(e) {
+      // console.log('handleDisabledIntentionLable-e: ', e)
+      this.disabledIntentionLable = !this.disabledIntentionLable
+      // console.log('this.disabledIntentionLable: ', this.disabledIntentionLable)
+    },
     async queryIntentionTemplateList() {
       try {
         const data = {
@@ -289,6 +397,23 @@ export default {
     }
   },
   watch: {
+    // 意图优先级
+    intentionPriority(v) {
+      // $.utils._intentionPriority = v;
+      var newList = []
+      v.forEach(o => {
+        newList.push('N' + o)
+      })
+      console.log('newList: ', newList)
+      $.utils._greaterProhibit = newList.join('|')
+      this.updateModel();
+    },
+    disabledIntentionPriority(v) {
+      // console.log('v: ', v)
+      // console.log('getLastCells.id: ', $.utils.getLastCells().id)
+      var id = $.utils.getLastCells().id
+      this.intentionPriorityOptions = getFlowXml(id)
+    },
     intentId(v) {
       $.utils._intentId = v;
       this.intentTemplateData.forEach(elem => {
@@ -298,11 +423,16 @@ export default {
       });
     },
     intentLabel(v) {
+      // alert('bt')
       $.utils._intentLabel = v;
       this.updateModel();
     },
     intentLevel(val) {
       $.utils._intentLevel = val;
+    },
+    intentionLable(val) {
+      $.utils._intentionLable = val;
+      this.updateModel();
     },
     // intentKeywords(val) {
     //   // $.utils._intentKeywords = val;
@@ -312,6 +442,7 @@ export default {
     jumpType(val) {
       $.utils._jumpType = val;
       this.jumpItemTypeList = $.utils.getACellsExStart(true);
+      // console.log('jumpItemTypeList: ', this.jumpItemTypeList)
       if (!val) {
         this.jumpItemType = '';
         this.showJumpItemType = false;
