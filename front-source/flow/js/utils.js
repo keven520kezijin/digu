@@ -641,7 +641,9 @@ var lastIndex = [];
      * @returns {Array}
      */
     getACellsExStart(exSelf = true) {
+      // debugger
       let _lastCells = this.getLastCells();
+      // console.log('_lastCells: ', _lastCells)
       let _allCells = graph.getModel().cells;
       let _filterArr = ['End', 'Robot'];
       let _filterId = [];
@@ -649,14 +651,19 @@ var lastIndex = [];
       $.utils.getCellsChildren(_filterId, _lastCells);
       for (var i in _allCells) {
         let item = _allCells[i];
+        // console.log('_filterId: ', _filterId)
+        // console.log('item.value.nodeName: ', item.value.nodeName)
         //所有节点name 在_filterArr and 节点ID 不在 _filterId
         if ($.inArray(item.value.nodeName, _filterArr) >= 0 && $.inArray(item.id, _filterId) < 0) {
+          // console.log("filter-item", item)
+          // console.log("filter-item", item.value)
           let addItem = {
             value: item.id,
             cell: item,
             nodeName: item.value.nodeName,
             label: item.value.attributes.label.nodeValue,
           };
+          // console.log('addItem: ', addItem)
           _result.push(addItem);
         }
       }

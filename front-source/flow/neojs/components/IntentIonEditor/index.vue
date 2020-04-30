@@ -161,6 +161,7 @@ export default {
   },
   created() {
     // console.log('created - $.utils._greaterProhibit: ', $.utils._greaterProhibit)
+    // console.log('$options: ', $options)
     let intentionArr = []
     if (localStorage.getItem('intentionLevelDescription') !== 'undefined') {
       const intentionLevelDescription = JSON.parse(localStorage.getItem('intentionLevelDescription'))
@@ -260,6 +261,7 @@ export default {
       // console.log('this.disabledIntentionLable: ', this.disabledIntentionLable)
     },
     async queryIntentionTemplateList() {
+      console.log('queryIntentionTemplateList: ')
       try {
         const data = {
           industryId: window.industryType == null ? '' : window.industryType,
@@ -273,7 +275,9 @@ export default {
       }
     },
     handleJumpTypeChange(v) {
+      console.log('handleJumpTypeChange-v: ', v)
       if (!v) {
+        alert(0)
         this.nochangeJumpList();
       } else {
         this.jumpType = '1';
@@ -368,6 +372,10 @@ export default {
     }, 300),
   },
   mounted() {
+    // 平级意图
+    var id = $.utils.getLastCells().id
+    this.intentionPriorityOptions = getFlowXml(id)
+
     const handleNochangeJumpConfirm = () => {
       this.jumpType = '';
     };
@@ -410,7 +418,8 @@ export default {
     },
     disabledIntentionPriority(v) {
       // console.log('v: ', v)
-      // console.log('getLastCells.id: ', $.utils.getLastCells().id)
+      console.log('getLastCells: ', $.utils.getLastCells())
+      console.log('graph.getModel().cells: ', graph.getModel().cells)
       var id = $.utils.getLastCells().id
       this.intentionPriorityOptions = getFlowXml(id)
     },
