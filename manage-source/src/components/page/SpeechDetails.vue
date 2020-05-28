@@ -155,8 +155,7 @@ export default {
     this.speechcraftId = this.$route.params.id;
     this.queryMemberDetail();
     this.$nextTick(() => {
-      let url = `${baseHost}/flow/index.html?viewType=0&m=2&speechcraftId=${this.speechcraftId}&m=1&flowType=1`;
-      this.iframeSrc = url;
+      this.iframeSrc = `/flow/index.html?viewType=0&m=2&speechcraftId=${this.speechcraftId}&m=1&flowType=1`;
     });
   },
   methods: {

@@ -161,6 +161,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new CopyWebpackPlugin(copyConfig),
 
     new HtmlWebpackStringReplacePlugin({
+      APP_VERSION: require('../package.json').version + ' ' + (new Date().getMonth()+1)+'-'+new Date().getDate(),
       GLOBAL_VARIABLES_SCRIPT: globalVariables,
     }),
   ],

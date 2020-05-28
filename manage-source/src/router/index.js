@@ -111,6 +111,16 @@ export default new Router({
           meta: { title: '话术详情' },
         },
         {
+          path: '/speech/bert/:id/:appkey/:name',
+          component: resolve => require(['../components/page/bert/Index.vue'], resolve),
+          meta: { title: 'bert模型' },
+        },
+        {
+          path: '/speech/bert/intent/:id/:appkey/:name/:model',
+          component: resolve => require(['../components/page/bert/Intention.vue'], resolve),
+          meta: { title: '查看意图' },
+        },
+        {
           path: '/record',
           component: resolve => require(['../components/page/Record.vue'], resolve),
           meta: { title: '意图统计' },

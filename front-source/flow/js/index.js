@@ -260,6 +260,7 @@ function edit() {
     success: function(data) {
       // console.log('index-querySpeechcraftFlowByFlowType.json: ', data)
       if (data.resultMessageEnum === '0000') {
+        console.log(data, _editUrl)
         var returnObject = data.returnObject;
         // console.log('returnObject: ', returnObject)
         localStorage.setItem('intentionLevelDescription', returnObject.intentionLevelDescription)

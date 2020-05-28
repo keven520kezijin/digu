@@ -40,14 +40,16 @@ router.beforeEach((to, from, next) => {
   //     next();
   // }
   next();
+  // console.log('next')
   $.ajaxSetup({
     complete: function(xhr, status) {
       var json = xhr.responseJSON;
       let num = json && json.errorInfoList && json.errorInfoList[0].errorMessageEnum;
+      // console.log(xhr)
       if (json && (num == '000103' || num == '000104')) {
         localStorage.removeItem('ms_pass');
         next('/login');
-      }
+      } 
     },
   });
 });

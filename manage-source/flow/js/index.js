@@ -81,7 +81,7 @@ function onload() {
   manage = $.utils.getUrlParam('m');
 
   if (flowId != null && typeof flowId != 'undefined' && flowId != '') {
-    _editUrl = _baseUrl + '/services/speechcraft/querySpeechcraftFlow.json?flowId=' + flowId;
+    _editUrl = _baseUrl + '/manage/services/speechcraft/querySpeechcraftFlow.json?flowId=' + flowId;
   } else if (
     speechcraftId != null &&
     typeof speechcraftId != 'undefined' &&

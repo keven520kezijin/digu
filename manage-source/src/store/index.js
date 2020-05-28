@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import vuex from 'vuex'
+import speach from './speach'
 Vue.use(vuex);
 
 /*
@@ -9,6 +10,9 @@ Vue.use(vuex);
  */
 
 export default new vuex.Store({
+    modules: {
+        speach
+    },
     state:{
         intentData:'',
         userInfo:'',

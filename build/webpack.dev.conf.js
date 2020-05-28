@@ -1,4 +1,5 @@
 'use strict';
+const path = require('path');
 const utils = require('./utils');
 const webpack = require('webpack');
 const config = require('./config/index');
@@ -8,10 +9,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const portfinder = require('portfinder');
 const HtmlWebpackStringReplacePlugin = require('html-webpack-string-replace-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const fs = require('fs');
 
 const HOST = process.env.HOST;
 const PORT = process.env.PORT && Number(process.env.PORT);
+
+const sourcePath = utils.ifFrontMode() ? 'front-source' : 'manage-source';
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -53,6 +57,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       inject: true,
     }),
     new HtmlWebpackStringReplacePlugin({
+      APP_VERSION: require('../package.json').version + ' ' + (new Date().getMonth()+1)+'-'+new Date().getDate(),
       GLOBAL_VARIABLES_SCRIPT: fs.readFileSync(`${__dirname}/globalVariables/dev.js`, 'utf8'),
     }),
   ],

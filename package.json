@@ -1,8 +1,8 @@
 {
-  "name": "vue-manage-system",
-  "version": "1.1.0",
-  "description": "基于Vue.js 2.x系列 + element-ui 内容管理系统解决方案",
-  "author": "wangyunbing <453917251@qq.com>",
+  "name": "digu",
+  "version": "1.4.1",
+  "description": "嘀咕",
+  "author": "unisound",
   "private": true,
   "config": {
     "backendUrl": ""

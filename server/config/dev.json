@@ -1,5 +1,5 @@
 {
   "env": "dev",
   "serverPort": 8082,
-  "defaultBackendUrl": "http://114.67.123.30:4002"
+  "defaultBackendUrl": "http://192.168.5.174:8002"
 }

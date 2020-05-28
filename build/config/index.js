@@ -36,6 +36,7 @@ module.exports = {
     // just be aware of this issue when enabling this option.
     cssSourceMap: false,
     proxyTable: {
+      '/flow': 'http://localhost:8082',
       '/services': 'http://localhost:8082',
       '/manage/services/': 'http://localhost:8082',
     },
