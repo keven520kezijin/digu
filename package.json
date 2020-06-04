@@ -21,7 +21,9 @@
     "dev": "concurrently -c \"bgCyan.bold,bgBlue.bold,bgMagenta.bold\" \"npm:dev:server\" \"npm:dev:front\" \"npm:dev:flow\"",
     "dev:manage": "concurrently -c \"bgCyan.bold,bgBlue.bold\" \"npm:dev:server:manage\" \"npm:dev-manage\"",
     "build:manage": "cross-env MODE=manage node build/build.js",
-    "build:front": "cross-env MODE=front node build/build.js"
+    "build:front": "cross-env MODE=front node build/build.js",
+    "upload:front": "scp -P 52000 -r server/digu-front unisound@192.168.5.174:/home/unisound/digu",
+    "upload:manage": "scp -P 52000 -r server/digu-manage unisound@192.168.5.174:/home/unisound/digu"
   },
   "dependencies": {
     "axios": "^0.15.3",

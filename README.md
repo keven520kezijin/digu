@@ -70,7 +70,14 @@ _端口重复问题，无法同时启动前台和后台_
       后台：/server/digu-manage
   ```
   
-  ###服务端部署
+  ###服务器部署(new)
+  ```
+    /home/unisound/digu/路径下分别覆盖 digu-front(前) digu-manage(后)
+
+    测试环境路径：http://192.168.5.174:8001/（前） http://192.168.5.174:8002/（后）
+  ```
+
+  ###服务端部署(old)
   ```
     /home/unisound/samantha/路径下分别覆盖 digu-front digu-manage
 
