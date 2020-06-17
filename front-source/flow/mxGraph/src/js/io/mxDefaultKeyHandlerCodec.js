@@ -71,9 +71,8 @@ mxCodecRegistry.register(function()
 					var as = node.getAttribute('as');
 					var action = node.getAttribute('action');
 					var control = node.getAttribute('control');
-					var shift = node.getAttribute('shift'); // shift按键
 					
-					into.bindAction(as, action, control, shift);
+					into.bindAction(as, action, control);
 				}
 				
 				node = node.nextSibling;

@@ -17,33 +17,28 @@
             @input="changeIntentionLevel"
             :disabled="isDisabled"
           >
-            <el-option
-              v-for="item in intentLevelData"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
+            <el-option v-for="item in intentLevelData" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </dg-form-item>
         <dg-form-item label="标题">
           <el-input v-model="intentLabel" placeholder="请输入标题" :disabled="isDisabled"></el-input>
         </dg-form-item>
-<!--        <dg-form-item label="意图预料">-->
-<!--          <el-input-->
-<!--            type="textarea"-->
-<!--            class="dg-textarea"-->
-<!--            v-model="intentKeywords"-->
-<!--            placeholder="如有多条语料请用英文“|”隔开"-->
-<!--            :rows="5"-->
-<!--            :disabled="isDisabled"-->
-<!--          ></el-input>-->
-<!--        </dg-form-item>-->
+        <!--        <dg-form-item label="意图预料">-->
+        <!--          <el-input-->
+        <!--            type="textarea"-->
+        <!--            class="dg-textarea"-->
+        <!--            v-model="intentKeywords"-->
+        <!--            placeholder="如有多条语料请用英文“|”隔开"-->
+        <!--            :rows="5"-->
+        <!--            :disabled="isDisabled"-->
+        <!--          ></el-input>-->
+        <!--        </dg-form-item>-->
         <dg-form-item label="意图语料">
           <el-select
             class="dg-textarea"
             v-model="intentKeywords"
-            @change='handleSelect'
+            @change="handleSelect"
             multiple
             allow-create
             filterable
@@ -65,7 +60,7 @@
         >
           <el-input v-model="intentionLable" placeholder="请输入意图标签"></el-input>
         </dg-checkbox-collapse-item>
-        <!---->        
+        <!---->
         <dg-checkbox-collapse-item
           name="2"
           title="意图优先级"
@@ -76,7 +71,7 @@
           <el-select
             class="dg-textarea"
             v-model="intentionPriority"
-            @change='handleSelectIntentionPriority'
+            @change="handleSelectIntentionPriority"
             multiple
             allow-create
             filterable
@@ -89,7 +84,8 @@
               v-for="item in intentionPriorityOptions"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
+              :value="item.value"
+            >
             </el-option>
           </el-select>
         </dg-checkbox-collapse-item>
@@ -166,18 +162,18 @@ export default {
     if (localStorage.getItem('intentionLevelDescription') !== 'undefined') {
       const intentionLevelDescription = JSON.parse(localStorage.getItem('intentionLevelDescription'))
       // console.log('intentionLevelDescription: ', intentionLevelDescription)
-      for(let key in intentionLevelDescription) {
+      for (let key in intentionLevelDescription) {
         // console.log('key: ', key)
         const obj = {}
         obj.value = key
         obj.label = key
         intentionArr.push(obj)
         // console.log('intentionLevelDescription[key].children: ', intentionLevelDescription[key])
-        if (intentionLevelDescription[key].children.length > 0) {
+        if (intentionLevelDescription[key] && intentionLevelDescription[key].children && intentionLevelDescription[key].children.length > 0) {
           intentionLevelDescription[key].children.forEach((v, i) => {
             const chiObj = {}
-            chiObj.value = key+(i+1)
-            chiObj.label = key+(i+1)
+            chiObj.value = key + (i + 1)
+            chiObj.label = key + (i + 1)
             intentionArr.push(chiObj)
           })
         }
@@ -227,10 +223,10 @@ export default {
     },
   ],
   methods: {
-    newIntenPrio() {      
+    newIntenPrio() {
       var id = ''
       var atherList = []
-      if($.utils.getLastCells()) {
+      if ($.utils.getLastCells()) {
         id = $.utils.getLastCells().id
         atherList = getFlowXml(id)
       }
@@ -240,7 +236,7 @@ export default {
         var list = $.utils._greaterProhibit.split('|');
         list.forEach(l => {
           atherList.forEach(a => {
-            if(a.value === l) {
+            if (a.value === l) {
               newList.push(a.label)
             }
           })
@@ -261,7 +257,7 @@ export default {
       // console.log('this.disabledIntentionLable: ', this.disabledIntentionLable)
     },
     async queryIntentionTemplateList() {
-      console.log('queryIntentionTemplateList: ')
+      // console.log('queryIntentionTemplateList: ')
       try {
         const data = {
           industryId: window.industryType == null ? '' : window.industryType,
@@ -275,7 +271,7 @@ export default {
       }
     },
     handleJumpTypeChange(v) {
-      console.log('handleJumpTypeChange-v: ', v)
+      // console.log('handleJumpTypeChange-v: ', v)
       if (!v) {
         alert(0)
         this.nochangeJumpList();
@@ -373,8 +369,10 @@ export default {
   },
   mounted() {
     // 平级意图
-    var id = $.utils.getLastCells().id
-    this.intentionPriorityOptions = getFlowXml(id)
+    var cell = $.utils.getLastCells()
+    if (cell) {
+      this.intentionPriorityOptions = getFlowXml(cell.id)
+    }
 
     const handleNochangeJumpConfirm = () => {
       this.jumpType = '';
@@ -412,16 +410,18 @@ export default {
       v.forEach(o => {
         newList.push('N' + o)
       })
-      console.log('newList: ', newList)
+      // console.log('newList: ', newList)
       $.utils._greaterProhibit = newList.join('|')
       this.updateModel();
     },
     disabledIntentionPriority(v) {
       // console.log('v: ', v)
-      console.log('getLastCells: ', $.utils.getLastCells())
-      console.log('graph.getModel().cells: ', graph.getModel().cells)
-      var id = $.utils.getLastCells().id
-      this.intentionPriorityOptions = getFlowXml(id)
+      // console.log('getLastCells: ', $.utils.getLastCells())
+      // console.log('graph.getModel().cells: ', graph.getModel().cells)
+      var cell = $.utils.getLastCells()
+      if (cell) {
+        this.intentionPriorityOptions = getFlowXml(cell.id)
+      }
     },
     intentId(v) {
       $.utils._intentId = v;

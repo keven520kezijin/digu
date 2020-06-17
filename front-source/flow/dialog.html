@@ -92,6 +92,20 @@
   </div>
 </el-dialog>
 
+<!-- 快捷键设置 -->
+<el-dialog title="快捷键列表" :visible.sync="dialogKeymapVisible" width="640">
+  <div style="width: 396px;margin: auto;">
+    <el-table :data="keyMap" border>
+      <el-table-column align="center" prop="name" label="操作" width="120"> </el-table-column>
+      <el-table-column align="center" prop="key" label="快捷键" width="275">
+        <template slot-scope="scope">
+          <span>{{scope.row.note||scope.row.key}}</span>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</el-dialog>
+
 <!-- 打断提示 -->
 <el-dialog title="打断提示" width="30%" :visible.sync="interruptVisible">
   <span>{{interruptChangeText}}</span>
@@ -300,21 +314,33 @@
       <div class="inputBox">
         <el-input v-model="intentLevelForm['A'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
         <div v-if="intentLevelForm.A.children && intentLevelForm.A.children.length" class="child-box">
-          <div class="child-hr" v-for="(item, i) in intentLevelForm.A.children" >
-            <span class="child-txt">A{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.A.children">
+            <span class="child-txt">A{{i + 1}}</span
+            ><el-input
+              class="child-input"
+              v-model="item.memberDescription"
+              autocomplete="off"
+              :disabled="isDisabled"
+            ></el-input>
             <span class="del-box" @click="delIntentLevel('A', i)"><i class="el-icon-delete"></i></span>
           </div>
         </div>
       </div>
-      <el-button type="text" @click="initDescription('A')" :disabled="isDisabled">初始描述</el-button>      
+      <el-button type="text" @click="initDescription('A')" :disabled="isDisabled">初始描述</el-button>
       <el-button type="text" @click="initDescriptionChildren('A')">新增</el-button>
     </el-form-item>
     <el-form-item class="templateBox" label="B" :label-width="intentLevelFormLabelWidth">
       <div class="inputBox">
         <el-input v-model="intentLevelForm['B'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
         <div v-if="intentLevelForm.B.children && intentLevelForm.B.children.length" class="child-box">
-          <div class="child-hr" v-for="(item, i) in intentLevelForm.B.children" >
-            <span class="child-txt">B{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.B.children">
+            <span class="child-txt">B{{i + 1}}</span
+            ><el-input
+              class="child-input"
+              v-model="item.memberDescription"
+              autocomplete="off"
+              :disabled="isDisabled"
+            ></el-input>
             <span class="del-box" @click="delIntentLevel('B', i)"><i class="el-icon-delete"></i></span>
           </div>
         </div>
@@ -326,8 +352,14 @@
       <div class="inputBox">
         <el-input v-model="intentLevelForm['C'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
         <div v-if="intentLevelForm.C.children && intentLevelForm.C.children.length" class="child-box">
-          <div class="child-hr" v-for="(item, i) in intentLevelForm.C.children" >
-            <span class="child-txt">C{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.C.children">
+            <span class="child-txt">C{{i + 1}}</span
+            ><el-input
+              class="child-input"
+              v-model="item.memberDescription"
+              autocomplete="off"
+              :disabled="isDisabled"
+            ></el-input>
             <span class="del-box" @click="delIntentLevel('C', i)"><i class="el-icon-delete"></i></span>
           </div>
         </div>
@@ -339,8 +371,14 @@
       <div class="inputBox">
         <el-input v-model="intentLevelForm['D'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
         <div v-if="intentLevelForm.D.children && intentLevelForm.D.children.length" class="child-box">
-          <div class="child-hr" v-for="(item, i) in intentLevelForm.D.children" >
-            <span class="child-txt">D{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.D.children">
+            <span class="child-txt">D{{i + 1}}</span
+            ><el-input
+              class="child-input"
+              v-model="item.memberDescription"
+              autocomplete="off"
+              :disabled="isDisabled"
+            ></el-input>
             <span class="del-box" @click="delIntentLevel('D', i)"><i class="el-icon-delete"></i></span>
           </div>
         </div>
@@ -352,8 +390,14 @@
       <div class="inputBox">
         <el-input v-model="intentLevelForm['E'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
         <div v-if="intentLevelForm.E.children && intentLevelForm.E.children.length" class="child-box">
-          <div class="child-hr" v-for="(item, i) in intentLevelForm.E.children" >
-            <span class="child-txt">E{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.E.children">
+            <span class="child-txt">E{{i + 1}}</span
+            ><el-input
+              class="child-input"
+              v-model="item.memberDescription"
+              autocomplete="off"
+              :disabled="isDisabled"
+            ></el-input>
             <span class="del-box" @click="delIntentLevel('E', i)"><i class="el-icon-delete"></i></span>
           </div>
         </div>
@@ -365,8 +409,14 @@
       <div class="inputBox">
         <el-input v-model="intentLevelForm['F'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
         <div v-if="intentLevelForm.F.children && intentLevelForm.F.children.length" class="child-box">
-          <div class="child-hr" v-for="(item, i) in intentLevelForm.F.children" >
-            <span class="child-txt">F{{i + 1}}</span><el-input class="child-input" v-model="item.memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+          <div class="child-hr" v-for="(item, i) in intentLevelForm.F.children">
+            <span class="child-txt">F{{i + 1}}</span
+            ><el-input
+              class="child-input"
+              v-model="item.memberDescription"
+              autocomplete="off"
+              :disabled="isDisabled"
+            ></el-input>
             <span class="del-box" @click="delIntentLevel('F', i)"><i class="el-icon-delete"></i></span>
           </div>
         </div>

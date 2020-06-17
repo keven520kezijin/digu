@@ -34,7 +34,7 @@ const mxBasePath = 'mxGraph/src';
 // }
 
 // mx的资源扩展名
-const mxResourceExtension = '.properties';
+// const mxResourceExtension = '.properties';
 
 // 帮助文档地址
 const _helpUrl = frontHost + '/index.html#/help';
@@ -260,10 +260,10 @@ function edit() {
     success: function(data) {
       // console.log('index-querySpeechcraftFlowByFlowType.json: ', data)
       if (data.resultMessageEnum === '0000') {
-        console.log(data, _editUrl)
+        // console.log(data, _editUrl);
         var returnObject = data.returnObject;
         // console.log('returnObject: ', returnObject)
-        localStorage.setItem('intentionLevelDescription', returnObject.intentionLevelDescription)
+        localStorage.setItem('intentionLevelDescription', returnObject.intentionLevelDescription);
         if (typeof returnObject !== 'undefined') {
           templateType = returnObject.templateType;
           speechcraftName = returnObject.speechcraftName;
@@ -309,37 +309,39 @@ function edit() {
 }
 
 /**
- * 
- * @param {*} isApprove 
- * @param {*} successCallback 
- * @param {*} failCallback 
+ *
+ * @param {*} isApprove
+ * @param {*} successCallback
+ * @param {*} failCallback
  */
 function getFlowXml(id) {
   // alert('getFlowXml')
   const flowContent = $.utils.inheritIntentionLevel(getFlowContent());
   // console.log('flowContent: ', flowContent)
   // console.log('5 - source: ',$(flowContent).find("[target=" + id + "]").attr('source'))
-  var sourceId = $(flowContent).find("[target=" + id + "]").attr('source')
-  var list = $(flowContent).find("[source="+sourceId+"]")
+  var sourceId = $(flowContent)
+    .find('[target=' + id + ']')
+    .attr('source');
+  var list = $(flowContent).find('[source=' + sourceId + ']');
   // console.log('list', list)
-  var listArr = []
-  list.each(function(){
-    var obj = {}
-    var listId = $(this).attr('target')
+  var listArr = [];
+  list.each(function() {
+    var obj = {};
+    var listId = $(this).attr('target');
     // console.log('listId: ', listId)
-    var label =  $(flowContent).find("[id="+listId+"]").attr('label')
-    obj.value = listId
-    obj.label = label
-    listArr.push(obj)
-  })
+    var label = $(flowContent)
+      .find('[id=' + listId + ']')
+      .attr('label');
+    obj.value = listId;
+    obj.label = label;
+    listArr.push(obj);
+  });
   listArr = listArr.filter(function(o) {
-    return o.value !== id
-  })
+    return o.value !== id;
+  });
   // console.log('listArr: ', listArr)
-  return listArr
+  return listArr;
 }
-
-
 
 /**
  * 保存流程
@@ -552,6 +554,7 @@ function showFlowDiagram(xml) {
     xmlDoc = mxUtils.parseXml(xml);
   }
   mxEditor.readGraphModel(xmlDoc.documentElement);
+  mxEditor.onFlowReady()
 }
 
 /**
@@ -770,6 +773,14 @@ function showSettingDialog() {
 }
 
 /**
+ * 显示快捷键设置对话框
+ */
+function showKeymapDialog() {
+  updateModel(currentCell); // 更新mxModel
+  $.utils._dialogVue.dialogKeymapVisible = true;
+}
+
+/**
  * 显示保存话术对话框
  */
 function showSaveDialog() {
@@ -842,4 +853,5 @@ function hasSensitiveWord() {
   return ishassensitiveWord;
 }
 
-$('html').niceScroll({ cursorcolor: '#CCC', cursorborder: '0px', zindex: 999 });
+
+// $('html').niceScroll({ cursorcolor: '#CCC', cursorborder: '0px', zindex: 999 });

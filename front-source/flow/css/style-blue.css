@@ -274,6 +274,11 @@ body,
   padding-left: 20px;
   font-size: 14px;
 }
+.el-button-list-span {
+  background: url(../images/list.png) no-repeat -1px -1px/20px 20px;
+  padding-left: 20px;
+  font-size: 14px;
+}
 .el-button-level-span {
   background: url(../images/edit.svg) no-repeat;
   background-size: contain;
@@ -440,7 +445,7 @@ body,
 }
 .el-table__row td {
   color: #647184;
-  border-bottom: none;
+  /* border-bottom: none; */
 }
 .el-table td,
 .el-table th {

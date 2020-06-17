@@ -51,6 +51,7 @@
         var node = mxUtils.load(config).getDocumentElement();
         editor = new mxEditor(node);
         mxObjectCodec.allowEval = false;
+        // console.log(editor);
 
         // Adds active border for panning inside the container
         editor.graph.createPanningManager = function() {
@@ -88,6 +89,7 @@
       model = editor.graph.getModel();
       // console.log('customize - editor: ', editor)
       customize(editor);
+      initMxgraphFunction(editor);
     } catch (e) {
       hideSplash();
 
@@ -124,12 +126,12 @@
                     // console.log('$.utils._intentLabel: ', $.utils._intentLabel)
                     val = $.utils._intentLabel;
                     break;
-                  case 'intentionLable':  // 意图标签
+                  case 'intentionLable': // 意图标签
                     // console.log('$.utils._intentionLable: ', $.utils._intentionLable)
-                    val = $.utils._intentionLable
+                    val = $.utils._intentionLable;
                     break;
-                  case 'greaterProhibit':  // 意图优先级
-                    val = $.utils._greaterProhibit
+                  case 'greaterProhibit': // 意图优先级
+                    val = $.utils._greaterProhibit;
                     break;
                   case 'keywords':
                     val = $.utils._intentKeywords;
@@ -231,16 +233,72 @@
     mxGraph.prototype.autoSizeCells = true;
     // 禁止鼠标移动到cell上时显示提示,默认显示cell的名称
     mxEditor.graph.setTooltips(false);
+
     // 禁止画布编辑
     mxGraph.prototype.enabled = false;
     // 连线鼠标形状
-    mxConstants.CURSOR_CONNECT = 'crosshair';
+    // mxConstants.CURSOR_CONNECT = 'crosshair';
     // 节点被选边框宽度
     mxConstants.VERTEX_SELECTION_STROKEWIDTH = 2;
     // 连线被选边框宽度
     mxConstants.EDGE_SELECTION_STROKEWIDTH = 2;
     // 控键大小
     mxConstants.HANDLE_SIZE = 10;
+
+    // 连接校验器
+    var invalidTarget = ['Edge', 'End'];
+    mxEditor.graph.connectionHandler.validateConnection = (source, target) => {
+      if (source === target || !target) {
+        return false;
+      } else if(source.value.nodeName === target.value.nodeName){
+        return false
+      } else if (invalidTarget.indexOf(target.value.nodeName) > -1) {
+        return false;
+      } else if (source.edges != null && source.edges.length > 0) {
+          for (var i in source.edges) {
+            if (source.edges[i].target && target.id == source.edges[i].target.id) {
+              return false;
+            }
+          }
+      }
+    };
+
+    // 重写连接点方法
+    var startNomeConstraints = [new mxConnectionConstraint(new mxPoint(0.5, 1))];
+    var endNomeConstraints = [new mxConnectionConstraint(new mxPoint(0.5, 0))];
+    mxGraph.prototype.getAllConnectionConstraints = function(terminal, source) {
+      if (terminal != null && terminal.shape != null) {
+        if (terminal.cell && terminal.cell.value) {
+          // 开始节点
+          if (terminal.cell.value.nodeName === 'Start') {
+            return startNomeConstraints;
+          } else if (terminal.cell.value.nodeName === 'End') {
+            return endNomeConstraints;
+          }
+        }
+        if (terminal.shape.stencil != null && terminal.shape.stencil.constraints != null) {
+          return terminal.shape.stencil.constraints;
+        } else if (terminal.shape.constraints != null) {
+          return terminal.shape.constraints;
+        }
+      }
+      return null;
+    };
+    // 连接点样式设置
+    // mxEditor.graph.connectionHandler.constraintHandler.pointImage = new mxImage('mxgraph/point1.gif', 10, 10)
+    mxEditor.graph.connectionHandler.constraintHandler.pointImage.width = 10;
+    mxEditor.graph.connectionHandler.constraintHandler.pointImage.height = 10;
+    mxEditor.graph.connectionHandler.constraintHandler.createHighlightShape = function() {
+      return new mxEllipse(null, this.highlightColor, this.highlightColor, 2);
+    };
+    // 设置连接点
+    mxShape.prototype.constraints = [
+      new mxConnectionConstraint(new mxPoint(0.5, 0)),
+      new mxConnectionConstraint(new mxPoint(0.5, 1)),
+    ];
+
+    // 线不设置连接点
+    mxPolyline.prototype.constraints = null;
 
     $(document).on('clearSelection', () => {
       mxEditor.graph.clearSelection();
@@ -289,7 +347,8 @@
       } else {
         mxEditor.hideProperties();
         if (typeof cell == 'undefined') {
-          mxEditor.graph.clearSelection();
+          // 1.3.6这里是不允许选择的， 1.4.2这里注释点，可以选择
+          // mxEditor.graph.clearSelection();
         }
         $.utils._dialogVue.dialogSpeechContLibVisible = false;
         //需求2.3 ------start----
@@ -306,7 +365,15 @@
           _lastTouchCellId = [];
         }
         //需求2.3 ------end----
-        evt.consume();
+
+        // evt.consume(); 1.4.2这里执行后会会导致鼠标框选后无法取消
+      }
+    });
+
+    // 双击替代 1.3.6版本中的全局双击
+    mxEditor.graph.addListener(mxEvent.DOUBLE_CLICK, function(sender, e) {
+      if (mxEditor.graph.getSelectionCell()) {
+        $(document).trigger('mxgraph_dblclick');
       }
     });
 
@@ -375,7 +442,7 @@
                   case 'keywords':
                     $.utils._intentKeywords = val;
                     break;
-                  case 'greaterProhibit':  // 意图优先级
+                  case 'greaterProhibit': // 意图优先级
                     $.utils._greaterProhibit = val.replace(/N/g, '');
                     // console.log('$.utils._greaterProhibit: ', $.utils._greaterProhibit)
                     break;
@@ -664,12 +731,10 @@
      */
     mxSvgCanvas2D.prototype.createDiv = function(str, align, valign, style, overflow) {
       var s = this.state;
-
       // Inline block for rendering HTML background over SVG in Safari
       var lh = mxConstants.ABSOLUTE_LINE_HEIGHT
         ? s.fontSize * mxConstants.LINE_HEIGHT + 'px'
         : mxConstants.LINE_HEIGHT * this.lineHeightCorrection;
-
       style =
         'display:inline-block;font-size:' +
         s.fontSize +
@@ -898,6 +963,9 @@
     // //重写插入edge的方法（v2.1 话术流程设计中的交互细化）
     mxConnectionHandler.prototype.insertEdge = function(parent, id, value, source, target, style) {
       //当edges 是插入的动作的时候
+      if(!target){
+        return null
+      }
       let edge;
       let sourceId = source.id;
       let soruceCount = 0;
@@ -1017,5 +1085,54 @@
 
       return cells;
     };
+
+    // 流程图加载后回调
+    mxEditor.onFlowReady = function() {
+      mxEditor.graph.center(true, false);
+      mxEditor.graph.setConnectable(true);
+
+      $(document).trigger('mxgraph_ready', mxEditor);
+    };
+  }
+
+  // 添加额外功能
+  function initMxgraphFunction(editor) {
+    mxConstants.OUTLINE_STROKEWIDTH = 1;
+    new mxOutline(editor.graph, document.getElementById('outline'));
+    editor.setMode('select'); // 使用选择模式
+    // ctrl + 鼠标滚轮
+    mxEvent.addMouseWheelListener(function(e) {
+      if (!e.wheelDelta) {
+        e.wheelDelta = e.detail;
+      }
+      if (e.wheelDelta > 0) {
+        editor.graph.zoomIn();
+      } else {
+        editor.graph.zoomOut();
+      }
+    });
+    // 树型布局
+    // var layout = new mxCompactTreeLayout(graph);
+    // layout.useBoundingBox = false;
+    // layout.edgeRouting = false;
+    // layout.levelDistance = 20;
+    // layout.nodeDistance = 20;
+    // editor.layoutManager = new mxLayoutManager(graph);
+    // editor.layoutManager.getLayout = function(cell) {
+    //   if (cell.getChildCount() > 0) {
+    //     return layout;
+    //   }
+    // };
+
+    // 快捷键
+    function keymapBind() {
+      var keyHandler = new mxKeyHandler(editor.graph);
+      keyHandler.bindControlKey(83, function() {
+        // ctrl s
+        // editor.execute('save');
+        showSaveDialog();
+      });
+    }
+    keymapBind();
   }
 }

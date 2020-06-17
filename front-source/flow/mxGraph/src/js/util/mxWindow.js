@@ -312,7 +312,6 @@ mxWindow.prototype.init = function(x, y, width, height, style)
 	
 	this.div = document.createElement('div');
 	this.div.className = style;
-	this.div.id = style;
 
 	this.div.style.left = x + 'px';
 	this.div.style.top = y + 'px';
@@ -363,11 +362,6 @@ mxWindow.prototype.init = function(x, y, width, height, style)
 	tr.appendChild(this.title);
 	tbody.appendChild(tr);
 	
-	// tile和正文间添加横线
-	var hr = document.createElement('hr');
-	hr.className = style + 'Hr';
-	tbody.appendChild(hr);
-	
 	// Creates content row and table cell
 	tr = document.createElement('tr');
 	this.td = document.createElement('td');
@@ -381,7 +375,7 @@ mxWindow.prototype.init = function(x, y, width, height, style)
 	this.contentWrapper = document.createElement('div');
 	this.contentWrapper.className = style + 'Pane';
 	this.contentWrapper.style.width = '100%';
-	/*this.contentWrapper.appendChild(this.content);*/
+	this.contentWrapper.appendChild(this.content);
 
 	// Workaround for div around div restricts height
 	// of inner div if outerdiv has hidden overflow
@@ -391,7 +385,7 @@ mxWindow.prototype.init = function(x, y, width, height, style)
 	}
 
 	// Puts all content into the DOM
-	this.td.appendChild(this.content);
+	this.td.appendChild(this.contentWrapper);
 	tr.appendChild(this.td);
 	tbody.appendChild(tr);
 	this.table.appendChild(tbody);

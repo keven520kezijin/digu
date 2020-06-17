@@ -1703,7 +1703,8 @@ mxConnectionHandler.prototype.addWaypointForEvent = function(me)
 mxConnectionHandler.prototype.checkConstraints = function(c1, c2)
 {
 	return (c1 == null || c2 == null || c1.point == null || c2.point == null ||
-		!c1.point.equals(c2.point) || c1.perimeter != c2.perimeter);
+		!c1.point.equals(c2.point) || c1.dx != c2.dx || c1.dy != c2.dy ||
+		c1.perimeter != c2.perimeter);
 };
 
 /**
@@ -1725,24 +1726,25 @@ mxConnectionHandler.prototype.mouseUp = function(sender, me)
 		
 		var c1 = this.sourceConstraint;
 		var c2 = this.constraintHandler.currentConstraint;
+
+		var source = (this.previous != null) ? this.previous.cell : null;
+		var target = null;
+		
+		if (this.constraintHandler.currentConstraint != null &&
+			this.constraintHandler.currentFocus != null)
+		{
+			target = this.constraintHandler.currentFocus.cell;
+		}
+		
+		if (target == null && this.currentState != null)
+		{
+			target = this.currentState.cell;
+		}
 		
 		// Inserts the edge if no validation error exists and if constraints differ
-		if (this.error == null && this.checkConstraints(c1, c2))
+		if (this.error == null && (source == null || target == null ||
+			source != target || this.checkConstraints(c1, c2)))
 		{
-			var source = (this.previous != null) ? this.previous.cell : null;
-			var target = null;
-			
-			if (this.constraintHandler.currentConstraint != null &&
-				this.constraintHandler.currentFocus != null)
-			{
-				target = this.constraintHandler.currentFocus.cell;
-			}
-			
-			if (target == null && this.currentState != null)
-			{
-				target = this.currentState.cell;
-			}
-			
 			this.connect(source, target, me.getEvent(), me.getCell());
 		}
 		else
@@ -2100,7 +2102,7 @@ mxConnectionHandler.prototype.createTargetVertex = function(evt, source)
 		geo = this.graph.getCellGeometry(source);
 	}
 	
-	var clone = this.graph.cloneCells([source])[0];
+	var clone = this.graph.cloneCell(source);
 	var geo = this.graph.getModel().getGeometry(clone);
 	
 	if (geo != null)

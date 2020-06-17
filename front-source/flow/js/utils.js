@@ -281,6 +281,27 @@ var lastIndex = [];
         });
       return xml;
     },
+    // 分发mxgraph action
+    dispatch(action, type) {
+      if (mxEditor) {
+        switch (type) {
+          case 'action':
+            mxEditor.execute(action);
+            break;
+          case 'mode':
+            mxEditor.setMode(mode);
+            break;
+          default:
+            mxEditor.execute(action);
+        }
+      }
+    },
+    // 设置 mxgraph mode
+    setMode: function(mode) {
+      if (mxEditor) {
+        mxEditor.setMode(mode);
+      }
+    },
 
     /**
      * 获取意图分类级别
@@ -1057,6 +1078,10 @@ var lastIndex = [];
     _dialogVue: null,
     // 创建对话Vue实例
     createDialogVue: function() {
+      let CtrlKey = 'Ctrl';
+      if (/macintosh|mac os x/i.test(navigator.userAgent)) {
+        CtrlKey = 'Command';
+      }
       return new Vue({
         el: '#_dialog',
         data: {
@@ -1067,6 +1092,8 @@ var lastIndex = [];
           recordData: $.utils._speechcraftContent.main.recordData,
           // 话术设置相关
           dialogSpeechSettingVisible: false,
+          // 快捷键设置
+          dialogKeymapVisible: false,
           formLabelWidth: '80px',
           speechForm: {
             speechcraftName: '',
@@ -1078,6 +1105,58 @@ var lastIndex = [];
             isArtificial: false,
             artificialIntention: '',
           },
+          keyMap: [
+            {
+              name: '复制',
+              key: CtrlKey + '+C',
+            },
+            {
+              name: '粘贴',
+              key: CtrlKey + '+V',
+            },
+            {
+              name: '剪切',
+              key: CtrlKey + '+X',
+            },
+            {
+              name: '删除',
+              key: 'Delete',
+            },
+            {
+              name: '保存',
+              key: CtrlKey + '+S',
+            },
+            {
+              name: '全选',
+              key: CtrlKey + '+S',
+            },
+            {
+              name: '撤销',
+              key: CtrlKey + '+Z',
+            },
+            {
+              name: '重做',
+              key: CtrlKey + '+Shift+R',
+            },
+            {
+              name: '多选',
+              key: '',
+              disable: true,
+              note: '鼠标长按框选',
+            },
+            {
+              name: '平移',
+              key: '',
+              disable: true,
+              note: '鼠标滚动 或 界面抓手按钮及右下角缩略图点击',
+            },
+            {
+              name: '缩放',
+              key: '',
+              disable: true,
+              note: '界面点击按钮',
+            },
+          ],
           settingSpeechRules: {
             speechcraftName: [{ required: true, message: '请输入话术名称' }],
           },
@@ -1130,12 +1209,12 @@ var lastIndex = [];
           intentLevelDesc: '',
           intentLevelFormLabelWidth: '30px',
           intentLevelForm: {
-            A: { initDescription: '', memberDescription: '', children:[] },
-            B: { initDescription: '', memberDescription: '', children:[] },
-            C: { initDescription: '', memberDescription: '', children:[] },
-            D: { initDescription: '', memberDescription: '', children:[] },
-            E: { initDescription: '', memberDescription: '', children:[] },
-            F: { initDescription: '', memberDescription: '', children:[] },
+            A: { initDescription: '', memberDescription: '', children: [] },
+            B: { initDescription: '', memberDescription: '', children: [] },
+            C: { initDescription: '', memberDescription: '', children: [] },
+            D: { initDescription: '', memberDescription: '', children: [] },
+            E: { initDescription: '', memberDescription: '', children: [] },
+            F: { initDescription: '', memberDescription: '', children: [] },
           },
 
           // 知识库设置相关
@@ -1383,12 +1462,12 @@ var lastIndex = [];
           },
           initDescriptionChildren(key) {
             // alert(key)
-            const obj = {initDescription: '', memberDescription: ''}
-            this.intentLevelForm[key].children.push(obj)
+            const obj = { initDescription: '', memberDescription: '' };
+            this.intentLevelForm[key].children.push(obj);
             // console.log("this.intentLevelForm[key]: ", this.intentLevelForm[key])
           },
           delIntentLevel(type, i) {
-            this.intentLevelForm[type].children.splice(i,1)
+            this.intentLevelForm[type].children.splice(i, 1);
           },
           /**
            * 保存意图分类级别描述
@@ -1409,7 +1488,7 @@ var lastIndex = [];
               if (data.resultMessageEnum == '0000') {
                 $.utils._dialogVue.intentLevelVisible = false;
                 $.utils.tooltip('意图分类级别描述设置成功！', 'success');
-                localStorage.setItem('intentionLevelDescription', JSON.stringify(this.intentLevelForm))
+                localStorage.setItem('intentionLevelDescription', JSON.stringify(this.intentLevelForm));
                 //修改之后立刻更新页面数据，不影响展示
                 $.utils.queryCurrentSpeechcraftDetail();
               } else {
@@ -1736,7 +1815,7 @@ var lastIndex = [];
             $(document).trigger('resetCheckedList', { checkedList });
             this.dialogVisibleChild = false;
           },
-          //转换按钮颜色回调函数 
+          //转换按钮颜色回调函数
           changeRobotToEnd: function() {
             // alert('changeRobotToEnd')
             this.dialogVisibleChild = false;

@@ -41,6 +41,7 @@ div.base#toolbar {
   color: #4e8ff9;
   margin-left: 10px;
   text-decoration: none;
+  overflow: hidden;
 }
 
 #headerBody {
@@ -80,6 +81,15 @@ div.base#toolbar {
 #toolbar img {
   height: 16px;
   margin-top: 8px;
+}
+
+#outline {
+  width: 210px;
+  height: 160px;
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  background-color: rgba(0,0,0,0.1);
 }
 
 #approve {
@@ -151,7 +161,8 @@ div.base#toolbar {
   background: rgba(255, 255, 255, 1);
   border-radius: 4px;
   border: 1px solid rgba(222, 226, 230, 1);
-  margin-right: 10px;
+  margin: auto 10px;
+  flex-shrink: 0;
 }
 
 #viewSwitch a {
@@ -193,7 +204,7 @@ div.base#toolbar {
   margin: 0 7px 0 7px;
 }
 
-#setting {
+#setting,#keymap {
   height: 30px;
   background-color: white;
   float: left;
@@ -201,10 +212,9 @@ div.base#toolbar {
   border-radius: 5px;
 }
 
-#setting button {
+#setting button,#keymap button {
   border: 0px solid #dcdfe6;
 }
-
 #level {
   height: 30px;
   background-color: white;
@@ -267,7 +277,6 @@ div.base#graph {
   right: 20px;
   top: 70px;
   bottom: 20px;
-  height: 200%;
 }
 
 /* 流程设计器 end */

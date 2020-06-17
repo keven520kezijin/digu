@@ -60,6 +60,13 @@ mxGuide.prototype.guideX = null;
 mxGuide.prototype.guideY = null;
 
 /**
+ * Variable: rounded
+ *
+ * Specifies if rounded coordinates should be used. Default is false.
+ */
+mxGuide.prototype.rounded = false;
+
+/**
  * Function: setStates
  * 
  * Sets the <mxCellStates> that should be used for alignment.
@@ -110,11 +117,21 @@ mxGuide.prototype.createGuideShape = function(horizontal)
 };
 
 /**
+ * Function: isStateIgnored
+ * 
+ * Returns true if the given state should be ignored.
+ */
+mxGuide.prototype.isStateIgnored = function(state)
+{
+	return false;
+};
+
+/**
  * Function: move
  * 
  * Moves the <bounds> by the given <mxPoint> and returnt the snapped point.
  */
-mxGuide.prototype.move = function(bounds, delta, gridEnabled)
+mxGuide.prototype.move = function(bounds, delta, gridEnabled, clone)
 {
 	if (this.states != null && (this.horizontal || this.vertical) && bounds != null && delta != null)
 	{
@@ -193,7 +210,7 @@ mxGuide.prototype.move = function(bounds, delta, gridEnabled)
 		};
 		
 		// Snaps the top, middle or bottom to the given y-coordinate
-		function snapY(y)
+		function snapY(y, state)
 		{
 			y += this.graph.panDy;
 			var override = false;
@@ -243,7 +260,7 @@ mxGuide.prototype.move = function(bounds, delta, gridEnabled)
 		{
 			var state =  this.states[i];
 			
-			if (state != null)
+			if (state != null && !this.isStateIgnored(state))
 			{
 				// Align x
 				if (this.horizontal)
@@ -290,6 +307,9 @@ mxGuide.prototype.move = function(bounds, delta, gridEnabled)
 		}
 		else if (this.guideX != null)
 		{
+			var minY = null;
+        	var maxY = null;
+        	
 			if (stateX != null && bounds != null)
 			{
 				minY = Math.min(bounds.y + dy - this.graph.panDy, stateX.y);
@@ -316,6 +336,9 @@ mxGuide.prototype.move = function(bounds, delta, gridEnabled)
 		}
 		else if (this.guideY != null)
 		{
+			var minX = null;
+        	var maxX = null;
+        	
 			if (stateY != null && bounds != null)
 			{
 				minX = Math.min(bounds.x + dx - this.graph.panDx, stateY.x);
@@ -335,11 +358,32 @@ mxGuide.prototype.move = function(bounds, delta, gridEnabled)
 			this.guideY.node.style.visibility = 'visible';
 			this.guideY.redraw();
 		}
-		
-		delta = new mxPoint(dx, dy);
+
+		delta = this.getDelta(bounds, stateX, dx, stateY, dy)
 	}
 	
 	return delta;
+};
+
+/**
+ * Function: hide
+ * 
+ * Hides all current guides.
+ */
+mxGuide.prototype.getDelta = function(bounds, stateX, dx, stateY, dy)
+{
+	// Round to pixels for virtual states (eg. page guides)
+	if (this.rounded || (stateX != null && stateX.cell == null))
+	{
+		dx = Math.floor(bounds.x + dx) - bounds.x;
+	}
+
+	if (this.rounded || (stateY != null && stateY.cell == null))
+	{
+		dy = Math.floor(bounds.y + dy) - bounds.y;
+	}
+	
+	return new mxPoint(dx, dy);
 };
 
 /**

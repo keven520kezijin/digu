@@ -1,6 +1,6 @@
 <mxEditor>
 	<ui>
-		<resource basename="resources/mxApplication"/>
+		<!-- <resource basename="resources/mxApplication"/> -->
 	</ui>
 
 	<mxDefaultPopupMenu as="popupHandler">

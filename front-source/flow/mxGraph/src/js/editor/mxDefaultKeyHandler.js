@@ -91,24 +91,21 @@ mxDefaultKeyHandler.prototype.handler = null;
  * action - Name of the action to execute in <editor>.
  * control - Optional boolean that specifies if control must be pressed.
  * Default is false.
- * shift - shift按键是否按下，默认false
  */
-mxDefaultKeyHandler.prototype.bindAction = function (code, action, control, shift)
+mxDefaultKeyHandler.prototype.bindAction = function (code, action, control)
 {
 	var keyHandler = mxUtils.bind(this, function()
 	{
 		this.editor.execute(action);
 	});
-	// 绑定ctrl+shift组合键
-	if (control && shift) {
-		this.handler.bindControlShiftKey(code, keyHandler);
-	} 
-	// 绑定ctrl键
-	else if (control)
+
+	// Binds the function to control-down keycode
+	if (control)
 	{
 		this.handler.bindControlKey(code, keyHandler);
 	}
-	// 绑定单独键
+
+	// Binds the function to the normal keycode
 	else
 	{
 		this.handler.bindKey(code, keyHandler);				

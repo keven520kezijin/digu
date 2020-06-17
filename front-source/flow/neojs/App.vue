@@ -73,7 +73,7 @@ export default {
   },
   mounted() {
     this.$document.on('openDrawer', this.openDrawerBindType.bind(this));
-    this.$document.on('dblclick', this.handleOpenDrawer.bind(this));
+    this.$document.on('mxgraph_dblclick', this.handleOpenDrawer.bind(this));
     const viewType = $.utils.getUrlParam('viewType');
     this.disabled = viewType == null || viewType == '' || viewType == '0';
   },
