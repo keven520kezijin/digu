@@ -9,7 +9,7 @@
 	<separator/> -->
 	<add as="zoomIn" action="zoomIn" icon="images/icon_enlarge.svg"/>
 	<add as="zoomOut" action="zoomOut" icon="images/icon_shrink.svg"/>
-    <add as="delete" action="delete" icon="images/delete.gif"/>
+    <!-- <add as="delete" action="delete" icon="images/delete.gif"/> -->
 	<!-- <add as="fit" action="fit" icon="images/zoom.gif"/>
 	<add as="actualSize" action="actualSize" icon="images/zoomactual.gif"/> -->
 	<!-- <separator/>
@@ -20,7 +20,7 @@
 	<add as="answer" template="answer" icon="images/blue.gif"/>
 	<!--<add as="robot" template="robot" icon="images/yellow.gif"/>-->
 	<!--<add as="end" template="end" icon="images/purple.gif"/>-->
-	<add as="connect" mode="connect" icon="images/connect.gif"><![CDATA[
+	<!-- <add as="connect" mode="connect" icon="images/connect.gif"><![CDATA[
 		function (editor)
 		{
 			if (editor.defaultEdge != null)
@@ -28,7 +28,7 @@
 				editor.defaultEdge.style = 'straightEdge';
 			}
 		}
-	]]></add>	
+	]]></add>	 -->
 	<!-- <add as="show" action="show" icon="images/preview.gif"/>
 	<add as="print" action="print" icon="images/print.gif"/>
 	<add as="exportImage" action="exportImage" icon="images/image.gif"/>

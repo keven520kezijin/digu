@@ -6,12 +6,12 @@
         :class="[{ highlight: highlight === 'images/blue.gif' }, 'topbar-add-btn']"
         >新建意图</a
       >
-      <div class="divide"></div>
+      <!-- <div class="divide"></div>
       <a
         @click="handleClick('images/connect.gif')"
         :class="[{ highlight: highlight === 'images/connect.gif' }, 'topbar-connect-btn']"
         >链接</a
-      >
+      > -->
     </div>
     <div class="btn-group">
       <a
@@ -28,10 +28,10 @@
       <a @click="handleZoom('zoomOut')" class="square">
         <i class="el-icon-zoom-out"></i>
       </a>
-      <div v-if="!readonly" class="divide"></div>
+      <!-- <div v-if="!readonly" class="divide"></div>
       <a v-if="!readonly" @click="handleDelete" class="square">
         <i class="el-icon-close"></i>
-      </a>
+      </a> -->
     </div>
   </div>
 </template>

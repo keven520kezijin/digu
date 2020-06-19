@@ -11,6 +11,7 @@
                 </transition>
             </div>
         </div>
+        <robot />
     </div>
 </template>
 
@@ -18,6 +19,7 @@
     import vSidebar from './Sidebar.vue';
     import vTop from './Top.vue';
     import bus from './bus';
+    import Robot from '../components/Robot.vue'
     export default {
         data(){
             return {
@@ -28,7 +30,9 @@
             }
         },
         components:{
-            vTop, vSidebar
+            vTop,
+            vSidebar,
+            Robot
         },
         created(){
             bus.$on('contentTop', msg => {

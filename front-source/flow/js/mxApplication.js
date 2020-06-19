@@ -245,61 +245,6 @@
     // 控键大小
     mxConstants.HANDLE_SIZE = 10;
 
-    // 连接校验器
-    var invalidTarget = ['Edge', 'End'];
-    mxEditor.graph.connectionHandler.validateConnection = (source, target) => {
-      if (source === target || !target) {
-        return false;
-      } else if(source.value.nodeName === target.value.nodeName){
-        return false
-      } else if (invalidTarget.indexOf(target.value.nodeName) > -1) {
-        return false;
-      } else if (source.edges != null && source.edges.length > 0) {
-          for (var i in source.edges) {
-            if (source.edges[i].target && target.id == source.edges[i].target.id) {
-              return false;
-            }
-          }
-      }
-    };
-
-    // 重写连接点方法
-    var startNomeConstraints = [new mxConnectionConstraint(new mxPoint(0.5, 1))];
-    var endNomeConstraints = [new mxConnectionConstraint(new mxPoint(0.5, 0))];
-    mxGraph.prototype.getAllConnectionConstraints = function(terminal, source) {
-      if (terminal != null && terminal.shape != null) {
-        if (terminal.cell && terminal.cell.value) {
-          // 开始节点
-          if (terminal.cell.value.nodeName === 'Start') {
-            return startNomeConstraints;
-          } else if (terminal.cell.value.nodeName === 'End') {
-            return endNomeConstraints;
-          }
-        }
-        if (terminal.shape.stencil != null && terminal.shape.stencil.constraints != null) {
-          return terminal.shape.stencil.constraints;
-        } else if (terminal.shape.constraints != null) {
-          return terminal.shape.constraints;
-        }
-      }
-      return null;
-    };
-    // 连接点样式设置
-    // mxEditor.graph.connectionHandler.constraintHandler.pointImage = new mxImage('mxgraph/point1.gif', 10, 10)
-    mxEditor.graph.connectionHandler.constraintHandler.pointImage.width = 10;
-    mxEditor.graph.connectionHandler.constraintHandler.pointImage.height = 10;
-    mxEditor.graph.connectionHandler.constraintHandler.createHighlightShape = function() {
-      return new mxEllipse(null, this.highlightColor, this.highlightColor, 2);
-    };
-    // 设置连接点
-    mxShape.prototype.constraints = [
-      new mxConnectionConstraint(new mxPoint(0.5, 0)),
-      new mxConnectionConstraint(new mxPoint(0.5, 1)),
-    ];
-
-    // 线不设置连接点
-    mxPolyline.prototype.constraints = null;
-
     $(document).on('clearSelection', () => {
       mxEditor.graph.clearSelection();
     });
@@ -951,7 +896,14 @@
             node.setAttribute('artificialIntention', '');
             node.setAttribute('excSkipNode', '');
             let v1 = this.editor.graph.insertVertex(parent, null, node, x - 30, y + 100, 100, 30, 'robot');
-            this.editor.graph.insertEdge(parent, null, mxEditor.templates.edge.value, vertex, v1, 'straightEdge');
+            this.editor.graph.insertEdge(
+              parent,
+              null,
+              mxEditor.templates.edge.value,
+              vertex,
+              v1,
+              mxConstants.EDGESTYLE_TOPTOBOTTOM,
+            );
           }
           return this.editor.addVertex(target, vertex, pt.x, pt.y);
         }
@@ -963,8 +915,8 @@
     // //重写插入edge的方法（v2.1 话术流程设计中的交互细化）
     mxConnectionHandler.prototype.insertEdge = function(parent, id, value, source, target, style) {
       //当edges 是插入的动作的时候
-      if(!target){
-        return null
+      if (!target) {
+        return null;
       }
       let edge;
       let sourceId = source.id;
@@ -1098,9 +1050,11 @@
   // 添加额外功能
   function initMxgraphFunction(editor) {
     mxConstants.OUTLINE_STROKEWIDTH = 1;
-    new mxOutline(editor.graph, document.getElementById('outline'));
+    editor.graph.setAllowDanglingEdges(false);
+    editor.graph.setConnectableEdges(false);
     editor.setMode('select'); // 使用选择模式
-    // ctrl + 鼠标滚轮
+    new mxOutline(editor.graph, document.getElementById('outline'));
+    // 鼠标滚轮
     mxEvent.addMouseWheelListener(function(e) {
       if (!e.wheelDelta) {
         e.wheelDelta = e.detail;
@@ -1111,18 +1065,89 @@
         editor.graph.zoomOut();
       }
     });
+
+    // 连接校验器
+    var invalidTarget = ['Start', 'End'];
+    editor.graph.connectionHandler.validateConnection = function(source, target) {
+      if (source === target || !target) {
+        return false;
+      } else if (source.value.nodeName === target.value.nodeName) {
+        return false;
+      } else if (invalidTarget.indexOf(target.value.nodeName) > -1) {
+        return false;
+      } else if (target.edges && target.edges.length) {
+        for (var i = 0, e; i < target.edges.length; i++) {
+          e = target.edges[i];
+          if ((e.target && source.id == e.target.id) || (e.source && source.id == e.source.id)) {
+            return false;
+          }
+        }
+      } else if (source.edges && source.edges.length) {
+        for (var i = 0, e; i < source.edges.length; i++) {
+          e = source.edges[i];
+          if (e.target && target.id == e.target.id) {
+            return false;
+          }
+        }
+      }
+    };
+
+    //连接线样式
+    var edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
+    edgeStyle[mxConstants.STYLE_EDGE] = mxEdgeStyle.TopToBottom;
+    edgeStyle[mxConstants.STYLE_ROUNDED] = true;
+    // edgeStyle[mxConstants.STYLE_STROKECOLOR] = '#1890ff';
+
+    // 连接点样式设置
+    // mxEditor.graph.connectionHandler.constraintHandler.pointImage = new mxImage('mxgraph/point1.gif', 10, 10)
+    editor.graph.connectionHandler.constraintHandler.pointImage.width = 10;
+    editor.graph.connectionHandler.constraintHandler.pointImage.height = 10;
+    editor.graph.connectionHandler.constraintHandler.createHighlightShape = function() {
+      return new mxEllipse(null, this.highlightColor, this.highlightColor, 2);
+    };
+    // 设置连接点
+    mxShape.prototype.constraints = [
+      new mxConnectionConstraint(new mxPoint(0.5, 0)),
+      new mxConnectionConstraint(new mxPoint(0.5, 1)),
+    ];
+
+    // 线不设置连接点
+    mxPolyline.prototype.constraints = null;
+
+    var startNomeConstraints = [new mxConnectionConstraint(new mxPoint(0.5, 1))];
+    var endNomeConstraints = [new mxConnectionConstraint(new mxPoint(0.5, 0))];
+    // 连接点方法
+    editor.graph.getAllConnectionConstraints = function(terminal, source) {
+      if (terminal != null && terminal.shape != null) {
+        if (terminal.cell && terminal.cell.value) {
+          // 开始节点
+          if (terminal.cell.value.nodeName === 'Start') {
+            return startNomeConstraints;
+          } else if (terminal.cell.value.nodeName === 'End') {
+            return endNomeConstraints;
+          }
+        }
+        if (terminal.shape.stencil != null && terminal.shape.stencil.constraints != null) {
+          return terminal.shape.stencil.constraints;
+        } else if (terminal.shape.constraints != null) {
+          return terminal.shape.constraints;
+        }
+      }
+      return null;
+    };
+
     // 树型布局
-    // var layout = new mxCompactTreeLayout(graph);
-    // layout.useBoundingBox = false;
-    // layout.edgeRouting = false;
-    // layout.levelDistance = 20;
-    // layout.nodeDistance = 20;
-    // editor.layoutManager = new mxLayoutManager(graph);
-    // editor.layoutManager.getLayout = function(cell) {
-    //   if (cell.getChildCount() > 0) {
-    //     return layout;
-    //   }
-    // };
+    var layout = new mxCompactTreeLayout(graph, false); // false 垂直布局
+    layout.useBoundingBox = false;
+    layout.edgeRouting = false;
+    layout.levelDistance = 20;
+    layout.nodeDistance = 20;
+    editor.layoutManager = new mxLayoutManager(graph);
+    editor.layoutManager.getLayout = function(cell) {
+      if (cell.getChildCount() > 0) {
+        return layout;
+      }
+    };
 
     // 快捷键
     function keymapBind() {
@@ -1131,6 +1156,10 @@
         // ctrl s
         // editor.execute('save');
         showSaveDialog();
+      });
+      keyHandler.bindControlShiftKey(90, function() {
+        // ctrl shift z
+        editor.execute('redo');
       });
     }
     keymapBind();

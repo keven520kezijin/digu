@@ -1,11 +1,15 @@
 <mxEditor>
 	<mxDefaultKeyHandler as="keyHandler">
-		<add as="90" control="true" action="undo"/> <!-- ctrl/command+z 撤销 -->
-		<add as="90" control="true" shift="true" action="redo"/> <!-- ctrl/command+shift+z 重做 -->	
-		<add as="65" control="true" action="selectAll"/>  <!-- ctrl/command+a 全选 -->
-		<add as="67" control="true" action="copy"/> <!-- ctrl/command+c 复制 -->
-		<add as="86" control="true" action="paste"/> <!-- ctrl/command+v 粘贴 -->		
 		<add as="46" action="delete"/> <!-- delete 删除 --> 
+		<add as="65" control="1" action="selectAll"/>  <!-- ctrl/command+a 全选 -->
+		<add as="67" control="1" action="copy"/> <!-- ctrl/command+c 复制 -->
+		<add as="86" control="1" action="paste"/> <!-- ctrl/command+v 粘贴 -->		
+		<add as="88" control="1" action="cut"/> <!-- ctrl/command+x 粘贴 -->		
+		<add as="71" control="1" action="group"/>
+		<add as="85" control="1" action="ungroup"/>
+		<add as="90" control="1" action="undo"/> <!-- ctrl/command+z 撤销 -->
+		<add as="107" action="zoomIn"/>
+		<add as="109" action="zoomOut"/>
 		<!-- <add as="8" action="collapse"/>
 		<add as="13" action="expand"/>
 		<add as="33" action="exitGroup"/>
