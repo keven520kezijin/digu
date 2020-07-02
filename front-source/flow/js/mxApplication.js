@@ -1055,16 +1055,30 @@
     editor.setMode('select'); // 使用选择模式
     new mxOutline(editor.graph, document.getElementById('outline'));
     // 鼠标滚轮
-    mxEvent.addMouseWheelListener(function(e) {
-      if (!e.wheelDelta) {
-        e.wheelDelta = e.detail;
-      }
-      if (e.wheelDelta > 0) {
-        editor.graph.zoomIn();
-      } else {
-        editor.graph.zoomOut();
-      }
-    });
+    // console.log('鼠标滚轮')
+    // window.addEventListener(
+    //   'DOMMouseScroll',
+    //   function(e) {
+    //     var e = e || window.event;
+    //     if (e.ctrlKey) {
+    //       e.preventDefault && e.preventDefault();
+    //       e.returnValue = false;
+    //       console.log(e)
+    //     }
+    //   },
+    //   false,
+    // );
+    
+    // mxEvent.addMouseWheelListener(function(e) {
+    //   if (!e.wheelDelta) {
+    //     e.wheelDelta = e.detail;
+    //   }
+    //   if (e.wheelDelta > 0) {
+    //     editor.graph.zoomIn();
+    //   } else {
+    //     editor.graph.zoomOut();
+    //   }
+    // });
 
     // 连接校验器
     var invalidTarget = ['Start', 'End'];
