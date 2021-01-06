@@ -40,7 +40,7 @@
     "build:manage": "cross-env MODE=manage node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "^0.21.1",
     "config": "^3.2.2",
     "crypto": "^1.0.1",
     "koa": "^2.7.0",
